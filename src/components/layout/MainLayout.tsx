@@ -54,7 +54,7 @@ const MainLayout = () => {
             alignItems: "center",
           }}
         >
-          <h1 style={{ height: "20px" }}>Bike Shop</h1>
+          <h1>Bike Shop</h1>
         </div>
         <Menu
           theme="dark"
