@@ -1,9 +1,9 @@
+import MainLayout from "./components/layout/MainLayout";
+
 function App() {
 
   return (
-    <>
-    <h2>Bike Shop Client</h2>
-    </>
+    <MainLayout />
   )
 }
 
