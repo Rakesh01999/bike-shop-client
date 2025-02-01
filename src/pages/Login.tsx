@@ -1,8 +1,9 @@
-
 const Login = () => {
   return (
-    <div>This is Login Component</div>
-  )
-}
+    <div>
+      <h1>This is Login Component</h1>
+    </div>
+  );
+};
 
-export default Login
+export default Login;
