@@ -1,7 +1,7 @@
 
 const Login = () => {
   return (
-    <div>This is Login</div>
+    <div>This is Login Component</div>
   )
 }
 
