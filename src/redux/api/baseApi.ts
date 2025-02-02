@@ -11,7 +11,8 @@ import {
   import { toast } from 'sonner';
   
   const baseQuery = fetchBaseQuery({
-    baseUrl: 'https://carmodelbackend.vercel.app/api',
+    // baseUrl: 'https://carmodelbackend.vercel.app/api',
+    baseUrl: 'https://bike-shop-server-six.vercel.app/api',
     credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).auth.token;
@@ -39,7 +40,8 @@ import {
       //* Send Refresh
       console.log('Sending refresh token');
   
-      const res = await fetch('https://carmodelbackend.vercel.app/api/refresh-token', {
+      // const res = await fetch('https://carmodelbackend.vercel.app/api/refresh-token', {
+      const res = await fetch('https://bike-shop-server-six.vercel.app/api/refresh-token', {
         method: 'POST',
         credentials: 'include',
       });
@@ -71,7 +73,8 @@ import {
   export const baseApi = createApi({
     reducerPath: 'baseApi',
     baseQuery: baseQueryWithRefreshToken,
-    tagTypes:['cars','tags','reset'],
+    // tagTypes:['cars','tags','reset'],
+    tagTypes:['bikes','tags','reset'],
     endpoints: () => ({}),
   });
   
