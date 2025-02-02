@@ -76,7 +76,7 @@ const CustomCard = () => {
                 </p>
                 <p>
                   <AppstoreAddOutlined /> <strong>Model:</strong>{" "}
-                  {product.model}
+                  {product.modelNumber}
                 </p>
               </div>
             </AntCard>

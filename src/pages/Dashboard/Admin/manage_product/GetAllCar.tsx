@@ -2,12 +2,17 @@ import { useState } from "react";
 import { useGetAllCarsQuery } from "../../../../redux/features/bikes/bikesManagement";
 import type { TQueryParam } from "../../../../types";
 import { useNavigate } from "react-router-dom";
-import { Button, Input, Table, type TableColumnsType, type TableProps } from "antd";
+import {
+  Button,
+  Input,
+  Table,
+  type TableColumnsType,
+  type TableProps,
+} from "antd";
 import type { TTableData } from "../../../Allproduct";
 
-
 const GetAllCar = () => {
-    const [params, setParams] = useState<TQueryParam[] | undefined>(undefined);
+  const [params, setParams] = useState<TQueryParam[] | undefined>(undefined);
   const [pagination, setPagination] = useState({ current: 1, pageSize: 10 });
   const [searchTerm, setSearchTerm] = useState<string>("");
 
@@ -20,13 +25,15 @@ const GetAllCar = () => {
     { name: "searchTerm", value: searchTerm },
   ]);
   const tableData = CarData?.data?.map(
-    ({ _id, price, model, brand, category,quantity }) => ({
+    // ({ _id, price, model, modelNumber, brand, category, quantity }) => ({
+    ({ _id, price, modelNumber, brand, category, quantity }) => ({
       key: _id,
       price,
-      model,
+      model : modelNumber ?? "N/A",
+      modelNumber,
       brand,
       category,
-      quantity
+      quantity,
     })
   );
 
@@ -96,9 +103,9 @@ const GetAllCar = () => {
       ],
     },
     {
-        title:"Quantity",
-        key:'quantity',
-        dataIndex:'quantity'
+      title: "Quantity",
+      key: "quantity",
+      dataIndex: "quantity",
     },
     {
       title: "Action",
@@ -179,7 +186,7 @@ const GetAllCar = () => {
         scroll={{ x: 800 }}
       />
     </div>
-  )
+  );
 };
 
 export default GetAllCar;

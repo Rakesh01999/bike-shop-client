@@ -151,11 +151,15 @@ const CreateCar = () => {
               name="category"
               label="Category"
               options={[
-                { value: "Sedan", label: "Sedan" },
-                { value: "SUV", label: "SUV" },
-                { value: "Truck", label: "Truck" },
-                { value: "Coupe", label: "Coupe" },
-                { value: "Convertible", label: "Convertible" },
+                // { value: "Sedan", label: "Sedan" },
+                // { value: "SUV", label: "SUV" },
+                // { value: "Truck", label: "Truck" },
+                // { value: "Coupe", label: "Coupe" },
+                // { value: "Convertible", label: "Convertible" },
+                { value: "Mountain", label: "Mountain" },
+                { value: "Road", label: "Road" },
+                { value: "Hybrid", label: "Hybrid" },
+                { value: "Electric", label: "Electric" },
               ]}
             />
           </Col>

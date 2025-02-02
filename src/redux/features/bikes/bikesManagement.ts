@@ -14,7 +14,8 @@ const bikesManagementApi = baseApi.injectEndpoints({
                 }
 
                 return {
-                    url: "/cars",
+                    // url: "/bikes",
+                    url: "/products",
                     method: "GET",
                     params: params,
                 };
@@ -25,22 +26,24 @@ const bikesManagementApi = baseApi.injectEndpoints({
                     meta: response.meta,
                 };
             },
-            providesTags: ["cars"],
+            // providesTags: ["cars"],
+            providesTags: ["bikes"],
         }),
         getOwnCars: builder.query({
             query: () => {
 
                 return {
-                    url: "/cars/own",
+                    // url: "/cars/own",
+                    url: "/bikes/own",
                     method: "GET",
                 };
             },
-            providesTags: ["cars"],
+            providesTags: ["bikes"],
         }),
         getSingleCars: builder.query({
             query: (args) => {
                 return {
-                    url: `/cars/${args}`,
+                    url: `/bikes/${args}`,
                     method: "GET",
                 };
             },
@@ -49,7 +52,7 @@ const bikesManagementApi = baseApi.injectEndpoints({
                     data: response.data,
                 };
             },
-            providesTags: ["cars"],
+            providesTags: ["bikes"],
         }),
 
         getAllOrders: builder.query({
@@ -76,7 +79,7 @@ const bikesManagementApi = baseApi.injectEndpoints({
                     meta: response.meta,
                 };
             },
-            providesTags: ["cars"],
+            providesTags: ["bikes"],
         }),
 
         verifyOrder: builder.query({
@@ -105,12 +108,12 @@ const bikesManagementApi = baseApi.injectEndpoints({
                     data: response.data,
                 };
             },
-            invalidatesTags: ["cars"],
+            invalidatesTags: ["bikes"],
         }),
         updateCar: builder.mutation({
             query: ({ data, order_id }) => {
                 return {
-                    url: `/cars/${order_id}`,
+                    url: `/bikes/${order_id}`,
                     method: "PUT",
                     body: data,
                 };
@@ -122,13 +125,13 @@ const bikesManagementApi = baseApi.injectEndpoints({
                     data: response.data,
                 };
             },
-            invalidatesTags: ["cars"],
+            invalidatesTags: ["bikes"],
         }),
         createCar: builder.mutation({
             query: ({ carData }) => {
                 console.log(carData)
                 return {
-                    url: `/cars`,
+                    url: `/bikes`,
                     method: "POST",
                     body: carData,
                 };
@@ -140,14 +143,14 @@ const bikesManagementApi = baseApi.injectEndpoints({
                     data: response.data,
                 };
             },
-            invalidatesTags: ["cars"],
+            invalidatesTags: ["bikes"],
         }),
         deleteCar: builder.mutation({
             query: ({ order_id }) => {
                 console.log(order_id)
 
                 return {
-                    url: `/cars/${order_id}`,
+                    url: `/bikes/${order_id}`,
                     method: "DELETE",
                 };
 
@@ -158,7 +161,7 @@ const bikesManagementApi = baseApi.injectEndpoints({
                     data: response.data,
                 };
             },
-            invalidatesTags: ["cars"],
+            invalidatesTags: ["bikes"],
         }),
 
         allsurjopay: builder.query({
