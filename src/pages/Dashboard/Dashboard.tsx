@@ -3,7 +3,7 @@ import { useCurrentUser } from "../../redux/features/auth/authSlice";
 import { useAppSelector } from "../../redux/hooks";
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Navbars from "../navbar/Navbars";
+import Navbars from "../Navbar/Navbars";
 
 type UserType = {
     email: string;
