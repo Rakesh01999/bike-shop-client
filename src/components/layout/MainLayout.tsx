@@ -1,5 +1,5 @@
 import { Layout } from 'antd';
-// import Sidebar from './SIdebar';
+import Sidebar from './SIdebar';
 import { Outlet } from 'react-router-dom';
 const { Content } = Layout;
 
