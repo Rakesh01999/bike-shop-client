@@ -20,6 +20,7 @@
     "react-hook-form": "^7.54.2",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.1.4",
+    "redux-persist": "^6.0.0",
     "sonner": "^1.7.4",
     "zod": "^3.24.1"
   },
