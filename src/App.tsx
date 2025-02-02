@@ -1,10 +1,15 @@
-import MainLayout from "./components/layout/MainLayout";
+import { Outlet } from "react-router-dom";
+import Navbar from "./pages/Navbar/Navbar";
+import Footer from "./pages/Footer/Footer";
 
 function App() {
-
   return (
-    <MainLayout />
-  )
+    <div>
+      <Navbar />
+      <Outlet></Outlet>
+      <Footer />
+    </div>
+  );
 }
 
-export default App
+export default App;
