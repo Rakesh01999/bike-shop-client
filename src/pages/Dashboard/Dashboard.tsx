@@ -7,7 +7,8 @@ import Navbars from "../Navbar/Navbars";
 
 type UserType = {
     email: string;
-    role: "admin" | "faculty" | "student" | "user";
+    // role: "admin" | "faculty" | "student" | "user";
+    role: "admin" | "faculty" | "student" | "user" | "customer";
     exp: number;
     iat: number;
   };

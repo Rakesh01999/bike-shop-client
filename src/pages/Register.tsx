@@ -18,7 +18,8 @@ const Register = () => {
 
   const onSubmit = async (data: FieldValues) => {
   
-    const toastId = toast.loading("Resigtered");
+    // const toastId = toast.loading("Resigtered");
+    const toastId = toast.loading("Resigtering...");
 
     try {
       const res = await register(data).unwrap();

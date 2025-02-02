@@ -18,8 +18,9 @@ const Swipper = () => {
             <div className="relative">
               <img
                 className="lg:w-full lg:h-[550px]"
-                src="https://i.postimg.cc/6pxW43YZ/pexels-photo-6462662.jpg"
-                alt=""
+                // src="https://i.postimg.cc/6pxW43YZ/pexels-photo-6462662.jpg"
+                src="https://i.postimg.cc/x1fhdMmX/mt-15-2-06613f885e681c.jpg"
+                alt="Bike"
               />
               <div className="z-20 absolute lg:top-[100px] md:top-[200px] top-[80px] lg:right-[150px] md:right-[30px] text-white font-bold text-center">
                 <p>
@@ -34,8 +35,9 @@ const Swipper = () => {
             <div className="relative">
               <img
                 className="lg:w-full w-full lg:h-[550px]"
-                src="https://i.postimg.cc/Fspfv09R/pexels-photo-2127733.jpg"
-                alt=""
+                // src="https://i.postimg.cc/fR8FSy7B/Screenshot-298.png"
+                src="https://i.postimg.cc/W4j3z9nM/Yamaha-MT15-szpwxk.jpg"
+                alt="Bike"
               />
             </div>
           </SwiperSlide>
@@ -43,8 +45,8 @@ const Swipper = () => {
             <div className="relative">
               <img
                 className="lg:w-full w-full lg:h-[550px]"
-                src="https://i.postimg.cc/05mWVy9Z/pexels-photo-2896135.jpg"
-                alt=""
+                src="https://i.postimg.cc/ZqgMjQMN/2-f0496b287fd341eca1631de4db55d82c-grande.jpg"
+                alt="Bike"
               />
             </div>
           </SwiperSlide>
