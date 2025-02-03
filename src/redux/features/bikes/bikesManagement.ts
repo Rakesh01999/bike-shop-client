@@ -43,7 +43,8 @@ const bikesManagementApi = baseApi.injectEndpoints({
         getSingleCars: builder.query({
             query: (args) => {
                 return {
-                    url: `/bikes/${args}`,
+                    // url: `/bikes/${args}`,
+                    url: `/products/${args}`,
                     method: "GET",
                 };
             },

@@ -8,7 +8,10 @@ const { Title, Text } = Typography;
 const SingleProduct = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { data: CarData, isFetching } = useGetSingleCarsQuery([id]);
+
+  const { data: CarData, isFetching } = useGetSingleCarsQuery(id);
+
+  console.log("API Response:", CarData); // Debugging output
 
   if (isFetching) {
     return (
@@ -18,23 +21,30 @@ const SingleProduct = () => {
     );
   }
 
-  if (!CarData || !CarData.data || CarData.data.length === 0) {
+  if (!CarData || !CarData.data) {
     return <div className="text-center">No data available</div>;
   }
 
-  const car = CarData?.data[0] as Bike;
+  // ✅ Handle both object and array cases
+  const car = Array.isArray(CarData.data) ? CarData.data[0] : (CarData.data as Bike);
+
+  if (!car) {
+    return <div className="text-center">No bike found</div>;
+  }
+
+  console.log("f-SP, bike:", car);
 
   const handleBuyNow = () => {
     navigate(`/checkout/${car?._id}`);
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen ">
+    <div className="flex justify-center items-center min-h-screen">
       <Card
         hoverable
-        className="w-full md:w-1/2 lg:w-1/3  max-w-4xl shadow-2xl p-6 rounded-lg"
+        className="w-full md:w-1/2 lg:w-1/3 max-w-4xl shadow-2xl p-6 rounded-lg"
         cover={
-          <div className="w-full  flex justify-center items-center overflow-hidden rounded-t-lg">
+          <div className="w-full flex justify-center items-center overflow-hidden rounded-t-lg">
             <img
               alt={car?.brand}
               src={car?.image}
@@ -44,7 +54,7 @@ const SingleProduct = () => {
         }
       >
         <Title level={2} className="text-center text-blue-600">
-          {car?.brand} {car?.model} ({car?.year})
+          {car?.brand} {car?.modelNumber}
         </Title>
         <Text strong className="block text-lg">
           Category: <Text>{car?.category}</Text>
