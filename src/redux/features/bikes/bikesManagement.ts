@@ -114,8 +114,10 @@ const bikesManagementApi = baseApi.injectEndpoints({
         updateCar: builder.mutation({
             query: ({ data, order_id }) => {
                 return {
-                    url: `/bikes/${order_id}`,
-                    method: "PUT",
+                    // url: `/bikes/${order_id}`,
+                    url: `/products/${order_id}`,
+                    // method: "PUT",
+                    method: "PATCH",
                     body: data,
                 };
 

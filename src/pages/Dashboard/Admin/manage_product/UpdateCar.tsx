@@ -91,8 +91,9 @@ const UpdateCar = () => {
         rowKey="key"
       />
       <Modal
-        title="Update Car"
-        visible={isModalVisible}
+        title="Update Bike"
+        // visible={isModalVisible}
+        open={isModalVisible}
         onCancel={() => setIsModalVisible(false)}
         onOk={() => form.submit()}
       >

@@ -16,18 +16,24 @@ export const adminChildren = [
     name: "Manage Product",
     children: [
       {
-        name: "Create Car",
-        path: "crate_car",
+        // name: "Create Car",
+        name: "Create Bike",
+        // path: "crate_car",
+        path: "create_bike",
         element: <CreateCar />,
       },
       {
-        name: "See all car",
-        path: "get_car",
+        // name: "See all car",
+        name: "See all bikes",
+        // path: "get_car",
+        path: "get_bike",
         element: <GetAllCar />,
       },
       {
-        name: "Update Car",
-        path: "update_car",
+        // name: "Update Car",
+        name: "Update Bike",
+        // path: "update_car",
+        path: "update_bike",
         element: <UpdateCar />,
       },
       {

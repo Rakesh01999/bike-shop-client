@@ -22,7 +22,8 @@ const Dashboard = () => {
     const navigate = useNavigate();
     useEffect(() => {
         if(role === 'admin'){
-            navigate('/dashboard/get_car');
+            // navigate('/dashboard/get_car');
+            navigate('/dashboard/get_bike');
         }
         else{
             navigate('/dashboard/change_password');

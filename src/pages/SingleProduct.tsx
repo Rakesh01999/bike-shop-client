@@ -11,7 +11,7 @@ const SingleProduct = () => {
 
   const { data: CarData, isFetching } = useGetSingleCarsQuery(id);
 
-  console.log("API Response:", CarData); // Debugging output
+  // console.log("API Response:", CarData); // Debugging output
 
   if (isFetching) {
     return (
@@ -25,14 +25,12 @@ const SingleProduct = () => {
     return <div className="text-center">No data available</div>;
   }
 
-  // ✅ Handle both object and array cases
+  // Handle both object and array cases
   const car = Array.isArray(CarData.data) ? CarData.data[0] : (CarData.data as Bike);
 
   if (!car) {
     return <div className="text-center">No bike found</div>;
   }
-
-  console.log("f-SP, bike:", car);
 
   const handleBuyNow = () => {
     navigate(`/checkout/${car?._id}`);
