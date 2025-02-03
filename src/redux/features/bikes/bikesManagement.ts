@@ -127,15 +127,57 @@ const bikesManagementApi = baseApi.injectEndpoints({
             },
             invalidatesTags: ["bikes"],
         }),
+        // createCar: builder.mutation({
+        //     query: (bikeData) => {
+        //         return {
+        //             url: `/products/create-bike`,
+        //             method: "POST",
+        //             body: {
+        //                 bike: {
+        //                     name: bikeData.name,
+        //                     modelNumber: bikeData.model, // Changed from model to modelNumber to match API
+        //                     brand: bikeData.brand,
+        //                     image: bikeData.image,
+        //                     price: Number(bikeData.price), // Ensure price is a number
+        //                     category: bikeData.category,
+        //                     description: bikeData.description,
+        //                     quantity: Number(bikeData.quantity), // Ensure quantity is a number
+        //                 }
+        //                 // bike: { bikeData }
+        //             }
+        //         };
+        //     },
+        //     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        //     transformResponse: (response: TResponseRedux<any>) => {
+        //         return {
+        //             data: response.data,
+        //         };
+        //     },
+        //     invalidatesTags: ["bikes"],
+        // }),
         createCar: builder.mutation({
-            query: ({ carData }) => {
-                console.log(carData)
-                return {
-                    url: `/bikes`,
-                    method: "POST",
-                    body: carData,
+            query: (bikeData) => {
+                // Create the request body with the exact structure expected by backend
+                const requestBody = {
+                    bike: {
+                        name: bikeData.name,
+                        modelNumber: bikeData.model, // Make sure this matches with the backend
+                        brand: bikeData.brand,
+                        image: bikeData.image, // Make sure this is being passed from your form
+                        price: Number(bikeData.price),
+                        category: bikeData.category,
+                        description: bikeData.description,
+                        quantity: Number(bikeData.quantity)
+                    }
                 };
 
+                console.log('Sending to backend:', requestBody); // Debug log
+
+                return {
+                    url: `/products/create-bike`,
+                    method: "POST",
+                    body: requestBody
+                };
             },
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             transformResponse: (response: TResponseRedux<any>) => {

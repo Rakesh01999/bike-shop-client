@@ -15,14 +15,16 @@ const CreateCar = () => {
   const [updateCar] = useCreateCarMutation();
 
   const defaultValues = {
-    brand: "Ram",
-    model: "1500",
-    year: "2023",
+    name: "Royal",
+    brand: "Royal Enfield",
+    model: "1500-classic",
+    year: "2027",
     price: "42000",
-    category: "Truck",
+    category: "Road",
     description:
       "A powerful truck designed for performance, towing, and durability.",
     quantity: "1",
+    image: "image",
     inStock: true,
   };
 
@@ -61,43 +63,85 @@ const CreateCar = () => {
     }
   };
 
-  const onSubmit = async(data: FieldValues) => {
-    const year = parseInt(data.year, 10);
+  // const onSubmit = async(data: FieldValues) => {
+  //   const year = parseInt(data.year, 10);
+  //   const price = parseFloat(data.price);
+  //   const quantity = parseInt(data.quantity, 10);
+
+  //   if (isNaN(year) || isNaN(price) || isNaN(quantity)) {
+  //     console.error("Year, Price, or Quantity is invalid");
+  //     return;
+  //   }
+
+  //   const carData = {
+  //     ...data,
+  //     image: imageUrl as string,
+  //     inStock: true,
+  //     year,
+  //     price,
+  //     quantity,
+  //   };
+
+  //   try {
+  //    const res = await updateCar({
+  //       carData
+  //     }).unwrap();
+
+  //     if(res?.data){
+  //       toast.success("Car Created successfully!");
+  //     }
+  //     else{
+  //       toast.error("something is wrong")
+  //     }
+
+  //   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  //   } catch (error) {
+  //     toast.error("Update failed");
+  //   }
+  // };
+
+  // In CreateCar.tsx
+  const onSubmit = async (data: FieldValues) => {
     const price = parseFloat(data.price);
     const quantity = parseInt(data.quantity, 10);
-
-    if (isNaN(year) || isNaN(price) || isNaN(quantity)) {
-      console.error("Year, Price, or Quantity is invalid");
+    
+    if (isNaN(price) || isNaN(quantity)) {
+      console.error("Price or Quantity is invalid");
       return;
     }
 
-    const carData = {
-      ...data,
-      image: imageUrl as string,
-      inStock: true,
-      year,
+    if (!imageUrl) {
+      toast.error("Please upload an image");
+      return;
+    }
+
+    const bikeData = {
+      // name: data?.name || "Default Name",
+      name: data?.name,
+      model: data.model, 
+      brand: data.brand,
       price,
+      category: data.category,
+      description: data.description,
       quantity,
+      image: imageUrl,
     };
-
+    console.log("f-CC", data);
+    console.log("f-CC, bikeData:", bikeData);
+    
     try {
-     const res = await updateCar({
-        carData
-      }).unwrap();
-     
-      if(res?.data){
-        toast.success("Car Created successfully!");
-      }
-      else{
-        toast.error("something is wrong")
-      }
+      const res = await updateCar(bikeData).unwrap();
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      if (res?.data) {
+        toast.success("Bike Created successfully!");
+      } else {
+        toast.error("Something went wrong");
+      }
     } catch (error) {
-      toast.error("Update failed");
+      console.error("Error creating bike:", error);
+      toast.error("Creation failed");
     }
   };
-
   return (
     <div
       style={{
@@ -114,6 +158,14 @@ const CreateCar = () => {
         defaultValues={defaultValues}
       >
         <Row gutter={[16, 16]}>
+          <Col className="mt-20 lg:mt-0 md:mt-0" xs={24} lg={12}>
+            <PHInput
+              type="text"
+              name="name"
+              label="Name"
+              placeholder="Enter Name"
+            />
+          </Col>
           <Col className="mt-20 lg:mt-0 md:mt-0" xs={24} lg={12}>
             <PHInput
               type="text"
@@ -164,7 +216,6 @@ const CreateCar = () => {
             />
           </Col>
           <Col xs={24}>
-            
             <input
               className="text-blue-400 cursor-pointer mt-2"
               type="file"

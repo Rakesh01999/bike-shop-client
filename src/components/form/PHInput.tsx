@@ -1,5 +1,5 @@
 import { Form, Input } from "antd";
-import { Controller } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 
 type TInputProps = {
   type: string;
@@ -10,10 +10,13 @@ type TInputProps = {
 };
 
 const PHInput = ({ type, name, label, disabled, placeholder }: TInputProps) => {
+  const { control } = useFormContext();
+
   return (
     <div style={{ marginBottom: "20px" }}>
       <Controller
         name={name}
+        control={control} 
         render={({ field, fieldState: { error } }) => (
           <Form.Item label={label}>
             <Input

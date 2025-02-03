@@ -111,8 +111,8 @@ const GetAllCar = () => {
       title: "Action",
       key: "x",
       render: (record: TTableData) => (
-        // <Button onClick={() => navigate(`/products/${record.key}`)}>
-        <Button onClick={() => navigate(`/car-detail/${record.key}`)}>
+        // <Button onClick={() => navigate(`/car-detail/${record.key}`)}>
+        <Button onClick={() => navigate(`/products/${record.key}`)}>
           View
         </Button>
       ),
