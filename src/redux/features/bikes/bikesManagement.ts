@@ -174,7 +174,8 @@ const bikesManagementApi = baseApi.injectEndpoints({
 
         alluser: builder.query({
             query: () => ({
-                url: "/alluser",
+                // url: "/alluser",
+                url: "/users",
                 method: "GET",
             }),
             providesTags: ['tags']

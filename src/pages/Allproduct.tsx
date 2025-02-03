@@ -33,10 +33,10 @@ const Allproduct = () => {
   ]);
 
   const tableData = CarData?.data?.map(
-    ({ _id, price, model, brand, category, quantity }) => ({
+    ({ _id, price, modelNumber, brand, category, quantity }) => ({
       key: _id,
       price,
-      model,
+      model: modelNumber ?? "N/A",
       brand,
       category,
       quantity,

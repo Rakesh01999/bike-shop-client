@@ -29,7 +29,7 @@ const GetAllCar = () => {
     ({ _id, price, modelNumber, brand, category, quantity }) => ({
       key: _id,
       price,
-      model : modelNumber ?? "N/A",
+      model: modelNumber ?? "N/A",
       modelNumber,
       brand,
       category,
@@ -111,6 +111,7 @@ const GetAllCar = () => {
       title: "Action",
       key: "x",
       render: (record: TTableData) => (
+        // <Button onClick={() => navigate(`/products/${record.key}`)}>
         <Button onClick={() => navigate(`/car-detail/${record.key}`)}>
           View
         </Button>

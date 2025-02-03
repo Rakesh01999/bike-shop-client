@@ -7,8 +7,11 @@ import type { ItemType, MenuItemType } from "antd/es/menu/interface";
 import { userChildren } from "../../routes/UserRoutes";
 
 type UserType = {
+  _id: string;
+  name: string;
   email: string;
-  role: "admin" | "faculty" | "student" | "user";
+  role: "admin" | "faculty" | "student" | "user" | "customer";
+  status: string;
   exp: number;
   iat: number;
 };
@@ -18,6 +21,7 @@ const { Sider } = Layout;
 const userRole = {
   ADMIN: "admin",
   USER:"user"
+  // USER:"user"
 };
 
 const Sidebar = () => {

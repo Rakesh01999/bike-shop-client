@@ -12,10 +12,10 @@ const DeleteCar = () => {
 
     const { data: CarData, isFetching } = useGetAllCarsQuery([]);
   
-    const tableData = CarData?.data?.map(({ _id, price, model, brand, category, quantity }) => ({
+    const tableData = CarData?.data?.map(({ _id, price, modelNumber, brand, category, quantity }) => ({
       key: _id,
       price,
-      model,
+      model : modelNumber ?? "N/A",
       brand,
       category,
       quantity
