@@ -20,7 +20,7 @@ const { Sider } = Layout;
 
 const userRole = {
   ADMIN: "admin",
-  USER:"user"
+  USER:"customer"
   // USER:"user"
 };
 
@@ -28,7 +28,7 @@ const Sidebar = () => {
   const user = useAppSelector(useCurrentUser) as UserType | null;
 
   const role = user?.role;
-
+  console.log('f-side:role', role);
   let sidebarItems: ItemType<MenuItemType>[] = [];
 
   switch (role) {

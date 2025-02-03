@@ -195,7 +195,7 @@ const bikesManagementApi = baseApi.injectEndpoints({
                 console.log(order_id)
 
                 return {
-                    url: `/bikes/${order_id}`,
+                    url: `/products/${order_id}`,
                     method: "DELETE",
                 };
 
