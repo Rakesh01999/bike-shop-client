@@ -68,8 +68,8 @@ const bikesManagementApi = baseApi.injectEndpoints({
                 }
 
                 return {
-                    // url: "/orders/Allorder",
-                    url: "/orders/orders",
+                    url: "/orders/Allorder",
+                    // url: "/orders/orders",
                     method: "GET",
                     params: params,
                 };
@@ -232,8 +232,8 @@ const bikesManagementApi = baseApi.injectEndpoints({
 
         allsurjopay: builder.query({
             query: () => ({
-                // url: "/orders/Allorder",
-                url: "/orders/orders",
+                url: "/orders/Allorder",
+                // url: "/orders/orders",
                 method: "GET",
             }),
             providesTags: ['tags']
