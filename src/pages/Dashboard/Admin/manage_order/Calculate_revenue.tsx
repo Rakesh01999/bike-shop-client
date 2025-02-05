@@ -3,44 +3,45 @@ import { useOrderRevenueQuery } from "../../../../redux/features/bikes/bikesMana
 
 const { Title, Paragraph } = Typography;
 
-const Calculate_revenue = () => {
+const CalculateRevenue = () => {
   const { data: CarData, isFetching } = useOrderRevenueQuery(undefined);
+
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "50vh",
-        textAlign: "center",
-        marginBottom: "100px",
-      }}
-    >
-      <Title level={2}>Car Shop Revenue Dashboard</Title>
-      <Paragraph style={{ maxWidth: "500px" }}>
-        Welcome to our Car Shop! Here you can track the total revenue generated
-        from sales. Stay updated with the latest figures and make informed
-        business decisions.
-      </Paragraph>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-teal-400 p-6 text-center">
+      <div className="max-w-lg w-full text-white">
+        <Title level={2} className="text-white font-bold drop-shadow-lg">
+          🚴‍♂️ Bike Shop Revenue Dashboard 💰
+        </Title>
+        <Paragraph className="text-lg text-gray-200">
+          Welcome to our Bike Shop! Here you can track the **total revenue** 
+          generated from sales. Stay updated with the latest figures and make 
+          informed business decisions.
+        </Paragraph>
+      </div>
+
       <Card
+        className="mt-6 w-80 shadow-lg rounded-2xl border-none bg-white transform transition hover:scale-105"
         style={{
-          width: 300,
-          textAlign: "center",
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-          borderRadius: "10px",
-          marginTop: "10px",
+          background: "linear-gradient(135deg, #ffffff, #f3f4f6)",
+          boxShadow: "0 8px 24px rgba(0, 0, 0, 0.2)",
         }}
       >
         {isFetching ? (
-          <Spin size="large" />
+          <div className="flex justify-center items-center h-24">
+            <Spin size="large" />
+          </div>
         ) : (
           <Statistic
             title="Total Revenue"
             value={CarData?.data?.totalRevenue || 0}
             prefix="$"
-            precision={5}
-            valueStyle={{ color: "#3f8600", fontSize: "24px" }}
+            precision={2}
+            valueStyle={{
+              color: "#16a34a",
+              fontSize: "32px",
+              fontWeight: "bold",
+              textShadow: "0px 0px 8px rgba(22, 163, 74, 0.6)",
+            }}
           />
         )}
       </Card>
@@ -48,4 +49,4 @@ const Calculate_revenue = () => {
   );
 };
 
-export default Calculate_revenue;
+export default CalculateRevenue;

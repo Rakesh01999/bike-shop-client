@@ -97,7 +97,22 @@ const bikesManagementApi = baseApi.injectEndpoints({
             },
             providesTags: ["bikes"],
         }),
-        
+        // Replace useGetOwnCarsQuery with a new endpoint for user orders
+        getOwnOrders: builder.query({
+            query: () => ({
+                url: "/orders/my-orders", // You'll need to create this endpoint in backend
+                method: "GET",
+            }),
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            transformResponse: (response: TResponseRedux<any>) => {
+                return {
+                    data: response.data.result,  // Access the nested result array
+                    meta: response.data.meta,
+                };
+            },
+            providesTags: ["bikes"],
+        }),
+
         verifyOrder: builder.query({
             query: (order_id) => ({
                 url: "/orders/verify",
@@ -292,6 +307,7 @@ export const {
     useAllsurjopayQuery,
     useAlluserQuery,
     useBlockedUserMutation,
-    useGetOwnCarsQuery
+    useGetOwnCarsQuery,
+    useGetOwnOrdersQuery, 
 
 } = bikesManagementApi;

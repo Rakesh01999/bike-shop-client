@@ -37,7 +37,7 @@ const ChangePassword = () => {
       const res = await login(data).unwrap();
 
       console.log(res);
-      toast.success("Change password sucessfully", {
+      toast.success("Password changed successfully", {
         id: toastId,
         duration: 2000,
       });

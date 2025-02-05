@@ -1,8 +1,12 @@
 import { Table } from "antd";
-import { useGetOwnCarsQuery } from "../../../redux/features/bikes/bikesManagement";
+import { useGetOwnOrdersQuery } from "../../../redux/features/bikes/bikesManagement";
 
 const ViewOrder = () => {
-  const { data: CarData, isFetching } = useGetOwnCarsQuery(undefined);
+  // const { data: CarData, isFetching } = useGetOwnCarsQuery(undefined);
+  // const { data: orderData, isFetching } = useGetAllOrdersQuery(undefined);
+  const { data: CarData, isFetching } = useGetOwnOrdersQuery(undefined);
+  // console.log(CarData);
+
   const columns = [
     {
       title: "Name",
