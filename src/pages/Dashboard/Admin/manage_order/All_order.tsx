@@ -1,29 +1,24 @@
 import { Table } from "antd";
-import { useAllsurjopayQuery } from "../../../../redux/features/bikes/bikesManagement";
+import { useGetAllOrdersQuery } from "../../../../redux/features/bikes/bikesManagement";
 
 const All_order = () => {
-  const { data: CarData, isFetching } = useAllsurjopayQuery(undefined);
+  const { data: orderData, isFetching, isError, error } = useGetAllOrdersQuery(undefined);
+
+  if (isError) {
+    console.error('Error fetching orders:', error);
+    return <div>Error loading orders. Please try again later.</div>;
+  }
 
   const columns = [
-    {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-    },
     {
       title: "Email",
       dataIndex: "email",
       key: "email",
     },
     {
-      title: "Phone Number",
-      dataIndex: "phone_number",
-      key: "phone_number",
-    },
-    {
-      title: "Address",
-      dataIndex: "address",
-      key: "address",
+      title: "Product ID",
+      dataIndex: "product",
+      key: "product",
     },
     {
       title: "Quantity",
@@ -36,34 +31,20 @@ const All_order = () => {
       key: "totalPrice",
     },
     {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
+      title: "Transaction ID",
+      dataIndex: ["transaction", "id"],
+      key: "transactionId",
     },
     {
-      title: "Bank Status",
-      dataIndex: ["transaction", "bank_status"],
-      key: "bank_status",
+      title: "Transaction Status",
+      dataIndex: ["transaction", "transactionStatus"],
+      key: "transactionStatus",
     },
     {
-      title: "Transaction Date",
-      dataIndex: ["transaction", "date_time"],
-      key: "date_time",
-    },
-    {
-      title: "Payment Method",
-      dataIndex: ["transaction", "method"],
-      key: "method",
-    },
-    {
-      title: "SP Code",
-      dataIndex: ["transaction", "sp_code"],
-      key: "sp_code",
-    },
-    {
-      title: "SP Message",
-      dataIndex: ["transaction", "sp_message"],
-      key: "sp_message",
+      title: "Created At",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (date: string) => new Date(date).toLocaleString(),
     },
   ];
 
@@ -71,10 +52,16 @@ const All_order = () => {
     <div style={{ overflowX: "auto" }}>
       <Table
         columns={columns}
-        dataSource={CarData?.data || []}
+        dataSource={orderData?.data || []}
         loading={isFetching}
         rowKey="_id"
         scroll={{ x: true }}
+        pagination={{
+          total: orderData?.meta?.total,
+          pageSize: orderData?.meta?.limit,
+          current: orderData?.meta?.page,
+          // total: orderData?.meta?.total,
+        }}
       />
     </div>
   );

@@ -56,34 +56,48 @@ const bikesManagementApi = baseApi.injectEndpoints({
             providesTags: ["bikes"],
         }),
 
+        // getAllOrders: builder.query({
+        //     query: (args) => {
+        //         console.log(args);
+        //         const params = new URLSearchParams();
+
+        //         if (args) {
+        //             args.forEach((item: TQueryParam) => {
+        //                 params.append(item.name, item.value as string);
+        //             });
+        //         }
+
+        //         return {
+        //             url: "/orders/Allorder",
+        //             // url: "/orders/orders",
+        //             method: "GET",
+        //             params: params,
+        //         };
+        //     },
+        //     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        //     transformResponse: (response: TResponseRedux<any>) => {
+        //         return {
+        //             data: response.data,
+        //             meta: response.meta,
+        //         };
+        //     },
+        //     providesTags: ["bikes"],
+        // }),
         getAllOrders: builder.query({
-            query: (args) => {
-                console.log(args);
-                const params = new URLSearchParams();
-
-                if (args) {
-                    args.forEach((item: TQueryParam) => {
-                        params.append(item.name, item.value as string);
-                    });
-                }
-
-                return {
-                    url: "/orders/Allorder",
-                    // url: "/orders/orders",
-                    method: "GET",
-                    params: params,
-                };
-            },
+            query: () => ({
+                url: "/orders",  // Updated to match your working endpoint
+                method: "GET",
+            }),
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             transformResponse: (response: TResponseRedux<any>) => {
                 return {
-                    data: response.data,
-                    meta: response.meta,
+                    data: response.data.result,  // Access the nested result array
+                    meta: response.data.meta,
                 };
             },
             providesTags: ["bikes"],
         }),
-
+        
         verifyOrder: builder.query({
             query: (order_id) => ({
                 url: "/orders/verify",
@@ -117,9 +131,9 @@ const bikesManagementApi = baseApi.injectEndpoints({
             query: (data) => ({
                 // console.log("Order Data Being Sent:", data); // Log request data
                 // return {
-                    url: "/orders/order",
-                    method: "POST",
-                    body: data,
+                url: "/orders/order",
+                method: "POST",
+                body: data,
                 // };
             }),
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -131,7 +145,7 @@ const bikesManagementApi = baseApi.injectEndpoints({
             },
             invalidatesTags: ["bikes"],
         }),
-        
+
         updateCar: builder.mutation({
             query: ({ data, order_id }) => {
                 return {
@@ -232,8 +246,8 @@ const bikesManagementApi = baseApi.injectEndpoints({
 
         allsurjopay: builder.query({
             query: () => ({
-                url: "/orders/Allorder",
-                // url: "/orders/orders",
+                // url: "/orders/Allorder",
+                url: "/orders/",
                 method: "GET",
             }),
             providesTags: ['tags']
