@@ -41,11 +41,13 @@ const Verify = () => {
   const { isLoading, data } = useVerifyOrderQuery(SearchParams.get("order_id"), {
     refetchOnMountOrArgChange: true,
   });
-
+  
   const orderData: OrderData = data?.data?.[0];
   const navigate = useNavigate();
-
-  if (isLoading) return <div className="min-h-screen text-center bg-amber-400">Loading...</div>;
+  console.log(data);
+  console.log(orderData);
+  
+  if (isLoading) return <div className="min-h-screen text-center bg-cyan-400">Loading...</div>;
 
   const handleHomeRedirect = () => {
     navigate("/");

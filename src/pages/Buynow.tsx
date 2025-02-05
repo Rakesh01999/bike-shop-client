@@ -11,13 +11,11 @@ const { Title, Text } = Typography;
 
 const Buynow = () => {
   const { id } = useParams();
-  const { data: CarData, isFetching } = useGetSingleCarsQuery(id); // ✅ Correct ID usage
-
+  const { data: CarData, isFetching } = useGetSingleCarsQuery(id);
   const [addOrder] = useOrderCarMutation();
   const [quantity, setQuantity] = useState(1);
   const [form] = Form.useForm();
 
-  // ✅ Check if data exists and correctly format it
   if (isFetching) {
     return (
       <div className="flex justify-center items-center min-h-screen">
@@ -30,13 +28,12 @@ const Buynow = () => {
     return <div className="text-center text-red-500">No data available</div>;
   }
 
-  const car = Array.isArray(CarData.data) ? CarData.data[0] : CarData.data; // ✅ Handle object & array cases
+  const car = Array.isArray(CarData.data) ? CarData.data[0] : CarData.data;
 
   if (!car) {
     return <div className="text-center text-red-500">No car found</div>;
   }
 
-  // ✅ Fix the function signature and ensure 'values' has correct types
   const handleOrderSubmit = async (values: {
     email: string;
     name: string;
@@ -55,22 +52,27 @@ const Buynow = () => {
       address: values.address,
       car: car._id,
       quantity: quantity,
-      totalPrice: car.price * quantity, // ✅ Calculate total price correctly
+      totalPrice: car.price * quantity,
     };
 
     try {
-      const res = await addOrder(orderDetails).unwrap(); // ✅ Use `.unwrap()` to handle API errors
-
-      if (!res || !res.data) {
-        toast.error("Order is not created successfully");
+      const response = await addOrder(orderDetails).unwrap();
+      
+      if (!response?.data) {
+        toast.error("Order creation failed");
         return;
       }
 
-      window.location.href = res.data[1]; // ✅ Ensure correct response handling
-      toast.success("Order placed successfully!");
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      // Direct redirect to Shurjopay URL
+      const paymentUrl = response.data;
+      if (typeof paymentUrl === 'string' && paymentUrl.startsWith('http')) {
+        window.location.href = paymentUrl;
+      } else {
+        toast.error("Invalid payment URL received");
+      }
     } catch (err) {
       toast.error("Order was not successful");
+      console.error("Order error:", err);
     }
   };
 
@@ -83,8 +85,7 @@ const Buynow = () => {
 
         <div className="mb-4 text-center">
           <Text strong className="block text-xl">
-            {car.brand} {car.modelNumber}{" "}
-            {/* ✅ Ensure correct property name */}
+            {car.brand} {car.modelNumber}
           </Text>
           <Text strong className="block text-lg text-green-600">
             ${car.price} per unit

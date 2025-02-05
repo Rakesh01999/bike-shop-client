@@ -42,6 +42,7 @@ const bikesManagementApi = baseApi.injectEndpoints({
         }),
         getSingleCars: builder.query({
             query: (args) => {
+                console.log('f-bikeManageApi, args:',args);
                 return {
                     // url: `/bikes/${args}`,
                     url: `/products/${args}`,
@@ -116,6 +117,7 @@ const bikesManagementApi = baseApi.injectEndpoints({
         verifyOrder: builder.query({
             query: (order_id) => ({
                 url: "/orders/verify",
+                // url: "/order/verify",
                 params: { order_id },
                 method: "GET",
             }),
