@@ -39,12 +39,15 @@ const CreateCar = () => {
 
     const data = new FormData();
     data.append("file", file);
-    data.append("upload_preset", "image-upload");
-    data.append("cloud_name", "df1plpdvy");
+    // data.append("upload_preset", "image-upload");
+    data.append("upload_preset", "pxuxm8bg");
+    // data.append("cloud_name", "df1plpdvy");
+    data.append("cloud_name", "dd3w1s9gq");
 
     try {
       const res = await fetch(
-        "https://api.cloudinary.com/v1_1/df1plpdvy/image/upload",
+        // "https://api.cloudinary.com/v1_1/df1plpdvy/image/upload",
+        "https://api.cloudinary.com/v1_1/dd3w1s9gq/image/upload",
         {
           method: "POST",
           body: data,

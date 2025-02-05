@@ -11,13 +11,13 @@ const { Title, Text } = Typography;
 
 const Buynow = () => {
   const { id } = useParams();
-  const { data: CarData, isFetching } = useGetSingleCarsQuery([id]);
+  const { data: CarData, isFetching } = useGetSingleCarsQuery(id); // ✅ Correct ID usage
 
   const [addOrder] = useOrderCarMutation();
-
   const [quantity, setQuantity] = useState(1);
   const [form] = Form.useForm();
 
+  // ✅ Check if data exists and correctly format it
   if (isFetching) {
     return (
       <div className="flex justify-center items-center min-h-screen">
@@ -26,18 +26,28 @@ const Buynow = () => {
     );
   }
 
-  if (!CarData || !CarData.data || CarData.data.length === 0) {
-    return <div className="text-center">No data available</div>;
+  if (!CarData || !CarData.data) {
+    return <div className="text-center text-red-500">No data available</div>;
   }
 
-  const car = CarData.data[0];
+  const car = Array.isArray(CarData.data) ? CarData.data[0] : CarData.data; // ✅ Handle object & array cases
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleOrderSubmit = async (values: any) => {
+  if (!car) {
+    return <div className="text-center text-red-500">No car found</div>;
+  }
+
+  // ✅ Fix the function signature and ensure 'values' has correct types
+  const handleOrderSubmit = async (values: {
+    email: string;
+    name: string;
+    phone: string;
+    address: string;
+  }) => {
     if (quantity > car.quantity) {
       toast.error("Ordered quantity exceeds available stock!");
       return;
     }
+
     const orderDetails = {
       email: values.email,
       name: values.name,
@@ -45,23 +55,22 @@ const Buynow = () => {
       address: values.address,
       car: car._id,
       quantity: quantity,
-      totalPrice: car.price,
+      totalPrice: car.price * quantity, // ✅ Calculate total price correctly
     };
 
     try {
-      const res = await addOrder(orderDetails);
+      const res = await addOrder(orderDetails).unwrap(); // ✅ Use `.unwrap()` to handle API errors
 
-      if (res?.error) {
+      if (!res || !res.data) {
         toast.error("Order is not created successfully");
-      } else {
-        window.location.href = res?.data?.data[1]
-
-        toast.success("Order placed successfully!");
+        return;
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-empty
+      window.location.href = res.data[1]; // ✅ Ensure correct response handling
+      toast.success("Order placed successfully!");
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
-      toast.error("Order is not successfully");
+      toast.error("Order was not successful");
     }
   };
 
@@ -74,7 +83,8 @@ const Buynow = () => {
 
         <div className="mb-4 text-center">
           <Text strong className="block text-xl">
-            {car.brand} {car.model} ({car.year})
+            {car.brand} {car.modelNumber}{" "}
+            {/* ✅ Ensure correct property name */}
           </Text>
           <Text strong className="block text-lg text-green-600">
             ${car.price} per unit
@@ -132,7 +142,6 @@ const Buynow = () => {
             <Input
               type="number"
               min={1}
-              // max={car.quantity}
               value={quantity}
               onChange={(e) => setQuantity(Number(e.target.value))}
             />
@@ -159,4 +168,3 @@ const Buynow = () => {
 };
 
 export default Buynow;
-

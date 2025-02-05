@@ -68,7 +68,8 @@ const bikesManagementApi = baseApi.injectEndpoints({
                 }
 
                 return {
-                    url: "/orders/Allorder",
+                    // url: "/orders/Allorder",
+                    url: "/orders/orders",
                     method: "GET",
                     params: params,
                 };
@@ -97,20 +98,40 @@ const bikesManagementApi = baseApi.injectEndpoints({
             }),
         }),
 
+        // orderCar: builder.mutation({
+        //     query: (data) => ({
+        //         // url: "/orders",
+        //         url: "/orders/order",
+        //         method: "POST",
+        //         body: data,
+        //     }),
+        //     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        //     transformResponse: (response: TResponseRedux<any>) => {
+        //         return {
+        //             data: response.data,
+        //         };
+        //     },
+        //     invalidatesTags: ["bikes"],
+        // }),
         orderCar: builder.mutation({
             query: (data) => ({
-                url: "/orders",
-                method: "POST",
-                body: data,
+                // console.log("Order Data Being Sent:", data); // Log request data
+                // return {
+                    url: "/orders/order",
+                    method: "POST",
+                    body: data,
+                // };
             }),
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             transformResponse: (response: TResponseRedux<any>) => {
+                console.log("Order API Response:", response); // Log response from backend
                 return {
                     data: response.data,
                 };
             },
             invalidatesTags: ["bikes"],
         }),
+        
         updateCar: builder.mutation({
             query: ({ data, order_id }) => {
                 return {
@@ -211,7 +232,8 @@ const bikesManagementApi = baseApi.injectEndpoints({
 
         allsurjopay: builder.query({
             query: () => ({
-                url: "/orders/Allorder",
+                // url: "/orders/Allorder",
+                url: "/orders/orders",
                 method: "GET",
             }),
             providesTags: ['tags']
