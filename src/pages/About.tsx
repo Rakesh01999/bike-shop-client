@@ -31,7 +31,7 @@ const About = () => {
           </div>
           <div className="md:w-1/2">
             <img
-              src="https://i.postimg.cc/m2TpmBMz/images.jpg"
+              src="https://i.postimg.cc/yxXJVFxy/MY-24-KTM-SUPERSPORT-RC-390.jpg"
               alt="Bike Shop"
               className="rounded-lg shadow-lg w-full object-cover"
             />
