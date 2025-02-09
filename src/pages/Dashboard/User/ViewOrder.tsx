@@ -104,6 +104,21 @@ const ViewOrder = () => {
             scroll={{ x: "max-content" }}
             pagination={{ pageSize: 5, showSizeChanger: false }}
             className="rounded-lg overflow-hidden"
+            components={{
+              header: {
+                cell: (props:any) => (
+                  <th 
+                    {...props} 
+                    style={{ 
+                      ...props.style, 
+                      backgroundColor: "#14B8A6", // Deep Teal color
+                      color: "white",
+                      fontWeight: "bold"
+                    }}
+                  />
+                )
+              }
+            }}
           />
         )}
       </Card>
