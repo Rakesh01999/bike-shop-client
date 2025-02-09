@@ -101,7 +101,7 @@ const bikesManagementApi = baseApi.injectEndpoints({
         // Replace useGetOwnCarsQuery with a new endpoint for user orders
         getOwnOrders: builder.query({
             query: () => ({
-                url: "/orders/my-orders", // You'll need to create this endpoint in backend
+                url: "/orders/my-orders", 
                 method: "GET",
             }),
             // eslint-disable-next-line @typescript-eslint/no-explicit-any

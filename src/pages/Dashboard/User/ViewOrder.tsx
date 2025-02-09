@@ -5,7 +5,8 @@ const ViewOrder = () => {
   // const { data: CarData, isFetching } = useGetOwnCarsQuery(undefined);
   // const { data: orderData, isFetching } = useGetAllOrdersQuery(undefined);
   const { data: CarData, isFetching } = useGetOwnOrdersQuery(undefined);
-  // console.log(CarData);
+  console.log(CarData);
+  console.log(isFetching);
 
   const columns = [
     {
@@ -37,11 +38,6 @@ const ViewOrder = () => {
       title: "Total Price",
       dataIndex: "totalPrice",
       key: "totalPrice",
-    },
-    {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
     },
     {
       title: "Bank Status",
