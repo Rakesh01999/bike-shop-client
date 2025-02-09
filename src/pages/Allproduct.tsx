@@ -203,8 +203,7 @@ const AllProduct = () => {
           responsive
           pageSizeOptions={["5", "10", "15", "20"]}
           onChange={(page, pageSize) => setPagination({ current: page, pageSize })}
-          // className="bg-white border border-teal-500 rounded-lg shadow-md px-3 py-1"
-          className="border border-teal-500 rounded-lg shadow-md px-3 py-1"
+          className="bg-white border border-teal-500 rounded-lg shadow-md px-3 py-1"
         />
       </div>
     </div>
