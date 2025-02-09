@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Bike, TQueryParam } from "../types";
 import { useGetAllCarsQuery } from "../redux/features/bikes/bikesManagement";
 import {
@@ -19,16 +19,13 @@ import "./pagination.css";
 export type TTableData = Pick<
   Bike,
   "price" | "model" | "brand" | "category" | "quantity"
-> & { 
-  key: string; 
-  // price: string; // Allow string for formatted price 
-  price: number; 
-};
+> & { key: string };
 
 const AllProduct = () => {
   const [params] = useState<TQueryParam[] | undefined>(undefined);
   const [pagination, setPagination] = useState({ current: 1, pageSize: 10 });
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [filteredData, setFilteredData] = useState<TTableData[]>([]);
 
   const navigate = useNavigate();
 
@@ -36,51 +33,48 @@ const AllProduct = () => {
     ...(params || []),
     { name: "page", value: pagination.current.toString() },
     { name: "limit", value: pagination.pageSize.toString() },
-    { name: "searchTerm", value: searchTerm },
   ]);
 
-  const tableData = CarData?.data?.map(
-    ({ _id, price, modelNumber, brand, category, quantity }): TTableData => ({
+  const tableData: TTableData[] | undefined = CarData?.data?.map(
+    ({ _id, price, modelNumber, brand, category, quantity }) => ({
       key: _id,
-      // price: `$${price.toLocaleString()}`, // Format Price
-      price:price,
+      price, // `price` as number
       model: modelNumber ?? "N/A",
       brand,
       category,
       quantity,
     })
-  ) as TTableData[];
+  );
+
+  // **Real-time Filtering on Search**
+  useEffect(() => {
+    if (searchTerm) {
+      const filtered = tableData?.filter(
+        (item) =>
+          item.model?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          item.brand.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          item.category.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredData(filtered || []);
+    } else {
+      setFilteredData(tableData || []);
+    }
+  }, [searchTerm, CarData]);
 
   const columns: TableColumnsType<TTableData> = [
-    { 
-      title: "Model", 
-      key: "model", 
-      dataIndex: "model",
-      align: 'center'
-    },
-    { 
-      title: "Brand", 
-      key: "brand", 
-      dataIndex: "brand",
-      align: 'center'
-    },
-    { 
-      title: "Price", 
-      key: "price", 
+    { title: "Model", key: "model", dataIndex: "model" },
+    { title: "Brand", key: "brand", dataIndex: "brand" },
+    {
+      title: "Price",
+      key: "price",
       dataIndex: "price",
-      align: 'center'
+      render: (price) => <span className="font-semibold text-green-600">${price.toLocaleString()}</span>, // ✅ Format only in UI
     },
-    { 
-      title: "Category", 
-      key: "category", 
-      dataIndex: "category",
-      align: 'center'
-    },
+    { title: "Category", key: "category", dataIndex: "category" },
     {
       title: "Stock",
       key: "quantity",
       dataIndex: "quantity",
-      align: 'center',
       render: (qty) => (
         <span className={qty > 0 ? "text-green-600 font-semibold" : "text-red-600 font-semibold"}>
           {qty > 0 ? qty : "Out of Stock"}
@@ -90,7 +84,6 @@ const AllProduct = () => {
     {
       title: "Action",
       key: "x",
-      align: 'center',
       render: (record: TTableData) => (
         <Button
           onClick={() => navigate(`/products/${record.key}`)}
@@ -164,14 +157,17 @@ const AllProduct = () => {
         }}
       >
         {isFetching ? (
-          <div className="flex justify-center items-center min-h-[300px] ">
+          <div className="flex justify-center items-center min-h-[300px]">
             <Spin size="large" />
           </div>
         ) : (
           <Table
             loading={isFetching}
-            columns={columns}
-            dataSource={tableData}
+            columns={columns.map((column) => ({
+              ...column,
+              align: "center", // Center-align all data
+            }))}
+            dataSource={filteredData} // Use filtered data
             pagination={false}
             onChange={onChange}
             scroll={{ x: "max-content" }}
@@ -207,7 +203,8 @@ const AllProduct = () => {
           responsive
           pageSizeOptions={["5", "10", "15", "20"]}
           onChange={(page, pageSize) => setPagination({ current: page, pageSize })}
-          className="bg-white border border-teal-500 rounded-lg shadow-md px-3 py-1"
+          // className="bg-white border border-teal-500 rounded-lg shadow-md px-3 py-1"
+          className="border border-teal-500 rounded-lg shadow-md px-3 py-1"
         />
       </div>
     </div>
