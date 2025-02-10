@@ -24,7 +24,8 @@ const Dashboard = () => {
       // navigate('/dashboard/get_car');
       navigate("/dashboard/get_bike");
     } else {
-      navigate("/dashboard/change_password");
+      // navigate("/dashboard/change_password");
+      navigate("/dashboard/update-profile");
     }
   }, [navigate, role]);
   return (

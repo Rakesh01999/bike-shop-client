@@ -38,16 +38,24 @@ interface OrderData {
 
 const Verify = () => {
   const [SearchParams] = useSearchParams();
-  const { isLoading, data } = useVerifyOrderQuery(SearchParams.get("order_id"), {
-    refetchOnMountOrArgChange: true,
-  });
-  
+  const { isLoading, data } = useVerifyOrderQuery(
+    SearchParams.get("order_id"),
+    {
+      refetchOnMountOrArgChange: true,
+    }
+  );
+
   const orderData: OrderData = data?.data?.[0];
   const navigate = useNavigate();
   console.log(data);
   console.log(orderData);
-  
-  if (isLoading) return <div className="min-h-screen text-center bg-cyan-400">Loading...</div>;
+
+  if (isLoading)
+    return (
+      <div className="min-h-screen text-center bg-emerald-500">
+        <h1 className="text-3xl text-black font-bold">Loading...</h1>
+      </div>
+    );
 
   const handleHomeRedirect = () => {
     navigate("/");
@@ -56,7 +64,9 @@ const Verify = () => {
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="bg-white p-6 rounded-lg shadow-lg max-w-3xl w-full">
-        <h1 className="text-2xl font-semibold text-center mb-4 text-gray-800">Order Verification</h1>
+        <h1 className="text-2xl font-semibold text-center mb-4 text-gray-800">
+          Order Verification
+        </h1>
         <div className="space-y-4">
           <div className="flex justify-between">
             <span className="font-bold text-gray-700">Order ID:</span>
@@ -68,11 +78,15 @@ const Verify = () => {
           </div>
           <div className="flex justify-between">
             <span className="font-bold text-gray-700">Amount:</span>
-            <span>{orderData?.amount} {orderData?.currency}</span>
+            <span>
+              {orderData?.amount} {orderData?.currency}
+            </span>
           </div>
           <div className="flex justify-between">
             <span className="font-bold text-gray-700">Paid Amount:</span>
-            <span>{orderData?.received_amount} {orderData?.currency}</span>
+            <span>
+              {orderData?.received_amount} {orderData?.currency}
+            </span>
           </div>
           <div className="flex justify-between">
             <span className="font-bold text-gray-700">Payment Method:</span>
@@ -80,7 +94,11 @@ const Verify = () => {
           </div>
           <div className="flex justify-between">
             <span className="font-bold text-gray-700">Payment Status:</span>
-            <span className={`${orderData?.is_verify === 1 ? 'text-green-500' : 'text-red-500'}`}>
+            <span
+              className={`${
+                orderData?.is_verify === 1 ? "text-green-500" : "text-red-500"
+              }`}
+            >
               {orderData?.is_verify === 1 ? "Verified" : "Not Verified"}
             </span>
           </div>
