@@ -190,7 +190,7 @@ const bikesManagementApi = baseApi.injectEndpoints({
         //             body: {
         //                 bike: {
         //                     name: bikeData.name,
-        //                     modelNumber: bikeData.model, // Changed from model to modelNumber to match API
+        //                     modelNumber: bikeData.model, 
         //                     brand: bikeData.brand,
         //                     image: bikeData.image,
         //                     price: Number(bikeData.price), // Ensure price is a number

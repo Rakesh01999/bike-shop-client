@@ -3,7 +3,7 @@ import ViewOrder from "../pages/Dashboard/User/ViewOrder";
 
 export const userChildren = [
   {
-    name: "Change_password",
+    name: "Change Password",
     path: "change_password",
     element: <ChangePassword />,
   },
