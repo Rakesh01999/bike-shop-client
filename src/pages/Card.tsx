@@ -1,4 +1,4 @@
-import { Card as AntCard, Row, Col, Button } from "antd";
+import { Card as AntCard, Button, Spin } from "antd";
 import {
   TagOutlined,
   CarOutlined,
@@ -7,13 +7,14 @@ import {
 } from "@ant-design/icons";
 import { useGetAllCarsQuery } from "../redux/features/bikes/bikesManagement";
 import { useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const CustomCard = () => {
   const { data: cars, isFetching } = useGetAllCarsQuery(undefined);
   const displayedCars = cars?.data?.slice(0, 6);
 
   const [totalCars, setTotalCars] = useState<number>(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (cars?.data) {
@@ -21,79 +22,98 @@ const CustomCard = () => {
     }
   }, [cars]);
 
-  const navigate = useNavigate();
-
   const handleViewAll = () => {
-    navigate('/allproduct');
+    navigate("/allproduct");
+  };
+
+  // Teal Theme Colors
+  const tealColors = {
+    primary: "#0F766E", // Deep Teal
+    secondary: "#14B8A6", // Bright Teal
+    background: "#ECFDF5", // Light Teal
   };
 
   return (
-    <div style={{ padding: "16px" }}>
-      <div style={{ textAlign: "center", marginBottom: "24px" }}>
-        <h2 style={{ margin: "0", fontSize: "24px", fontWeight: "bold" }}>
-          Available Cars
+    <div
+      className="min-h-screen flex flex-col items-center px-5 py-10"
+      // style={{
+      //   background: `linear-gradient(135deg, ${tealColors.background} 0%, ${tealColors.secondary} 100%)`,
+      // }}
+    >
+      {/* Title Section */}
+      <div className="text-center mb-6">
+        <h2
+          className="text-3xl font-bold text-teal-900"
+          // style={{ color: tealColors.primary }}
+        >
+          Available Bikes
         </h2>
-        <p style={{ margin: "0", fontSize: "16px", color: "#555" }}>
-          Browse through our collection of cars. Find your perfect match!
+        <p className="text-gray-600 text-sm">
+          Browse through our collection of high-quality bikes.
         </p>
       </div>
-      <Row
-        gutter={[16, 16]}
-        justify="start"
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-          gap: "16px",
-        }}
-      >
-        {displayedCars?.map((product) => (
-          <Col key={product._id}>
+
+      {/* Loader while fetching */}
+      {isFetching ? (
+        <div className="flex justify-center items-center min-h-[300px]">
+          <Spin size="large" />
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-6xl">
+          {displayedCars?.map((product) => (
             <AntCard
+              key={product._id}
+              hoverable
+              className="rounded-lg shadow-md transition-all duration-300 transform hover:scale-105"
               style={{
-                width: "100%",
-                border: "2px solid #4CAF50",
-                borderRadius: "8px",
-                boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+                background: "rgba(255, 255, 255, 0.9)",
+                border: `2px solid ${tealColors.secondary}`,
               }}
-              loading={isFetching}
               cover={
                 <img
                   alt={product.model}
                   src={product.image}
-                  style={{ width: "100%", height: "auto" }}
+                  className="w-full h-48 object-cover rounded-t-lg"
                 />
               }
             >
-              <div className="space-y-2">
+              <div className="space-y-2 text-sm">
                 <p>
-                  <CarOutlined /> <strong>Brand:</strong> {product.brand}
+                  <CarOutlined className="text-teal-600" />{" "}
+                  <strong>Brand:</strong> {product.brand}
                 </p>
                 <p>
-                  <TagOutlined /> <strong>Category:</strong> {product.category}
+                  <TagOutlined className="text-teal-600" />{" "}
+                  <strong>Category:</strong> {product.category}
                 </p>
                 <p>
-                  <DollarOutlined /> <strong>Price:</strong> ${product.price}
+                  <DollarOutlined className="text-teal-600" />{" "}
+                  <strong>Price:</strong>{" "}
+                  <span className="text-teal-700 font-semibold">
+                    ${product.price.toLocaleString()}
+                  </span>
                 </p>
                 <p>
-                  <AppstoreAddOutlined /> <strong>Model:</strong>{" "}
-                  {product.modelNumber}
+                  <AppstoreAddOutlined className="text-teal-600" />{" "}
+                  <strong>Model:</strong> {product.modelNumber}
                 </p>
               </div>
             </AntCard>
-          </Col>
-        ))}
-      </Row>
-
-      {totalCars > 6 && (
-        <div style={{ textAlign: "center", marginTop: "16px" }}>
-          <Button type="primary" onClick={handleViewAll}>View All</Button>
+          ))}
         </div>
       )}
 
-     {/* Extra section */}
-
-
-
+      {/* View All Button */}
+      {totalCars > 6 && (
+        <div className="text-center mt-6">
+          <Button
+            className="w-52 h-10 bg-teal-600 hover:bg-teal-700 text-white md:text-xl font-bold px-6 py-2 rounded-lg shadow-md transition-all"
+            onClick={handleViewAll}
+          >
+            View All
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

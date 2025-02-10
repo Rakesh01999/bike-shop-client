@@ -30,12 +30,6 @@ const Home = () => {
 
       {/* Customer Testimonials */}
       <div className="w-full max-w-6xl px-4 mt-16">
-        <h2 className="text-3xl font-bold text-teal-950 text-center">
-          What Our Customers Say
-        </h2>
-        <p className="text-gray-600 text-center text-sm sm:text-base mt-2">
-          See why riders love our bikes!
-        </p>
         <div className="mt-6">
           <Testimonials />
         </div>
