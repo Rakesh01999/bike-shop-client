@@ -1,6 +1,17 @@
 const About = () => {
+  const tealColors = {
+    primary: "#0F766E", // Deep Teal
+    secondary: "#14B8A6", // Bright Teal
+    background: "#ECFDF5", // Light Teal
+  };
+
   return (
-    <div className="bg-gray-50 min-h-screen flex flex-col">
+    <div
+      className="bg-gray-50 min-h-screen flex flex-col"
+      style={{
+        background: `linear-gradient(135deg, ${tealColors.background} 0%, ${tealColors.secondary} 100%)`,
+      }}
+    >
       {/* Hero Section */}
       <section className="bg-teal-600 text-white py-20">
         <div className="container mx-auto text-center">
@@ -8,7 +19,8 @@ const About = () => {
             About <span className="text-yellow-300">BikeShop</span>
           </h1>
           <p className="text-lg max-w-2xl mx-auto">
-            Your trusted partner for premium-quality bikes and exceptional customer service.
+            Your trusted partner for premium-quality bikes and exceptional
+            customer service.
           </p>
         </div>
       </section>
@@ -21,12 +33,14 @@ const About = () => {
         <div className="flex flex-col md:flex-row items-center gap-10">
           <div className="md:w-1/2 text-gray-700 space-y-5">
             <p className="text-lg leading-relaxed">
-              At <span className="text-teal-600 font-bold">BikeShop</span>, we are passionate about providing the 
-              highest quality bikes at affordable prices. Whether you're a seasoned rider or a first-time buyer, 
-              we ensure a seamless experience from selection to purchase.
+              At <span className="text-teal-600 font-bold">BikeShop</span>, we
+              are passionate about providing the highest quality bikes at
+              affordable prices. Whether you're a seasoned rider or a first-time
+              buyer, we ensure a seamless experience from selection to purchase.
             </p>
             <p className="text-lg">
-              Our commitment is to deliver excellent service, ensuring you get the best ride for your needs.
+              Our commitment is to deliver excellent service, ensuring you get
+              the best ride for your needs.
             </p>
           </div>
           <div className="md:w-1/2">
@@ -45,15 +59,38 @@ const About = () => {
           <h2 className="text-3xl font-semibold text-gray-800 mb-8">
             Our Services
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 px-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 px-5">
             {[
-              { title: "Bike Sales", desc: "A wide range of premium and budget-friendly bikes." },
-              { title: "Bike Maintenance", desc: "Expert repair and maintenance services to keep you rolling." },
-              { title: "Financing Options", desc: "Flexible payment plans tailored to your needs." },
+              {
+                title: "Bike Sales",
+                desc: "A wide range of premium and budget-friendly bikes.",
+              },
+              {
+                title: "Bike Maintenance",
+                desc: "Expert repair and maintenance services to keep you rolling.",
+              },
+              {
+                title: "Financing Options",
+                desc: "Flexible payment plans tailored to your needs.",
+              },
+              {
+                title: "Genuine Accessories & Parts",
+                desc: "Wide range of authentic bike accessories and spare parts for all models .",
+              },
             ].map((service, index) => (
-              <div key={index} className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition">
-                <h3 className="text-xl font-semibold text-teal-600 mb-4">{service.title}</h3>
-                <p className="text-gray-700">{service.desc}</p>
+              <div
+                key={index}
+                className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition"
+                style={{
+                  // background: `linear-gradient(135deg, ${tealColors.background} 0%, ${tealColors.secondary} 100%)`,
+                  background: `linear-gradient(135deg, ${tealColors.background} 0%, ${tealColors.secondary} 170%)`,
+                }}
+              >
+                <h3 className="text-xl font-semibold text-teal-600 mb-4">
+                  {service.title}
+                </h3>
+                {/* <p className="text-gray-700">{service.desc}</p> */}
+                <p className="">{service.desc}</p>
               </div>
             ))}
           </div>
@@ -78,8 +115,13 @@ const About = () => {
           </div>
           <div className="text-lg text-gray-700">
             <p>
-              We value our customers and are committed to making every ride an adventure. 
-              Join our family and experience the <span className="text-teal-600 font-bold">BikeShop Difference</span>.
+              We value our customers and are committed to making every ride an
+              adventure. Join our family and experience the{" "}
+              {/* <span className="text-teal-600 font-bold"> */}
+              <span className="text-teal-900 font-bold">
+                BikeShop Difference
+              </span>
+              .
             </p>
           </div>
         </div>
@@ -90,11 +132,11 @@ const About = () => {
         <div className="container mx-auto text-center">
           <h2 className="text-3xl font-semibold mb-4">Let's Connect</h2>
           <p className="text-lg mb-6 max-w-2xl mx-auto">
-            Need help choosing a bike or have any questions? 
-            Contact us today and our team will assist you.
+            Need help choosing a bike or have any questions? Contact us today
+            and our team will assist you.
           </p>
           <a
-            href="/contact"
+            href="/about"
             className="bg-yellow-300 text-teal-800 font-semibold py-3 px-6 rounded-lg shadow-md 
             hover:bg-yellow-400 transition"
           >
