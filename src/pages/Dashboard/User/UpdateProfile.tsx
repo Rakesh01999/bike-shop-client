@@ -3,57 +3,60 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Card, Input, Button, Form, Typography } from "antd";
-import {
-  EyeInvisibleOutlined,
-  EyeOutlined,
-  LockOutlined,
-  KeyOutlined,
-} from "@ant-design/icons";
+import { UserOutlined, HomeOutlined, PhoneOutlined } from "@ant-design/icons";
 import { toast } from "sonner";
-import { useChangePasswordMutation } from "../../../redux/features/auth/authApi";
+import { useUpdateProfileMutation } from "../../../redux/features/auth/authApi";
 
-const passwordSchema = z.object({
-  oldPassword: z.string().min(6, "Old password must be at least 6 characters"),
-  newPassword: z.string().min(6, "New password must be at least 6 characters"),
+// Validation Schema
+const profileSchema = z.object({
+  name: z.string().min(3, "Name must be at least 3 characters"),
+  phone_number: z
+    .string(),
+    // .regex(/^01[3-9]\d{8}$/, "Enter a valid Bangladeshi phone number")
+    // .regex(/^\+?[1-9]\d{1,14}$/, "Enter a valid phone number"), // Supports international formats
+  address: z.string().min(5, "Address must be at least 5 characters"),
 });
 
-type PasswordFormValues = z.infer<typeof passwordSchema>;
+type ProfileFormValues = z.infer<typeof profileSchema>;
 
-const ChangePassword = () => {
+const UpdateProfile = () => {
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<PasswordFormValues>({
-    resolver: zodResolver(passwordSchema),
+  } = useForm<ProfileFormValues>({
+    resolver: zodResolver(profileSchema),
   });
 
-  const [login] = useChangePasswordMutation();
+  const [updateProfile] = useUpdateProfileMutation();
 
-  const onSubmit = async (data: PasswordFormValues) => {
-    const toastId = toast.loading("Updating Password");
+  const onSubmit = async (data: ProfileFormValues) => {
+    const toastId = toast.loading("Updating Profile...");
 
     try {
-      const res = await login(data).unwrap();
+      const res = await updateProfile(data).unwrap();
 
       console.log(res);
-      toast.success("Password changed successfully", {
+      toast.success("Profile updated successfully!", {
         id: toastId,
         duration: 2000,
       });
     } catch (err: any) {
-      toast.error(err?.data?.message, { id: toastId, duration: 5000 });
+      toast.error(err?.data?.message || "Failed to update profile", {
+        id: toastId,
+        duration: 5000,
+      });
     }
   };
 
-  // Teal Color Palette
+  // Teal Theme
   const tealColors = {
-    primary: "#0F766E", // Deep Teal
-    secondary: "#14B8A6", // Bright Teal
-    background: "#CCFBF1", // Light Teal
+    primary: "#0F766E",
+    secondary: "#14B8A6",
+    background: "#CCFBF1",
     text: {
-      primary: "#134E4A", // Dark Teal
-      secondary: "#115E59", // Slightly Lighter Dark Teal
+      primary: "#134E4A",
+      secondary: "#115E59",
     },
   };
 
@@ -79,7 +82,7 @@ const ChangePassword = () => {
               background: `linear-gradient(135deg, ${tealColors.primary} 0%, ${tealColors.secondary} 100%)`,
             }}
           >
-            <KeyOutlined className="text-3xl sm:text-4xl text-white" />
+            <UserOutlined className="text-3xl sm:text-4xl text-white" />
           </div>
           <Typography.Title
             level={3}
@@ -89,13 +92,13 @@ const ChangePassword = () => {
               letterSpacing: "-0.5px",
             }}
           >
-            Change Password
+            Update Profile
           </Typography.Title>
           <Typography.Text
             className="text-center block text-sm sm:text-base"
             style={{ color: tealColors.text.secondary }}
           >
-            Secure your account with a new password
+            Keep your profile up-to-date
           </Typography.Text>
         </div>
 
@@ -104,28 +107,26 @@ const ChangePassword = () => {
           onFinish={handleSubmit(onSubmit)}
           className="px-4 sm:px-6"
         >
+          {/* Name Field */}
           <Form.Item
             label={
               <span
                 className="font-medium text-sm sm:text-base"
                 style={{ color: tealColors.text.primary }}
               >
-                Old Password
+                Full Name
               </span>
             }
-            validateStatus={errors.oldPassword ? "error" : ""}
-            help={errors.oldPassword?.message}
+            validateStatus={errors.name ? "error" : ""}
+            help={errors.name?.message}
           >
             <Controller
-              name="oldPassword"
+              name="name"
               control={control}
               render={({ field }) => (
-                <Input.Password
+                <Input
                   {...field}
-                  prefix={<LockOutlined className="text-gray-400" />}
-                  iconRender={(visible) =>
-                    visible ? <EyeOutlined /> : <EyeInvisibleOutlined />
-                  }
+                  prefix={<UserOutlined className="text-gray-400" />}
                   className="!py-2 !rounded-xl text-sm sm:text-base"
                   style={{
                     boxShadow: `0 4px 6px rgba(${tealColors.primary}, 0.1)`,
@@ -135,28 +136,26 @@ const ChangePassword = () => {
             />
           </Form.Item>
 
+          {/* Phone Number Field */}
           <Form.Item
             label={
               <span
                 className="font-medium text-sm sm:text-base"
                 style={{ color: tealColors.text.primary }}
               >
-                New Password
+                Phone Number
               </span>
             }
-            validateStatus={errors.newPassword ? "error" : ""}
-            help={errors.newPassword?.message}
+            validateStatus={errors.phone_number ? "error" : ""}
+            help={errors.phone_number?.message}
           >
             <Controller
-              name="newPassword"
+              name="phone_number"
               control={control}
               render={({ field }) => (
-                <Input.Password
+                <Input
                   {...field}
-                  prefix={<LockOutlined className="text-gray-400" />}
-                  iconRender={(visible) =>
-                    visible ? <EyeOutlined /> : <EyeInvisibleOutlined />
-                  }
+                  prefix={<PhoneOutlined className="text-gray-400" />}
                   className="!py-2 !rounded-xl text-sm sm:text-base"
                   style={{
                     boxShadow: `0 4px 6px rgba(${tealColors.primary}, 0.1)`,
@@ -166,6 +165,36 @@ const ChangePassword = () => {
             />
           </Form.Item>
 
+          {/* Address Field */}
+          <Form.Item
+            label={
+              <span
+                className="font-medium text-sm sm:text-base"
+                style={{ color: tealColors.text.primary }}
+              >
+                Address
+              </span>
+            }
+            validateStatus={errors.address ? "error" : ""}
+            help={errors.address?.message}
+          >
+            <Controller
+              name="address"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  prefix={<HomeOutlined className="text-gray-400" />}
+                  className="!py-2 !rounded-xl text-sm sm:text-base"
+                  style={{
+                    boxShadow: `0 4px 6px rgba(${tealColors.primary}, 0.1)`,
+                  }}
+                />
+              )}
+            />
+          </Form.Item>
+
+          {/* Submit Button */}
           <Button
             type="primary"
             htmlType="submit"
@@ -178,21 +207,12 @@ const ChangePassword = () => {
               fontSize: "0.875rem",
             }}
           >
-            Update Password
+            Update Profile
           </Button>
         </Form>
-
-        <div className="text-center mt-4 sm:mt-6 px-4 sm:px-6">
-          <Typography.Text
-            className="text-xs sm:text-sm"
-            style={{ color: tealColors.text.secondary }}
-          >
-            {/* Password must be at least 6 characters long */}
-          </Typography.Text>
-        </div>
       </Card>
     </div>
   );
 };
 
-export default ChangePassword;
+export default UpdateProfile;
