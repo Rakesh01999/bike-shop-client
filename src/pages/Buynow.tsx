@@ -57,7 +57,7 @@ const Buynow = () => {
 
     try {
       const response = await addOrder(orderDetails).unwrap();
-      
+
       if (!response?.data) {
         toast.error("Order creation failed");
         return;
@@ -65,7 +65,8 @@ const Buynow = () => {
 
       // Direct redirect to Shurjopay URL
       const paymentUrl = response.data;
-      if (typeof paymentUrl === 'string' && paymentUrl.startsWith('http')) {
+      // if (typeof paymentUrl === "string" && paymentUrl.startsWith("http")) {
+      if (typeof paymentUrl === "string" && paymentUrl.startsWith("https")) {
         window.location.href = paymentUrl;
       } else {
         toast.error("Invalid payment URL received");
@@ -75,9 +76,20 @@ const Buynow = () => {
       console.error("Order error:", err);
     }
   };
+  // Teal Color Palette
+  const tealColors = {
+    primary: "#0F766E", // Deep Teal
+    secondary: "#14B8A6", // Bright Teal
+    background: "#ECFDF5", // Light Teal
+  };
 
   return (
-    <div className="flex justify-center items-center min-h-screen p-4">
+    <div
+      className="flex justify-center items-center min-h-screen p-4"
+      style={{
+        background: `linear-gradient(135deg, ${tealColors.background} 0%, ${tealColors.secondary} 100%)`,
+      }}
+    >
       <Card className="w-full max-w-2xl shadow-xl rounded-lg p-6">
         <Title level={2} className="text-center text-blue-600">
           Order Details
@@ -157,7 +169,7 @@ const Buynow = () => {
             <Button
               type="primary"
               htmlType="submit"
-              className="bg-blue-500 hover:bg-blue-700 text-white px-6 py-2 rounded-lg"
+              className="bg-teal-500 hover:bg-teal-700 text-white px-6 py-2 md:py-5 rounded-lg font-bold md:text-xl"
             >
               Order Now
             </Button>
