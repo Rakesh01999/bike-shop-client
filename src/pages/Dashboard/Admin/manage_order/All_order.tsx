@@ -3,7 +3,7 @@ import { useGetAllOrdersQuery } from "../../../../redux/features/bikes/bikesMana
 
 const All_order = () => {
   const { data: orderData, isFetching, isError, error } = useGetAllOrdersQuery(undefined);
-
+  console.log(orderData);
   if (isError) {
     console.error('Error fetching orders:', error);
     return <div>Error loading orders. Please try again later.</div>;
@@ -37,7 +37,8 @@ const All_order = () => {
     },
     {
       title: "Transaction Status",
-      dataIndex: ["transaction", "transactionStatus"],
+      // dataIndex: ["transaction", "transactionStatus"],
+      dataIndex: ["transaction", "bank_status"],
       key: "transactionStatus",
     },
     {

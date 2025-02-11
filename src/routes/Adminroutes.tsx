@@ -37,8 +37,8 @@ export const adminChildren = [
         element: <UpdateCar />,
       },
       {
-        name: "Delete Car",
-        path: "delete_car",
+        name: "Delete Bike",
+        path: "delete_bike",
         element: <DeleteCar />,
       },
     ],
