@@ -105,7 +105,7 @@ const AllProduct = () => {
     setSearchTerm(e.target.value);
   };
 
-  // 🌿 Teal Theme
+  // Teal Theme
   const tealColors = {
     primary: "#0F766E", // Deep Teal
     secondary: "#14B8A6", // Bright Teal
