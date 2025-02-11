@@ -288,7 +288,7 @@ const BlogComponent: React.FC = () => {
           Bike Shop Blog
         </h1>
         <p className="text-gray-600 text-lg">
-          Expert insights, tips, and stories from the world of cycling
+          Expert insights, tips, and stories from the world of biking
         </p>
       </Card>
 

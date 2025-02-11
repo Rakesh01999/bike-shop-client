@@ -5,7 +5,9 @@ import Footer from "./pages/Footer/Footer";
 function App() {
   return (
     <div>
-      <Navbar />
+      <div className="mb-24">
+        <Navbar />
+      </div>
       <Outlet></Outlet>
       <Footer />
     </div>
