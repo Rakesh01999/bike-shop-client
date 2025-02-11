@@ -13,10 +13,10 @@ const About = () => {
       }}
     >
       {/* Hero Section */}
-      <section className="bg-teal-600 text-white py-20">
+      <section className=" text-teal-700 py-20">
         <div className="container mx-auto text-center">
           <h1 className="text-4xl font-bold mb-4 tracking-wide">
-            About <span className="text-yellow-300">BikeShop</span>
+            About <span className="">BikeShop</span>
           </h1>
           <p className="text-lg max-w-2xl mx-auto">
             Your trusted partner for premium-quality bikes and exceptional
@@ -27,7 +27,7 @@ const About = () => {
 
       {/* Our Mission */}
       <section className="container mx-auto py-16 px-6">
-        <h2 className="text-3xl font-semibold text-center text-gray-800 mb-8">
+        <h2 className="text-3xl font-semibold text-center text-teal-800 mb-8">
           Our Mission
         </h2>
         <div className="flex flex-col md:flex-row items-center gap-10">
@@ -56,7 +56,7 @@ const About = () => {
       {/* Our Services */}
       <section className="bg-gray-200 py-16">
         <div className="container mx-auto text-center">
-          <h2 className="text-3xl font-semibold text-gray-800 mb-8">
+          <h2 className="text-3xl font-semibold text-teal-800 mb-8">
             Our Services
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 px-5">
@@ -99,7 +99,7 @@ const About = () => {
 
       {/* Why Choose Us */}
       <section className="container mx-auto py-16 px-6">
-        <h2 className="text-3xl font-semibold text-center text-gray-800 mb-8">
+        <h2 className="text-3xl font-semibold text-center text-teal-800 mb-8">
           Why Choose Us?
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">

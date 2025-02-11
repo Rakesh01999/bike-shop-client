@@ -1,11 +1,6 @@
 import React, { useState } from "react";
-import { Card, Row, Col, Tag, Select, Modal, Button } from "antd";
-import {
-  CalendarOutlined,
-  UserOutlined,
-  TagOutlined,
-  ReadOutlined,
-} from "@ant-design/icons";
+import { Tag, Select, Modal, Button } from "antd";
+import { CalendarOutlined, UserOutlined, TagOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
 
@@ -231,13 +226,6 @@ const BlogComponent: React.FC = () => {
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
   const postsPerPage = 6;
 
-  // Teal Theme
-  const tealColors = {
-    primary: "#0F766E",
-    secondary: "#14B8A6",
-    background: "#ECFDF5",
-  };
-
   // Filtering and Pagination Logic
   const filteredPosts = blogPosts.filter(
     (post) =>
@@ -263,61 +251,28 @@ const BlogComponent: React.FC = () => {
   const handleCloseModal = () => {
     setSelectedPost(null);
   };
-
   return (
-    <div
-      className="min-h-screen flex flex-col items-center px-5 py-12"
-    //   style={{
-    //     background: `linear-gradient(135deg, ${tealColors.background} 0%, ${tealColors.secondary} 100%)`,
-    //   }}
-    >
-      {/* ... previous title and filter sections ... */}
+    <div className="min-h-screen flex flex-col items-center px-4 sm:px-6 lg:px-8 py-8 md:py-12">
       {/* Title and Description Card */}
-      <Card
-        className="w-full max-w-3xl text-center shadow-lg mb-8"
-        style={{
-          background: "rgba(255, 255, 255, 0.9)",
-          backdropFilter: "blur(10px)",
-          border: `1px solid ${tealColors.secondary}`,
-        }}
-      >
-        <h1
-          className="text-3xl font-bold mb-4"
-          style={{ color: tealColors.primary }}
-        >
+      <div className="w-full max-w-3xl text-center mb-8 bg-teal-400 shadow-md rounded-lg p-6 transform transition-all duration-300 hover:shadow-lg">
+        <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 text-teal-700">
           Bike Shop Blog
         </h1>
-        <p className="text-gray-600 text-lg">
+        <p className="text-base md:text-lg text-gray-600">
           Expert insights, tips, and stories from the world of biking
         </p>
-      </Card>
+      </div>
 
       {/* Filters */}
-      <Card
-        className="w-full max-w-6xl mb-8"
-        style={{
-          background: "rgba(255, 255, 255, 0.9)",
-          backdropFilter: "blur(10px)",
-          border: `1px solid ${tealColors.secondary}`,
-        }}
-      >
-        <Row gutter={16}>
-          {/* <Col xs={24} md={12}>
-            <Search
-              placeholder="Search blogs..."
-              allowClear
-              prefix={<SearchOutlined style={{ color: tealColors.primary }} />}
-              onSearch={(value) => setSearchTerm(value)}
-              style={{ width: "100%" }}
-            />
-          </Col> */}
-          <Col xs={24} md={12}>
+      <div className="w-full max-w-6xl mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="w-full">
             <Select
               placeholder="Filter by Category"
-              style={{ width: "100%" }}
+              className="w-full"
               allowClear
               onChange={(value) => setCategoryFilter(value)}
-              suffixIcon={<TagOutlined style={{ color: tealColors.primary }} />}
+              suffixIcon={<TagOutlined className="text-teal-600" />}
             >
               {categories.map((category) => (
                 <Option key={category} value={category}>
@@ -325,77 +280,59 @@ const BlogComponent: React.FC = () => {
                 </Option>
               ))}
             </Select>
-          </Col>
-        </Row>
-      </Card>
+          </div>
+        </div>
+      </div>
 
       {/* Blog Posts Grid */}
-      <Row
-        gutter={[16, 16]}
-        className="w-full max-w-6xl"
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
-          gap: "16px",
-        }}
-      >
+      <div className="w-full max-w-6xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {currentPosts.map((post) => (
-          <Col key={post.id} className="w-full">
-            <Card
-              hoverable
-              cover={
-                <img
-                  alt={post.title}
-                  src={post.imageUrl}
-                  style={{
-                    height: "250px",
-                    objectFit: "cover",
-                  }}
-                />
-              }
-              className="h-full transition-all duration-300"
-              style={{
-                border: `1px solid ${tealColors.secondary}`,
-                borderRadius: "12px",
-              }}
-              extra={
+          <div
+            key={post.id}
+            className="bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-300 hover:shadow-xl hover:-translate-y-2"
+          >
+            <div className="relative">
+              <img
+                alt={post.title}
+                src={post.imageUrl}
+                className="w-full h-48 object-cover"
+              />
+              <div className="absolute top-4 left-4">
+                <Tag color="processing">{post.category}</Tag>
+              </div>
+            </div>
+
+            <div className="p-5">
+              <h3 className="text-xl font-bold mb-3 text-teal-700 line-clamp-2">
+                {post.title}
+              </h3>
+              <p className="text-gray-600 mb-4 line-clamp-3">{post.excerpt}</p>
+
+              <div className="flex items-center justify-between text-sm text-gray-500">
+                <div className="flex items-center space-x-2">
+                  <UserOutlined className="text-teal-600" />
+                  <span>{post.author}</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <CalendarOutlined className="text-teal-600" />
+                  <span>{new Date(post.date).toLocaleDateString()}</span>
+                </div>
+              </div>
+
+              <div className="mt-4 flex justify-between items-center">
+                <Tag color="default">{post.readTime}</Tag>
                 <Button
                   type="link"
                   onClick={() => handleReadMore(post)}
-                  icon={<ReadOutlined />}
+                  className="text-teal-600 hover:text-teal-800"
                 >
                   Read More
                 </Button>
-              }
-            >
-              <div>
-                <Tag color={tealColors.primary}>{post.category}</Tag>
-                <h3
-                  className="text-xl font-bold mt-2 mb-3"
-                  style={{ color: tealColors.primary }}
-                >
-                  {post.title}
-                </h3>
-                <p className="text-gray-600 mb-4">{post.excerpt}</p>
-
-                <div className="flex justify-between items-center">
-                  <div className="flex items-center space-x-2">
-                    <UserOutlined style={{ color: tealColors.primary }} />
-                    <span>{post.author}</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <CalendarOutlined style={{ color: tealColors.primary }} />
-                    <span>{new Date(post.date).toLocaleDateString()}</span>
-                  </div>
-                  <div>
-                    <Tag color="default">{post.readTime}</Tag>
-                  </div>
-                </div>
               </div>
-            </Card>
-          </Col>
+            </div>
+          </div>
         ))}
-      </Row>
+      </div>
 
       {/* Full Post Modal */}
       <Modal
@@ -403,49 +340,40 @@ const BlogComponent: React.FC = () => {
         open={!!selectedPost}
         onCancel={handleCloseModal}
         footer={null}
-        width={800}
-        style={{
-          top: 20,
-        }}
+        width="90%"
+        style={{ maxWidth: 800, top: 20 }}
         bodyStyle={{
           maxHeight: "70vh",
           overflowY: "auto",
+          padding: "20px",
         }}
       >
         {selectedPost && (
-          <div>
+          <div className="space-y-6">
             <img
               src={selectedPost.imageUrl}
               alt={selectedPost.title}
-              style={{
-                width: "100%",
-                maxHeight: "400px",
-                objectFit: "cover",
-                marginBottom: "20px",
-                borderRadius: "8px",
-              }}
+              className="w-full max-h-[400px] object-cover rounded-lg"
             />
-            <div className="mb-4 flex justify-between items-center">
-              <div>
-                <Tag color={tealColors.primary}>{selectedPost.category}</Tag>
-                <span className="ml-2 text-gray-600">
-                  <UserOutlined className="mr-2" />
+
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0">
+              <div className="space-x-4">
+                <Tag color="processing">{selectedPost.category}</Tag>
+                <span className="text-gray-600 flex items-center">
+                  <UserOutlined className="mr-2 text-teal-600" />
                   {selectedPost.author}
                 </span>
-                <span className="ml-2 text-gray-600">
-                  <CalendarOutlined className="mr-2" />
+                <span className="text-gray-600 flex items-center">
+                  <CalendarOutlined className="mr-2 text-teal-600" />
                   {new Date(selectedPost.date).toLocaleDateString()}
                 </span>
               </div>
               <Tag color="default">{selectedPost.readTime}</Tag>
             </div>
+
             <div
-              className="prose max-w-none"
-              style={{
-                whiteSpace: "pre-wrap",
-                lineHeight: "1.6",
-                color: "#333",
-              }}
+              className="prose max-w-none text-base leading-relaxed text-gray-700"
+              style={{ whiteSpace: "pre-wrap" }}
             >
               {selectedPost.fullContent}
             </div>
@@ -453,20 +381,19 @@ const BlogComponent: React.FC = () => {
         )}
       </Modal>
 
-      {/* Pagination */}
-      {/* <div className="mt-8">
-        <Pagination
-          current={currentPage}
-          total={filteredPosts.length}
-          pageSize={postsPerPage}
-          onChange={(page) => setCurrentPage(page)}
-          showSizeChanger={false}
-          style={{
-            display: "flex",
-            justifyContent: "center",
-          }}
-        />
-      </div> */}
+      {/* Pagination (Optional) */}
+      {/* {filteredPosts.length > postsPerPage && (
+        <div className="mt-8 flex justify-center">
+          <Pagination
+            current={currentPage}
+            total={filteredPosts.length}
+            pageSize={postsPerPage}
+            onChange={(page) => setCurrentPage(page)}
+            showSizeChanger={false}
+            responsive
+          />
+        </div>
+      )} */}
     </div>
   );
 };
