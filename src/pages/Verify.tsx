@@ -41,7 +41,11 @@ const Verify = () => {
     navigate("/");
   };
 
-  // 🌿 Teal Theme
+  // const handleViewOrderRedirect = () => {
+  //   navigate("/dashboard/view_order");
+  // };
+
+  // Teal Theme
   const tealColors = {
     primary: "#0F766E",
     secondary: "#14B8A6",
@@ -164,6 +168,12 @@ const Verify = () => {
 
         {/* Button */}
         <div className="mt-6 text-center">
+          {/* <Button
+            onClick={handleViewOrderRedirect}
+            className="bg-teal-500 hover:bg-teal-700 text-white font-bold md:py-6 px-6 rounded-lg shadow-md transition-all md:text-xl "
+          >
+            Go to My Order history
+          </Button> */}
           <Button
             onClick={handleHomeRedirect}
             className="bg-teal-500 hover:bg-teal-700 text-white font-bold md:py-6 px-6 rounded-lg shadow-md transition-all md:text-xl "

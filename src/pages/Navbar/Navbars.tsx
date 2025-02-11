@@ -16,7 +16,7 @@ const Navbars = ({ children }: { children: React.ReactNode }) => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const user = useAppSelector(useCurrentUser);
 
-  // 🎨 **Teal Theme Colors**
+  // **Teal Theme Colors**
   const colors = {
     primary: "#0F766E",
     secondary: "#14B8A6",
@@ -31,7 +31,7 @@ const Navbars = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <>
-      {/* 🔹 **Navbar Section** */}
+      {/* **Navbar Section** */}
       <nav
         className="fixed top-0 left-0 w-full z-50 shadow-lg transition-all duration-300"
         style={{
@@ -57,7 +57,7 @@ const Navbars = ({ children }: { children: React.ReactNode }) => {
             </span>
           </div>
 
-          {/* 🌍 **Desktop Navigation** */}
+          {/* **Desktop Navigation** */}
           <div className="hidden md:flex items-center space-x-6">
             <div className="flex space-x-6">
               <NavLink href="/" label="Home" />
@@ -73,7 +73,7 @@ const Navbars = ({ children }: { children: React.ReactNode }) => {
               )}
             </div>
 
-            {/* 🔓 Logout Button */}
+            {/* Logout Button */}
             {user && (
               <button
                 onClick={handleLogout}
@@ -148,7 +148,7 @@ const Navbars = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-// ✅ **Desktop Navigation Link**
+// **Desktop Navigation Link**
 const NavLink = ({ href, label }: { href: string; label: string }) => (
   <a
     href={href}
@@ -163,7 +163,7 @@ const NavLink = ({ href, label }: { href: string; label: string }) => (
   </a>
 );
 
-// ✅ **Mobile Navigation Link**
+// **Mobile Navigation Link**
 const MobileNavLink = ({ href, label }: { href: string; label: string }) => (
   <a
     href={href}

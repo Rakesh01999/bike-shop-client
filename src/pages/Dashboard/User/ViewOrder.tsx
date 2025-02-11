@@ -27,12 +27,75 @@ const ViewOrder = () => {
       title: "Total Price",
       dataIndex: "totalPrice",
       key: "totalPrice",
-      render: (price:any) => <span className="text-green-600 font-semibold">${price}</span>,
+      render: (price: any) => (
+        <span className="text-green-600 font-semibold">${price}</span>
+      ),
     },
     {
       title: "Bank Status",
       dataIndex: ["transaction", "bank_status"],
       key: "bank_status",
+      render: (status: any) => (
+        <span
+          className={`px-3 py-1 rounded-full text-xs font-semibold ${
+            status === "Success"
+              ? "bg-green-100 text-green-700"
+              : "bg-red-100 text-red-700"
+          }`}
+        >
+          {status || "N/A"}
+        </span>
+      ),
+    },
+    {
+      title: "Transaction Date",
+      dataIndex: ["transaction", "date_time"],
+      key: "date_time",
+      render: (status: any) => (
+        <span
+          className={`px-3 py-1 rounded-full text-xs font-semibold ${
+            status === "Success"
+            // ? "bg-green-100 text-green-700"
+            // : "bg-red-100 text-red-700"
+          }`}
+        >
+          {status || "N/A"}
+        </span>
+      ),
+    },
+    {
+      title: "Payment Method",
+      dataIndex: ["transaction", "method"],
+      key: "method",
+      render: (status: any) => (
+        <span
+          className={`px-3 py-1 rounded-full text-xs font-semibold ${
+            status === "Success"
+              // ? "bg-green-100 text-green-700"
+              // : "bg-red-100 text-red-700"
+          }`}
+        >
+          {status || "N/A"}
+        </span>
+      ),
+    },
+    { title: "SP Code", dataIndex: ["transaction", "sp_code"], key: "sp_code",
+      render: (status:any) => (
+        <span
+          className={`px-3 py-1 rounded-full text-xs font-semibold ${
+            status === "Success"
+              // ? "bg-green-100 text-green-700"
+              // : "bg-red-100 text-red-700"
+          }`}
+        >
+          {status || "N/A"}
+        </span>
+      ),
+     },
+    {
+      title: "SP Message",
+      dataIndex: ["transaction", "sp_message"],
+      key: "sp_message",
       render: (status:any) => (
         <span
           className={`px-3 py-1 rounded-full text-xs font-semibold ${
@@ -45,10 +108,6 @@ const ViewOrder = () => {
         </span>
       ),
     },
-    { title: "Transaction Date", dataIndex: ["transaction", "date_time"], key: "date_time" },
-    { title: "Payment Method", dataIndex: ["transaction", "method"], key: "method" },
-    { title: "SP Code", dataIndex: ["transaction", "sp_code"], key: "sp_code" },
-    { title: "SP Message", dataIndex: ["transaction", "sp_message"], key: "sp_message" },
   ];
 
   return (
@@ -78,7 +137,9 @@ const ViewOrder = () => {
         >
           Your Order History
         </Title>
-        <p className="text-gray-600 text-sm">Track all your past purchases here.</p>
+        <p className="text-gray-600 text-sm">
+          Track all your past purchases here.
+        </p>
       </Card>
 
       {/* Order Table */}
@@ -105,18 +166,18 @@ const ViewOrder = () => {
             className="rounded-lg overflow-hidden"
             components={{
               header: {
-                cell: (props:any) => (
-                  <th 
-                    {...props} 
-                    style={{ 
-                      ...props.style, 
+                cell: (props: any) => (
+                  <th
+                    {...props}
+                    style={{
+                      ...props.style,
                       backgroundColor: "#14B8A6", // Deep Teal color
                       color: "white",
-                      fontWeight: "bold"
+                      fontWeight: "bold",
                     }}
                   />
-                )
-              }
+                ),
+              },
             }}
           />
         )}
