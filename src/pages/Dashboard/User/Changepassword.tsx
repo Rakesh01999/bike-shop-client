@@ -60,9 +60,9 @@ const ChangePassword = () => {
   return (
     <div
       className="min-h-screen flex items-center justify-center p-4 sm:p-6 md:p-8"
-      style={{
-        background: `linear-gradient(135deg, ${tealColors.background} 0%, ${tealColors.secondary} 100%)`,
-      }}
+      // style={{
+      //   background: `linear-gradient(135deg, ${tealColors.background} 0%, ${tealColors.secondary} 100%)`,
+      // }}
     >
       <Card
         className="w-full max-w-md shadow-2xl rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl"

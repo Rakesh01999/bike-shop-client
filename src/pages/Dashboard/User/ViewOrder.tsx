@@ -54,10 +54,9 @@ const ViewOrder = () => {
   return (
     <div
       className="min-h-screen p-6 flex flex-col items-center"
-      // style={{ background: tealColors.background }}
-      style={{
-        background: `linear-gradient(135deg, ${tealColors.background} 0%, ${tealColors.secondary} 100%)`,
-      }}
+      // style={{
+      //   background: `linear-gradient(135deg, ${tealColors.background} 0%, ${tealColors.secondary} 100%)`,
+      // }}
     >
       {/* Title Card */}
       <Card
