@@ -23,7 +23,8 @@ export type TTableData = Pick<
 
 const AllProduct = () => {
   const [params] = useState<TQueryParam[] | undefined>(undefined);
-  const [pagination, setPagination] = useState({ current: 1, pageSize: 10 });
+  // const [pagination, setPagination] = useState({ current: 1, pageSize: 10 });
+  const [pagination, setPagination] = useState({ current: 1, pageSize: 20 });
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [filteredData, setFilteredData] = useState<TTableData[]>([]);
 

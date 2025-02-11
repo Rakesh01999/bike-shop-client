@@ -112,9 +112,9 @@ const Acctivate_account = () => {
   return (
     <div
       className="min-h-screen flex flex-col items-center px-5 py-10"
-      style={{
-        background: `linear-gradient(135deg, ${tealColors.background} 0%, ${tealColors.secondary} 100%)`,
-      }}
+      // style={{
+      //   background: `linear-gradient(135deg, ${tealColors.background} 0%, ${tealColors.secondary} 100%)`,
+      // }}
     >
       {/* Title Section */}
       <Card
