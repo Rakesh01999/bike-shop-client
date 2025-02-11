@@ -1,92 +1,85 @@
-
 import { Card, Row, Col } from "antd";
 
 const testimonials = [
   {
     id: 1,
-    quote: "Amazing service! I found my dream car at an unbeatable price.",
-    name: "Emily R.",
+    quote: "Absolutely love my new bike! Smooth ride and top-notch quality.",
+    name: "Daniel R.",
     location: "New York",
   },
   {
     id: 2,
-    quote: "The buying process was seamless, and the team was super helpful!",
-    name: "John D.",
+    quote: "Best bike shop in town! Great selection and amazing customer support.",
+    name: "Sarah K.",
     location: "California",
   },
   {
     id: 3,
-    quote: "I love my new car! It’s exactly what I was looking for. Highly recommend.",
-    name: "Sophia L.",
+    quote: "The entire buying process was effortless. Highly recommend this store!",
+    name: "Chris M.",
     location: "Texas",
   },
   {
     id: 4,
-    quote: "Great selection of cars and excellent customer support.",
-    name: "Michael B.",
+    quote: "Top-tier bikes at unbeatable prices! Will be back for my next upgrade.",
+    name: "Emma T.",
     location: "Florida",
   },
   {
     id: 5,
-    quote: "The staff went above and beyond to help me find car.",
-    name: "Olivia H.",
-    location: "Illinois",
-  },
-  {
-    id: 6,
-    quote: "Affordable pricing and top-notch quality.",
-    name: "James P.",
-    location: "Nevada",
-  },
-  {
-    id: 7,
-    quote: "I’ll definitely recommend this place to my friends and family.",
-    name: "Charlotte W.",
+    quote: "The staff guided me to the perfect bike. Couldn’t be happier!",
+    name: "Liam B.",
     location: "Washington",
   },
   {
+    id: 6,
+    quote: "Fast delivery, quality bike, and exceptional service. 5 stars!",
+    name: "Sophia J.",
+    location: "Illinois",
+  },
+  {
+    id: 7,
+    quote: "Great experience! My bike rides like a dream. Worth every penny!",
+    name: "Michael P.",
+    location: "Nevada",
+  },
+  {
     id: 8,
-    quote: "Quick delivery and fantastic customer service!",
-    name: "Liam T.",
+    quote: "Ordered online and got my bike delivered in 2 days! Impressed!",
+    name: "Lucas D.",
     location: "Arizona",
   },
 ];
 
 const Testimonials = () => {
   return (
-    <div style={{ padding: "16px", textAlign: "center" }}>
-      {/* Title and Description */}
-      <div style={{ marginBottom: "32px" }}>
-        <h2 style={{ fontSize: "28px", fontWeight: "bold" }}>What Our Happy Customers Say</h2>
-        <p style={{ fontSize: "16px", color: "#555" }}>
-          Hear from our satisfied customers who found their perfect cars and exceptional service with us.
+    <div className="py-12 px-6 text-center">
+      {/* Title & Description */}
+      <div className="mb-8">
+        <h2 className="text-3xl font-bold text-gray-800">What Our Riders Say</h2>
+        <p className="text-lg text-gray-600 mt-2">
+          Hear from our happy customers who found their perfect ride with us.
         </p>
       </div>
 
       {/* Testimonials Grid */}
       <Row
         gutter={[16, 16]}
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))",
-          gap: "16px",
-          justifyContent: "center",
-        }}
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-center"
       >
         {testimonials.map((testimonial) => (
           <Col key={testimonial.id}>
             <Card
+              className="shadow-lg rounded-xl border border-gray-200 p-6 transition-all hover:shadow-xl"
               style={{
-                border: "1px solid #ddd",
-                borderRadius: "8px",
-                boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-                textAlign: "left",
-                padding: "16px",
+                background: "white",
+                borderLeft: "6px solid #0F766E", // Teal left border
               }}
             >
-              <p style={{ color: "#555" }}>"{testimonial.quote}"</p>
-              <p style={{ fontWeight: "bold", marginTop: "12px" }}>
-                - {testimonial.name}, <span style={{ color: "#4CAF50" }}>{testimonial.location}</span>
+              <p className="text-gray-700 italic">"{testimonial.quote}"</p>
+              <p className="font-semibold text-gray-900 mt-4">
+                - {testimonial.name},{" "}
+                <span className="text-teal-500">{testimonial.location}</span>
               </p>
             </Card>
           </Col>
