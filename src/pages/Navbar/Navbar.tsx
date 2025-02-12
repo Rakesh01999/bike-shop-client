@@ -45,15 +45,21 @@ const Navbar = () => {
           onClick={() => navigate('/')}
         >
           <img
-            src="https://i.postimg.cc/C5SrMXNd/car.png"
-            alt="Cars"
+            // src="https://i.postimg.cc/C5SrMXNd/car.png"
+            src="https://i.postimg.cc/Kzzym4yH/bike.png"
+            alt="Bike"
             className="w-16 h-16 rounded-full border-2 border-white/20 transform transition-all duration-300 group-hover:rotate-12 group-hover:scale-110"
           />
           <span
             className="text-2xl font-bold tracking-wider transition-all duration-300 group-hover:text-teal-200"
             style={{ color: colors.text.primary }}
           >
-            AutoVerse
+            {/* AutoVerse */}
+            <img
+            src="https://i.postimg.cc/KzLCGTHQ/bike-shop-logo.png"
+            alt="Bike"
+            className="md:w-32 w-24"
+          />
           </span>
         </div>
 

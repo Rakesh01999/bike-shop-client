@@ -47,15 +47,25 @@ const Navbars = ({ children }: { children: React.ReactNode }) => {
             className="flex items-center space-x-4 group cursor-pointer"
             onClick={() => navigate("/")}
           >
+
+<img
+            // src="https://i.postimg.cc/C5SrMXNd/car.png"
+            src="https://i.postimg.cc/Kzzym4yH/bike.png"
+            alt="Bike"
+            className="w-16 h-16 rounded-full border-2 border-white/20 transform transition-all duration-300 group-hover:rotate-12 group-hover:scale-110"
+          />
+          <span
+            className="text-2xl font-bold tracking-wider transition-all duration-300 group-hover:text-teal-200"
+            style={{ color: colors.text.primary }}
+          >
+            {/* AutoVerse */}
             <img
-              src="https://i.postimg.cc/C5SrMXNd/car.png"
-              alt="Cars"
-              className="w-14 h-14 rounded-full border border-white shadow-md transform transition-transform duration-300 hover:scale-110"
-            />
-            <span className="text-xl font-bold tracking-wider text-white transition-all duration-300 group-hover:text-teal-200">
-              AutoVerse
-            </span>
-          </div>
+            src="https://i.postimg.cc/KzLCGTHQ/bike-shop-logo.png"
+            alt="Bike"
+            className="md:w-32 w-24"
+          />
+          </span>
+        </div>
 
           {/* **Desktop Navigation** */}
           <div className="hidden md:flex items-center space-x-6">
