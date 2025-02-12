@@ -1,3 +1,106 @@
+# 🏍️ Bike Shop - AutoVerse
+
+## 🚀 Overview
+AutoVerse is a **full-stack bike shop application** built with the **MERN Stack**. It offers a seamless experience for **browsing, purchasing, and managing bikes online** with secure payments via **Shurjopay**.
+
+## 🔥 Tech Stack
+### **Frontend:**
+- React.js
+- TypeScript
+- Redux Toolkit
+- Tailwind CSS
+- Ant Design
+- Firebase Authentication
+
+### **Backend:**
+- Node.js
+- Express.js
+- MongoDB & Mongoose
+- JWT Authentication
+- Shurjopay Payment Gateway
+
+## 📂 Folder Structure
+
+### **Frontend (`/frontend` Directory)**
+```
+frontend/
+│── src/
+│   ├── assets/        # Images, icons, logos
+│   ├── components/    # Reusable UI components
+│   ├── pages/         # Page components
+│   ├── redux/         # Redux store & slices
+│   ├── utils/         # Helper functions
+│   ├── App.tsx        # Main app entry
+│   ├── index.tsx      # Root file
+│   ├── routes.tsx     # Routing configuration
+│   ├── .env.example   # Example environment variables
+│── public/
+│── package.json       # Frontend dependencies
+│── README.md
+```
+
+### **Backend (`/backend` Directory)**
+```
+backend/
+│── config/            # Environment variables, DB connection
+│── controllers/       # Business logic (Auth, Orders, Bikes)
+│── models/           # Mongoose models (Bike, User, Order)
+│── routes/           # API endpoints
+│── middleware/       # JWT Authentication, error handling
+│── utils/            # Helper functions
+│── server.js         # Main server entry file
+│── .env.example      # Example environment variables
+│── package.json      # Backend dependencies
+│── README.md
+```
+
+## 🛠 Installation Guide
+### 📌 Prerequisites
+- Node.js installed
+- MongoDB Atlas or Local MongoDB
+- Create `.env` files in `backend/` and `frontend/`
+
+### 🚀 Backend Setup
+```sh
+cd backend
+npm install
+npm start
+```
+
+### 🚀 Frontend Setup
+```sh
+cd frontend
+npm install
+npm run dev
+```
+
+## 📖 API Endpoints
+| Method | Endpoint | Description |
+|--------|---------|-------------|
+| GET | `/api/v1/bikes` | Fetch all bikes |
+| POST | `/api/v1/orders` | Place an order |
+| POST | `/api/v1/auth/register` | User registration |
+
+## 🚀 Deployment Guide
+### **Frontend Deployment (Vercel)**
+1. Install Vercel CLI: `npm install -g vercel`
+2. Run `vercel` and follow setup prompts
+3. Deploy using `vercel --prod`
+
+### **Backend Deployment (Render/Heroku)**
+1. Push code to GitHub
+2. Connect Render/Heroku with GitHub repo
+3. Set up environment variables
+4. Deploy & monitor logs
+
+## 🛠 Contributing
+We welcome contributions! Check [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+
+## 📜 License
+MIT License - see the [LICENSE](LICENSE) file for details.
+
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
