@@ -62,7 +62,7 @@ const Login = () => {
       xl:-mt-32 lg:-mt-20 
       "
       >
-        <h2 className="text-center text-2xl font-bold text-gray-700">
+        <h2 className="text-center text-2xl font-bold text-teal-700">
           Sign In
         </h2>
         <PHForm onSubmit={onSubmit} resolver={zodResolver(LoginSchema)}>
@@ -89,7 +89,7 @@ const Login = () => {
           <div>
             <button
               type="submit"
-              className="flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white mt-5 shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              className="flex w-full justify-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-sm font-medium text-white mt-5 shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
               Sign In
             </button>
@@ -98,7 +98,7 @@ const Login = () => {
         <div className="mt-8 flex justify-center text-center">
           <p className="text-sm font-bold text-gray-600">
             are you not register{" "}
-            <span className="font-semibold text-indigo-600">
+            <span className="font-semibold text-teal-600">
               <NavLink to="/register">Sign Up</NavLink>
             </span>
           </p>

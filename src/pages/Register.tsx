@@ -57,7 +57,7 @@ const Register = () => {
       xl:-mt-32 lg:-mt-20 
       "
       >
-        <h2 className="text-center text-2xl font-bold text-gray-700">
+        <h2 className="text-center text-2xl font-bold text-teal-700">
           Sign Up
         </h2>
         <PHForm onSubmit={onSubmit} resolver={zodResolver(registrationSchema)}>
@@ -90,7 +90,7 @@ const Register = () => {
           <div>
             <button
               type="submit"
-              className="flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white mt-5 shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              className="flex w-full justify-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-sm font-medium text-white mt-5 shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
             >
               Sign Up
             </button>
@@ -98,9 +98,9 @@ const Register = () => {
         </PHForm>
         <div className="mt-8 flex justify-center text-center">
           <p className="text-sm font-bold text-gray-600">
-            For query, please call:{" "}
-            <span className="font-semibold text-indigo-600">
-              013 12 xxx xxx
+            For any query, please call:{" "}
+            <span className="font-semibold text-teal-600">
+              01928374658
             </span>
           </p>
         </div>
