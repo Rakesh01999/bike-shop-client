@@ -6,14 +6,14 @@ import { useGetAllCarsQuery } from "../../../../redux/features/bikes/bikesManage
 import type { TQueryParam } from "../../../../types";
 import { useNavigate } from "react-router-dom";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-empty
-import type { TableColumnsType, TableProps } from "antd";
+import type { TableColumnsType } from "antd";
 import type { TTableData } from "../../../Allproduct";
 
 const GetAllCar: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-empty
-  const [params, setParams] = useState<TQueryParam[] | undefined>(undefined);
+  const [params, _setParams] = useState<TQueryParam[] | undefined>(undefined);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-empty
-  const [pagination, setPagination] = useState({ current: 1, pageSize: 20 });
+  const [pagination, _setPagination] = useState({ current: 1, pageSize: 20 });
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [filteredData, setFilteredData] = useState<TTableData[]>([]);
 

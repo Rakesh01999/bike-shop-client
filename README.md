@@ -3,6 +3,9 @@
 ## 🚀 Overview
 AutoVerse is a **full-stack bike shop application** built with the **MERN Stack**. It offers a seamless experience for **browsing, purchasing, and managing bikes online** with secure payments via **Shurjopay**.
 
+## 🌐 Live Demo
+[Visit Bike Shop](https://bike-shop-client-ruby.vercel.app/)
+
 ## 🔥 Tech Stack
 ### **Frontend:**
 - React.js

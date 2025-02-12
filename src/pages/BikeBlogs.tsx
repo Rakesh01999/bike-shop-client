@@ -219,10 +219,10 @@ const blogPosts: BlogPost[] = [
 
 const BlogComponent: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-empty
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, _setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-empty
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, _setCurrentPage] = useState(1);
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
   const postsPerPage = 6;
 
