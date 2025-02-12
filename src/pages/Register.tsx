@@ -14,10 +14,9 @@ const Register = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const [ register ] = useRegisterMutation();
+  const [register] = useRegisterMutation();
 
   const onSubmit = async (data: FieldValues) => {
-  
     // const toastId = toast.loading("Resigtered");
     const toastId = toast.loading("Resigtering...");
 
@@ -29,18 +28,30 @@ const Register = () => {
       const user = verifyToken(res?.data?.accessToken);
 
       dispatch(setUser({ user: user, token: res.data.accessToken }));
-      toast.success("Register in", { id: toastId, duration: 2000 });
+      toast.success("Signed Up Successfully", { id: toastId, duration: 2000 });
 
       navigate("/");
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (err:any) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
       toast.error(err?.data?.message, { id: toastId, duration: 5000 });
     }
   };
 
+  // Teal Color Palette
+  const tealColors = {
+    primary: "#0F766E", // Deep Teal
+    secondary: "#14B8A6", // Bright Teal
+    background: "#ECFDF5", // Light Teal
+  };
+
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div
+      className="flex items-center justify-center h-screen"
+      style={{
+        background: `linear-gradient(135deg, ${tealColors.background} 0%, ${tealColors.secondary} 100%)`,
+      }}
+    >
       <div
         className="w-full max-w-md rounded-lg bg-gray-100 p-8 shadow-md
       xl:-mt-32 lg:-mt-20 

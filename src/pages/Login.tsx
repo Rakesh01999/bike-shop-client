@@ -17,8 +17,8 @@ const Login = () => {
   const [login] = useLoginMutation();
 
   const onSubmit = async (data: FieldValues) => {
-
-    const toastId = toast.loading("Logging in");
+    // const toastId = toast.loading("Logging in");
+    const toastId = toast.loading("Signing in");
 
     try {
       const res = await login(data).unwrap();
@@ -26,7 +26,7 @@ const Login = () => {
       const user = verifyToken(res?.data?.accessToken);
 
       dispatch(setUser({ user: user, token: res.data.accessToken }));
-      toast.success("Logged in", { id: toastId, duration: 2000 });
+      toast.success("Signed in successfully", { id: toastId, duration: 2000 });
 
       navigate("/");
 
@@ -34,15 +34,29 @@ const Login = () => {
     } catch (err) {
       if (err instanceof Error) {
         toast.error(err?.message, { id: toastId, duration: 5000 });
-        
-    } else {
-        toast.error("Something went wrong or blocked", { id: toastId, duration: 5000 })
-    }
+      } else {
+        toast.error("Something went wrong or blocked", {
+          id: toastId,
+          duration: 5000,
+        });
+      }
     }
   };
 
+  // Teal Color Palette
+  const tealColors = {
+    primary: "#0F766E", // Deep Teal
+    secondary: "#14B8A6", // Bright Teal
+    background: "#ECFDF5", // Light Teal
+  };
+
   return (
-    <div className="flex items-center justify-center h-screen">
+    <div
+      className="flex items-center justify-center h-screen"
+      style={{
+        background: `linear-gradient(135deg, ${tealColors.background} 0%, ${tealColors.secondary} 100%)`,
+      }}
+    >
       <div
         className="w-full max-w-md rounded-lg bg-gray-100 p-8 shadow-md
       xl:-mt-32 lg:-mt-20 
@@ -77,15 +91,15 @@ const Login = () => {
               type="submit"
               className="flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white mt-5 shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
-              Login
+              Sign In
             </button>
           </div>
         </PHForm>
         <div className="mt-8 flex justify-center text-center">
           <p className="text-sm font-bold text-gray-600">
-            are you not register {" "}{" "}
+            are you not register{" "}
             <span className="font-semibold text-indigo-600">
-              <NavLink to='/register'>Register</NavLink>
+              <NavLink to="/register">Sign Up</NavLink>
             </span>
           </p>
         </div>

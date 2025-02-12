@@ -64,7 +64,8 @@ const Footer: React.FC = () => {
             <FaMapMarkerAlt className="text-4xl text-emerald-500" />
             <h2 className="text-3xl font-bold tracking-wider">Bike Shop</h2>
           </div>
-          <p className="text-gray-400 leading-relaxed">
+          <p className='text-gray-400 leading-relaxed'>123 Auto Lane, Tech City</p>
+          <p className="text-gray-300 leading-relaxed">
             Revolutionizing automotive experiences with cutting-edge technology 
             and unparalleled customer service. Your journey, our passion.
           </p>
@@ -162,7 +163,7 @@ const Footer: React.FC = () => {
               </div>
               <div className="flex items-center space-x-3">
                 <FaMapMarkerAlt className="text-emerald-500" />
-                <span className="text-gray-400">123 Auto Lane, Tech City</span>
+                <span className="text-gray-300">123 Auto Lane, Tech City</span>
               </div>
             </div>
           </div>
