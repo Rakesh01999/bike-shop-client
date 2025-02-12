@@ -39,21 +39,6 @@ frontend/
 │── README.md
 ```
 
-### **Backend (`/backend` Directory)**
-```
-backend/
-│── config/            # Environment variables, DB connection
-│── controllers/       # Business logic (Auth, Orders, Bikes)
-│── models/           # Mongoose models (Bike, User, Order)
-│── routes/           # API endpoints
-│── middleware/       # JWT Authentication, error handling
-│── utils/            # Helper functions
-│── server.js         # Main server entry file
-│── .env.example      # Example environment variables
-│── package.json      # Backend dependencies
-│── README.md
-```
-
 ## 🛠 Installation Guide
 ### 📌 Prerequisites
 - Node.js installed
