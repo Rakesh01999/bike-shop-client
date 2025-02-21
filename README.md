@@ -18,7 +18,7 @@ AutoVerse is a **full-stack bike shop application** built with the **MERN Stack*
 - Redux Toolkit
 - Tailwind CSS
 - Ant Design
-- Firebase Authentication
+- Authentication
 
 ### **Backend:**
 - Node.js
