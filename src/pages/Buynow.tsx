@@ -57,7 +57,7 @@ const Buynow = () => {
 
     try {
       const response = await addOrder(orderDetails).unwrap();
-
+      
       if (!response?.data) {
         toast.error("Order creation failed");
         return;
