@@ -10,6 +10,7 @@ AutoVerse is a **full-stack bike shop application** built with the **MERN Stack*
 ## ⚙️ Server-Side Repo:
 [bike-shop-server](https://github.com/Rakesh01999/bike-shop-server)
 
+Project Structure:project-structure.txt
 
 ## 🔥 Tech Stack
 ### **Frontend:**
