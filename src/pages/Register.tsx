@@ -4,7 +4,7 @@ import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 import { useRegisterMutation } from "../redux/features/auth/authApi";
 import { verifyToken } from "../utils/verifyToken";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { setUser } from "../redux/features/auth/authSlice";
 import { useAppDispatch } from "../redux/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -80,17 +80,17 @@ const Register = () => {
             placeholder="Enter your password"
           />
 
-          <label className="flex items-center">
+          {/* <label className="flex items-center">
             <input
               type="checkbox"
-              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+              className="h-4 w-4 rounded border-gray-300 text-teal-600 focus:ring-teal-500"
             />
             <span className="ms-2 text-sm text-gray-600">Remember me</span>
-          </label>
+          </label> */}
           <div>
             <button
               type="submit"
-              className="flex w-full justify-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-sm font-medium text-white mt-5 shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+              className="flex w-full justify-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-sm font-medium text-white mt-5 shadow-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
             >
               Sign Up
             </button>
@@ -99,8 +99,14 @@ const Register = () => {
         <div className="mt-8 flex justify-center text-center">
           <p className="text-sm font-bold text-gray-600">
             For any query, please call:{" "}
+            <span className="font-semibold text-teal-600">01999647103</span>
+          </p>
+        </div>
+        <div className="mt-8 flex justify-center text-center">
+          <p className="text-sm font-bold text-gray-600">
+            Are you registered ?
             <span className="font-semibold text-teal-600">
-              01928374658
+              <NavLink to="/login"> Sign in</NavLink>
             </span>
           </p>
         </div>
