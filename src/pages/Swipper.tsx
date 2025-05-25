@@ -1,116 +1,105 @@
 import React from 'react';
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay, EffectFade } from "swiper/modules";
+import { Link } from "react-router-dom";
 
-// Import Swiper styles
+// Swiper Styles
 import './swipper.css';
-// import 'swiper/css/navigation';
-// import 'swiper/css/pagination';
-// import 'swiper/css/effect-fade';
 
 const Swipper: React.FC = () => {
-  // Slide content data
   const slides = [
     {
-      image: "https://i.postimg.cc/x1fhdMmX/mt-15-2-06613f885e681c.jpg",
-      overlayText: "Drive in Style, Experience the Power. Unleash the Road with Precision and Performance",
-      altText: "Bike Slide 1"
+      image: "https://i.postimg.cc/zDx7jX1j/Bann1.jpg",
+      overlayText: "Drive in Style, Experience the Power",
+      description: "Unleash the Road with Precision and Performance",
+      altText: "Bike Slide 1",
+      cta: {
+        label: "All Products",
+        link: "/allproduct"
+      }
     },
     {
-      image: "https://i.postimg.cc/W4j3z9nM/Yamaha-MT15-szpwxk.jpg",
-      overlayText: "Precision Engineering Meets Aesthetic Design",
-      altText: "Bike Slide 2"
+      image: "https://i.postimg.cc/h4Z8my9Z/Bann2.jpg",
+      overlayText: "Precision Meets Aesthetic Design",
+      description: "Riding Redefined with Next-Level Engineering",
+      altText: "Bike Slide 2",
+      cta: {
+        label: "Read Blogs",
+        link: "/blogs"
+      }
     },
     {
-      image: "https://i.postimg.cc/ZqgMjQMN/2-f0496b287fd341eca1631de4db55d82c-grande.jpg",
-      overlayText: "Unleash Your Riding Potential with Cutting-Edge Technology",
-      altText: "Bike Slide 3"
+      image: "https://i.postimg.cc/JzZj9RSS/Bann3.jpg",
+      overlayText: "Tech-Driven Performance",
+      description: "Unleash Your Riding Potential Today",
+      altText: "Bike Slide 3",
+      cta: {
+        label: "Contact Us",
+        link: "/contact"
+      }
     }
   ];
 
   return (
     <div className="w-full overflow-hidden">
       <Swiper
-        // Responsive breakpoints
-        breakpoints={{
-          // When window width is >= 320px
-          320: {
-            slidesPerView: 1,
-            spaceBetween: 10
-          },
-          // When window width is >= 640px
-          640: {
-            slidesPerView: 1,
-            spaceBetween: 20
-          },
-          // When window width is >= 1024px
-          1024: {
-            slidesPerView: 1,
-            spaceBetween: 30
-          }
-        }}
-        
-        // Modules
         modules={[Navigation, Pagination, Autoplay, EffectFade]}
-        
-        // Navigation
-        navigation={{
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev"
-        }}
-        
-        // Pagination
-        pagination={{
-          type: "fraction",
-          el: ".swiper-pagination"
-        }}
-        
-        // Autoplay
-        autoplay={{
-          delay: 5000,
-          disableOnInteraction: false
-        }}
-        
-        // Effect
+        navigation={{ nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" }}
+        pagination={{ type: "fraction", el: ".swiper-pagination" }}
+        autoplay={{ delay: 5000, disableOnInteraction: false }}
         effect="fade"
         fadeEffect={{ crossFade: true }}
-        
-        // Other options
         loop={true}
-        className="mySwiper relative w-full h-[300px] md:h-[450px] lg:h-[600px]"
+        className="mySwiper relative w-full h-[60vh] sm:h-[65vh] md:h-[70vh] lg:h-[80vh]"
       >
         {slides.map((slide, index) => (
           <SwiperSlide key={index} className="relative">
-            {/* Image */}
+            {/* Background Image */}
             <div className="absolute inset-0 z-10">
               <img
                 src={slide.image}
                 alt={slide.altText}
                 className="w-full h-full object-cover"
               />
-              {/* Gradient Overlay */}
-              <div className="absolute inset-0 bg-black/40 z-20"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/40 z-20" />
             </div>
 
-            {/* Overlay Content */}
+            {/* Text + CTA Overlay */}
             <div className="relative z-30 flex items-center justify-center h-full">
-              <div className="text-center text-white max-w-2xl px-4 md:px-8">
-                <p className="text-sm md:text-lg lg:text-2xl font-medium leading-relaxed drop-shadow-lg">
+              <div className="text-center text-white px-4 max-w-2xl space-y-4">
+                <h2 className="text-xl sm:text-2xl md:text-4xl font-bold drop-shadow-xl">
                   {slide.overlayText}
+                </h2>
+                <p className="text-sm sm:text-base md:text-lg drop-shadow-lg">
+                  {slide.description}
                 </p>
+                <div className="flex flex-wrap justify-center gap-4 mt-4">
+                  <Link
+                    to={slide.cta.link}
+                    className="bg-teal-500 hover:bg-teal-600 px-6 py-2 rounded-full text-white font-semibold transition"
+                  >
+                    {slide.cta.label}
+                  </Link>
+                  <Link
+                    to="/about"
+                    className="bg-white hover:bg-gray-100 text-teal-600 px-6 py-2 rounded-full font-semibold transition"
+                  >
+                    Learn More
+                  </Link>
+                </div>
               </div>
             </div>
           </SwiperSlide>
         ))}
 
-        {/* Custom Navigation */}
+        {/* Navigation Buttons */}
         <div className="swiper-navigation-wrapper absolute top-1/2 transform -translate-y-1/2 z-40 w-full px-4">
-          <div className="swiper-button-prev text-white bg-black/50 hover:bg-black/70 p-2 rounded-full transition-all"></div>
-          <div className="swiper-button-next text-white bg-black/50 hover:bg-black/70 p-2 rounded-full transition-all"></div>
+          <div className="swiper-button-prev text-white bg-black/50 hover:bg-black/70 p-2 rounded-full transition-all" />
+          <div className="swiper-button-next text-white bg-black/50 hover:bg-black/70 p-2 rounded-full transition-all" />
         </div>
 
         {/* Pagination */}
-        <div className="swiper-pagination text-white absolute bottom-4 left-1/2 transform -translate-x-1/2 z-40"></div>
+        <div className="swiper-pagination text-white absolute bottom-5 left-1/2 transform -translate-x-1/2 z-40 text-sm" />
       </Swiper>
     </div>
   );
