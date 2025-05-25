@@ -118,6 +118,20 @@ const AllProduct = () => {
     }
   }, [tableData.length, maxPrice, isInitialized, searchParams]);
 
+  // NEW: Watch for URL parameter changes after initialization
+  useEffect(() => {
+    if (isInitialized && tableData.length > 0) {
+      const urlCategory = searchParams.get('category');
+      const urlBrand = searchParams.get('brand');
+      const urlModel = searchParams.get('modelnumber') || searchParams.get('modelNumber');
+      
+      // Update filters when URL parameters change
+      setSelectedCategory(urlCategory || "");
+      setSelectedBrand(urlBrand || "");
+      setSelectedModel(urlModel || "");
+    }
+  }, [searchParams, isInitialized, tableData.length]);
+
   // Memoize filtered data
   const filteredData = useMemo(() => {
     if (!tableData.length) return [];
