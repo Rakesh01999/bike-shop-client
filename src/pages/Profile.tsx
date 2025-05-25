@@ -1,4 +1,3 @@
-import React from "react";
 import { useAppSelector } from "../redux/hooks";
 import { useCurrentUser } from "../redux/features/auth/authSlice";
 import { useSingleuserQuery } from "../redux/features/bikes/bikesManagement";
@@ -27,7 +26,7 @@ const Profile = () => {
   const { data: userData, isLoading, isError } = useSingleuserQuery(userId);
 
   const profile = userData?.data;
-
+  console.log(profile);
   return (
     <div
       className="min-h-screen flex items-center justify-center px-4"
@@ -47,7 +46,7 @@ const Profile = () => {
         ) : (
           <>
             {/* Top Section */}
-            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 md:text-lg">
               {/* Avatar */}
               {/* <img
                 src={
@@ -65,7 +64,7 @@ const Profile = () => {
               >
                 <UserOutlined className="text-3xl sm:text-4xl text-white" />
               </div>
-              
+
               {/* Basic Info */}
               <div className="flex-1 text-center sm:text-left">
                 <h1 className="text-3xl font-bold text-teal-700">
@@ -79,9 +78,9 @@ const Profile = () => {
             </div>
 
             {/* Profile Info Grid */}
-            <div className="grid sm:grid-cols-2 gap-6 mt-4 text-sm text-gray-800">
+            <div className="grid sm:grid-cols-2 gap-6 mt-4 text-sm text-gray-800 md:text-lg">
               <div>
-                <span className="text-gray-500 block mb-1">Status</span>
+                <span className="text-gray-500 block mb-1 font-bold">Status</span>
                 <span
                   className={`font-semibold ${
                     profile?.status === "active"
@@ -93,7 +92,7 @@ const Profile = () => {
                 </span>
               </div>
               <div>
-                <span className="text-gray-500 block mb-1">Blocked</span>
+                <span className="text-gray-500 block mb-1 font-bold">Blocked</span>
                 <span
                   className={`font-semibold ${
                     profile?.isBlocked ? "text-red-600" : "text-green-600"
@@ -103,7 +102,7 @@ const Profile = () => {
                 </span>
               </div>
               <div>
-                <span className="text-gray-500 block mb-1">
+                <span className="text-gray-500 block mb-1 font-bold">
                   Password Change Required
                 </span>
                 <span className="font-semibold">
@@ -111,21 +110,33 @@ const Profile = () => {
                 </span>
               </div>
               <div>
-                <span className="text-gray-500 block mb-1">Joined On</span>
+                <span className="text-gray-500 block mb-1 font-bold">Joined On</span>
                 <span className="font-semibold">
                   {profile?.createdAt?.split("T")[0] || "N/A"}
                 </span>
               </div>
               <div>
-                <span className="text-gray-500 block mb-1">Last Updated</span>
+                <span className="text-gray-500 block mb-1 font-bold">Last Updated</span>
                 <span className="font-semibold">
                   {profile?.updatedAt?.split("T")[0] || "N/A"}
                 </span>
               </div>
               <div>
-                <span className="text-gray-500 block mb-1">User ID</span>
-                <span className="font-mono text-xs break-all">
+                <span className="text-gray-500 block mb-1 font-bold">User ID</span>
+                <span className="font-mono md:text-lg break-all">
                   {profile?._id}
+                </span>
+              </div>
+              <div>
+                <span className="text-gray-500 block mb-1 font-bold">Address</span>
+                <span className="font-mono md:text-lg break-all">
+                  {profile?.address ? profile?.address : "N/A"}
+                </span>
+              </div>
+              <div>
+                <span className="text-gray-500 block mb-1 font-bold">Phone Number</span>
+                <span className="font-mono md:text-lg break-all">
+                  {profile?.phone_number ? profile?.phone_number : "N/A"}
                 </span>
               </div>
             </div>
