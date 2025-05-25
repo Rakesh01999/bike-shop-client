@@ -16,6 +16,7 @@ import { userChildren } from './UserRoutes';
 import ProtectedRoute from '../components/layout/ProtectedRoute';
 import Contact from '../pages/Contact';
 import Blog from '../pages/Blog';
+import Profile from '../pages/Profile';
 
 const router = createBrowserRouter([
    {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
         {
            path:'blog',
            element:<Blog/>
+        },
+        {
+           path:'profile',
+           element:<Profile/>
         },
         {
             path:'register',

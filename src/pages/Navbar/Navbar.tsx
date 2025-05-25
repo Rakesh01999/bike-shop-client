@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, User, LogOut } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { logout, useCurrentUser } from "../../redux/features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
@@ -10,8 +10,13 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [megaMenuOpen, setMegaMenuOpen] = useState(false);
-
-  const user = useAppSelector(useCurrentUser);
+  const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+  
+  interface User {
+    name?: string; // Optional because it's not guaranteed to be present
+    email?: string; // Optional because it's not guaranteed to be present
+  }
+  const user = useAppSelector(useCurrentUser) as User;
   const { data: bikesData } = useGetAllCarsQuery([]);
 
   // Extract unique categories, brands, and models
@@ -34,6 +39,12 @@ const Navbar = () => {
   const handleLogout = () => {
     dispatch(logout());
     navigate("/login");
+    setProfileDropdownOpen(false);
+  };
+
+  const handleProfileNavigation = () => {
+    navigate("/profile");
+    setProfileDropdownOpen(false);
   };
 
   // Enhanced Color Palette
@@ -125,6 +136,48 @@ const Navbar = () => {
     </div>
   );
 
+  // Profile Dropdown Component
+  const ProfileDropdown = () => (
+    <div
+      className="absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-xl transform transition-all duration-300 z-50"
+      style={{
+        visibility: profileDropdownOpen ? "visible" : "hidden",
+        opacity: profileDropdownOpen ? 1 : 0,
+        transform: `translateY(${profileDropdownOpen ? "0" : "-10px"})`,
+      }}
+    >
+      <div className="py-2">
+        {/* User Info */}
+        <div className="px-4 py-3 border-b border-gray-100">
+          <p className="text-sm font-medium text-gray-900 truncate">
+            {user?.name || user?.email || "User"}
+          </p>
+          {user?.email && (
+            <p className="text-xs text-gray-500 truncate">{user.email}</p>
+          )}
+        </div>
+
+        {/* Profile Option */}
+        <button
+          onClick={handleProfileNavigation}
+          className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-teal-50 hover:text-teal-700 transition-all duration-200"
+        >
+          <User size={16} className="mr-3" />
+          Profile
+        </button>
+
+        {/* Logout Option */}
+        <button
+          onClick={handleLogout}
+          className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-red-50 hover:text-red-700 transition-all duration-200"
+        >
+          <LogOut size={16} className="mr-3" />
+          Logout
+        </button>
+      </div>
+    </div>
+  );
+
   return (
     <nav
       className="fixed top-0 left-0 w-full z-50 shadow-lg transition-all duration-300"
@@ -190,18 +243,34 @@ const Navbar = () => {
             )}
           </div>
 
+          {/* Profile Dropdown for Desktop */}
           {user && (
-            <button
-              onClick={handleLogout}
-              className="px-6 py-2 rounded-full font-medium transition-all duration-300 hover:bg-white/20 hover:shadow-2xl group relative overflow-hidden"
-              style={{
-                color: colors.text.primary,
-                border: `2px solid ${colors.text.primary}`,
-              }}
-            >
-              <span className="relative z-10">Logout</span>
-              <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-            </button>
+            <div className="relative">
+              <button
+                onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
+                onBlur={() =>
+                  setTimeout(() => setProfileDropdownOpen(false), 150)
+                }
+                className="flex items-center space-x-2 px-4 py-2 rounded-full font-medium transition-all duration-300 hover:bg-white/20 hover:shadow-2xl group relative overflow-hidden"
+                style={{
+                  color: colors.text.primary,
+                  border: `2px solid ${colors.text.primary}`,
+                }}
+              >
+                <User size={18} />
+                <span className="relative z-10">
+                  {user?.name?.split(" ")[0] || "Profile"}
+                </span>
+                <ChevronDown
+                  size={16}
+                  className={`transform transition-transform duration-200 ${
+                    profileDropdownOpen ? "rotate-180" : ""
+                  }`}
+                />
+                <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+              </button>
+              <ProfileDropdown />
+            </div>
           )}
         </div>
 
@@ -256,6 +325,39 @@ const Navbar = () => {
             />
 
             {/* Mobile Vehicles Section */}
+            {/* <div className="border-t border-white/20 pt-4">
+              <h4 className="text-white font-semibold mb-3">Vehicles</h4>
+              <div className="pl-4 space-y-2">
+                <div>
+                  <p className="text-white/80 text-sm font-medium mb-2">Categories</p>
+                  <div className="pl-2 space-y-1">
+                    {categories.slice(0, 3).map((category, index) => (
+                      <button
+                        key={index}
+                        onClick={() => handleFilteredNavigation("category", category)}
+                        className="block text-white/70 text-sm hover:text-white transition-colors duration-200"
+                      >
+                        {category}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <p className="text-white/80 text-sm font-medium mb-2">Brands</p>
+                  <div className="pl-2 space-y-1">
+                    {brands.slice(0, 3).map((brand, index) => (
+                      <button
+                        key={index}
+                        onClick={() => handleFilteredNavigation("brand", brand)}
+                        className="block text-white/70 text-sm hover:text-white transition-colors duration-200"
+                      >
+                        {brand}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div> */}
 
             <MobileNavLink
               href="/dashboard"
@@ -293,18 +395,29 @@ const Navbar = () => {
               </>
             )}
 
+            {/* Mobile Profile Section */}
             {user && (
-              <button
-                onClick={handleLogout}
-                className="w-full px-6 py-3 rounded-lg font-medium text-center transition-all duration-300 hover:bg-white/20 group relative overflow-hidden"
-                style={{
-                  color: colors.text.primary,
-                  border: `2px solid ${colors.text.primary}`,
-                }}
-              >
-                <span className="relative z-10">Logout</span>
-                <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-              </button>
+              <div className="border-t border-white/20 pt-4 space-y-3">
+                <div className="text-white/90">
+                  <p className="font-medium">{user?.name || "User"}</p>
+                  {user?.email && (
+                    <p className="text-sm text-white/70">{user.email}</p>
+                  )}
+                </div>
+                <MobileNavLink
+                  href="/profile"
+                  label="Profile"
+                  onClick={() => setMenuOpen(false)}
+                />
+                <button
+                  onClick={handleLogout}
+                  className="w-full text-left py-3 text-base font-medium tracking-wider transition-all duration-300 hover:bg-white/10 rounded-lg px-4 relative group"
+                  style={{ color: "rgba(255,255,255,0.9)" }}
+                >
+                  Logout
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
+                </button>
+              </div>
             )}
           </div>
         </div>

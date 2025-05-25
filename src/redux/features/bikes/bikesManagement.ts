@@ -42,7 +42,7 @@ const bikesManagementApi = baseApi.injectEndpoints({
         }),
         getSingleCars: builder.query({
             query: (args) => {
-                console.log('f-bikeManageApi, args:',args);
+                console.log('f-bikeManageApi, args:', args);
                 return {
                     // url: `/bikes/${args}`,
                     url: `/products/${args}`,
@@ -101,7 +101,7 @@ const bikesManagementApi = baseApi.injectEndpoints({
         // Replace useGetOwnCarsQuery with a new endpoint for user orders
         getOwnOrders: builder.query({
             query: () => ({
-                url: "/orders/my-orders", 
+                url: "/orders/my-orders",
                 method: "GET",
             }),
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -279,6 +279,17 @@ const bikesManagementApi = baseApi.injectEndpoints({
             providesTags: ['tags']
         }),
 
+        singleuser: builder.query({
+            query: (userId) => {
+                return {
+                    // url: `/${userId.id}`,
+                    url: `/${userId}`,
+                    method: "GET",
+                }
+            },
+            // invalidatesTags: ['tags']
+        }),
+
         blockedUser: builder.mutation({
             query: (userId) => {
                 console.log(userId.userId)
@@ -286,7 +297,6 @@ const bikesManagementApi = baseApi.injectEndpoints({
                     url: `/${userId.userId}`,
                     method: "PUT",
                 };
-
             },
             invalidatesTags: ["tags"],
         }),
@@ -308,8 +318,9 @@ export const {
     useCreateCarMutation,
     useAllsurjopayQuery,
     useAlluserQuery,
+    useSingleuserQuery,
     useBlockedUserMutation,
     useGetOwnCarsQuery,
-    useGetOwnOrdersQuery, 
+    useGetOwnOrdersQuery,
 
 } = bikesManagementApi;
