@@ -1,6 +1,7 @@
 import BikeBlogs from "./BikeBlogs";
 import CustomCard from "./Card";
 import Category from "./Category";
+import Newsletter from "./Newsletter";
 import Offers from "./Offers";
 import Services from "./Services";
 import Swipper from "./Swipper";
@@ -74,6 +75,13 @@ const Home = () => {
       <div className="w-full max-w-6xl px-4 mt-10">
         <div className="mt-6">
           <Services />
+        </div>
+      </div>
+      
+      {/* Newsletter */}
+      <div className="w-full max-w-6xl px-4 mt-10">
+        <div className="mt-6">
+          <Newsletter />
         </div>
       </div>
 
