@@ -110,7 +110,7 @@ const CustomCard = () => {
             className="w-52 h-10 bg-teal-600 hover:bg-teal-700 text-white md:text-xl font-bold px-6 py-2 rounded-lg shadow-md transition-all"
             onClick={handleViewAll}
           >
-            View All
+            View All Bikes
           </Button>
         </div>
       )}

@@ -1,6 +1,7 @@
 import BikeBlogs from "./BikeBlogs";
 import CustomCard from "./Card";
 import Category from "./Category";
+import Offers from "./Offers";
 import Swipper from "./Swipper";
 import Testimonials from "./Testimonials";
 
@@ -34,6 +35,23 @@ const Home = () => {
       <div className="w-full max-w-6xl px-4 mt-16">
         <div className="mt-6">
           <Category />
+        </div>
+      </div>
+
+      <div>
+        <h2 className="text-3xl md:text-4xl font-bold text-teal-900 animate-pulse mb-6 text-center mt-16">
+          🔥 Special Offers
+        </h2>
+        <p className="text-gray-700 max-w-2xl mx-auto text-center">
+          Don’t miss out on our exclusive deals and seasonal discounts. Grab
+          your dream ride today!
+        </p>
+      </div>
+
+      {/* Offers */}
+      <div className="w-full max-w-6xl px-4 ">
+        <div className="mt-6">
+          <Offers />
         </div>
       </div>
 
