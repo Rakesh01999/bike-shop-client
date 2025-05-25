@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect, useMemo, useCallback } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Bike, TQueryParam } from "../types";
 import { useGetAllCarsQuery } from "../redux/features/bikes/bikesManagement";
 import {
@@ -28,10 +29,13 @@ export type TTableData = Pick<
 const AllProduct = () => {
   const [params] = useState<TQueryParam[] | undefined>(undefined);
   const [pagination] = useState({ current: 1, pageSize: 20 });
+  const [searchParams] = useSearchParams();
 
   // Search and Filter States
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [selectedBrand, setSelectedBrand] = useState<string>("");
+  const [selectedModel, setSelectedModel] = useState<string>("");
   const [priceRange, setPriceRange] = useState<number[]>([0, 10000]);
   const [isInitialized, setIsInitialized] = useState<boolean>(false);
 
@@ -60,14 +64,22 @@ const AllProduct = () => {
     );
   }, [CarData?.data]);
 
-  // Memoize categories and max price
-  const { categories, maxPrice } = useMemo(() => {
+  // Memoize categories, brands, models and max price
+  const { categories, brands, models, maxPrice } = useMemo(() => {
     if (!tableData.length) {
-      return { categories: [], maxPrice: 10000 };
+      return { categories: [], brands: [], models: [], maxPrice: 10000 };
     }
 
     const uniqueCategories = [
       ...new Set(tableData.map((item) => item.category)),
+    ];
+    
+    const uniqueBrands = [
+      ...new Set(tableData.map((item) => item.brand)),
+    ];
+    
+    const uniqueModels = [
+      ...new Set(tableData.map((item) => item.model).filter(model => model !== "N/A")),
     ];
     
     const prices = tableData.map((item) => item.price);
@@ -75,17 +87,36 @@ const AllProduct = () => {
 
     return {
       categories: uniqueCategories,
+      brands: uniqueBrands,
+      models: uniqueModels,
       maxPrice: maxPriceValue,
     };
   }, [tableData]);
 
-  // Initialize price range only once when data loads
+  // Initialize filters from URL parameters and set initial state
   useEffect(() => {
     if (tableData.length > 0 && !isInitialized) {
+      // Get URL parameters
+      const urlCategory = searchParams.get('category');
+      const urlBrand = searchParams.get('brand');
+      const urlModel = searchParams.get('modelnumber') || searchParams.get('modelNumber');
+      
+      // Set filters based on URL parameters
+      if (urlCategory) {
+        setSelectedCategory(urlCategory);
+      }
+      if (urlBrand) {
+        setSelectedBrand(urlBrand);
+      }
+      if (urlModel) {
+        setSelectedModel(urlModel);
+      }
+      
+      // Initialize price range
       setPriceRange([0, maxPrice]);
       setIsInitialized(true);
     }
-  }, [tableData.length, maxPrice, isInitialized]);
+  }, [tableData.length, maxPrice, isInitialized, searchParams]);
 
   // Memoize filtered data
   const filteredData = useMemo(() => {
@@ -109,13 +140,23 @@ const AllProduct = () => {
       filtered = filtered.filter((item) => item.category === selectedCategory);
     }
 
+    // Brand filter
+    if (selectedBrand) {
+      filtered = filtered.filter((item) => item.brand === selectedBrand);
+    }
+
+    // Model filter
+    if (selectedModel) {
+      filtered = filtered.filter((item) => item.model === selectedModel);
+    }
+
     // Price range filter
     filtered = filtered.filter(
       (item) => item.price >= priceRange[0] && item.price <= priceRange[1]
     );
 
     return filtered;
-  }, [searchTerm, selectedCategory, priceRange, tableData]);
+  }, [searchTerm, selectedCategory, selectedBrand, selectedModel, priceRange, tableData]);
 
   // Memoize event handlers
   const handleSearch = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -124,7 +165,34 @@ const AllProduct = () => {
 
   const handleCategoryChange = useCallback((value: string) => {
     setSelectedCategory(value);
-  }, []);
+    // Update URL without the category parameter when cleared
+    if (!value) {
+      const newSearchParams = new URLSearchParams(searchParams);
+      newSearchParams.delete('category');
+      navigate(`?${newSearchParams.toString()}`, { replace: true });
+    }
+  }, [navigate, searchParams]);
+
+  const handleBrandChange = useCallback((value: string) => {
+    setSelectedBrand(value);
+    // Update URL without the brand parameter when cleared
+    if (!value) {
+      const newSearchParams = new URLSearchParams(searchParams);
+      newSearchParams.delete('brand');
+      navigate(`?${newSearchParams.toString()}`, { replace: true });
+    }
+  }, [navigate, searchParams]);
+
+  const handleModelChange = useCallback((value: string) => {
+    setSelectedModel(value);
+    // Update URL without the model parameter when cleared
+    if (!value) {
+      const newSearchParams = new URLSearchParams(searchParams);
+      newSearchParams.delete('modelnumber');
+      newSearchParams.delete('modelNumber');
+      navigate(`?${newSearchParams.toString()}`, { replace: true });
+    }
+  }, [navigate, searchParams]);
 
   const handlePriceRangeChange = useCallback((value: number[]) => {
     setPriceRange(value);
@@ -133,12 +201,26 @@ const AllProduct = () => {
   const clearFilters = useCallback(() => {
     setSearchTerm("");
     setSelectedCategory("");
+    setSelectedBrand("");
+    setSelectedModel("");
     setPriceRange([0, maxPrice]);
-  }, [maxPrice]);
+    // Clear URL parameters
+    navigate('/allproduct', { replace: true });
+  }, [maxPrice, navigate]);
 
   const navigateToProduct = useCallback((productId: string) => {
     navigate(`/products/${productId}`);
   }, [navigate]);
+
+  // Get active filter display
+  const getActiveFiltersDisplay = useMemo(() => {
+    const filters = [];
+    if (selectedCategory) filters.push(`Category: ${selectedCategory}`);
+    if (selectedBrand) filters.push(`Brand: ${selectedBrand}`);
+    if (selectedModel) filters.push(`Model: ${selectedModel}`);
+    if (searchTerm) filters.push(`Search: "${searchTerm}"`);
+    return filters;
+  }, [selectedCategory, selectedBrand, selectedModel, searchTerm]);
 
   // Teal Theme
   const tealColors = {
@@ -172,6 +254,20 @@ const AllProduct = () => {
         <p className="text-gray-600 text-sm">
           Find the perfect bike for your journey.
         </p>
+        
+        {/* Active Filters Display */}
+        {getActiveFiltersDisplay.length > 0 && (
+          <div className="mt-3 flex flex-wrap gap-2 justify-center">
+            {getActiveFiltersDisplay.map((filter, index) => (
+              <span
+                key={index}
+                className="px-3 py-1 bg-teal-100 text-teal-700 rounded-full text-xs font-medium"
+              >
+                {filter}
+              </span>
+            ))}
+          </div>
+        )}
       </Card>
 
       {/* Search and Filters Section */}
@@ -226,6 +322,46 @@ const AllProduct = () => {
                   </Select>
                 </div>
 
+                {/* Brand Filter */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Brand
+                  </label>
+                  <Select
+                    placeholder="Select Brand"
+                    value={selectedBrand || undefined}
+                    onChange={handleBrandChange}
+                    className="w-full"
+                    allowClear
+                  >
+                    {brands.map((brand) => (
+                      <Option key={brand} value={brand}>
+                        {brand}
+                      </Option>
+                    ))}
+                  </Select>
+                </div>
+
+                {/* Model Filter */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Model
+                  </label>
+                  <Select
+                    placeholder="Select Model"
+                    value={selectedModel || undefined}
+                    onChange={handleModelChange}
+                    className="w-full"
+                    allowClear
+                  >
+                    {models.map((model) => (
+                      <Option key={model} value={model}>
+                        {model}
+                      </Option>
+                    ))}
+                  </Select>
+                </div>
+
                 {/* Price Range Filter */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -265,7 +401,7 @@ const AllProduct = () => {
         <div className="hidden sm:block">
           <Row gutter={[16, 16]} align="middle">
             {/* Search Input */}
-            <Col xs={24} sm={12} md={8}>
+            <Col xs={24} sm={12} md={6}>
               <Input
                 placeholder="Search by brand, model, category"
                 value={searchTerm}
@@ -292,8 +428,42 @@ const AllProduct = () => {
               </Select>
             </Col>
 
+            {/* Brand Filter */}
+            <Col xs={24} sm={6} md={4}>
+              <Select
+                placeholder="Brand"
+                value={selectedBrand || undefined}
+                onChange={handleBrandChange}
+                className="w-full"
+                allowClear
+              >
+                {brands.map((brand) => (
+                  <Option key={brand} value={brand}>
+                    {brand}
+                  </Option>
+                ))}
+              </Select>
+            </Col>
+
+            {/* Model Filter */}
+            <Col xs={24} sm={6} md={4}>
+              <Select
+                placeholder="Model"
+                value={selectedModel || undefined}
+                onChange={handleModelChange}
+                className="w-full"
+                allowClear
+              >
+                {models.map((model) => (
+                  <Option key={model} value={model}>
+                    {model}
+                  </Option>
+                ))}
+              </Select>
+            </Col>
+
             {/* Price Range */}
-            <Col xs={24} sm={12} md={8}>
+            <Col xs={24} sm={12} md={4}>
               <div>
                 <div className="text-xs text-gray-600 mb-1">
                   Price: ${priceRange[0].toLocaleString()} - $
@@ -314,7 +484,7 @@ const AllProduct = () => {
             </Col>
 
             {/* Clear Filters */}
-            <Col xs={24} sm={6} md={4}>
+            <Col xs={24} sm={6} md={2}>
               <Button
                 onClick={clearFilters}
                 className="w-full"
@@ -323,7 +493,7 @@ const AllProduct = () => {
                   color: tealColors.primary,
                 }}
               >
-                Clear Filters
+                Clear
               </Button>
             </Col>
           </Row>
