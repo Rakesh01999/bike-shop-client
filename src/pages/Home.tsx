@@ -2,6 +2,7 @@ import BikeBlogs from "./BikeBlogs";
 import CustomCard from "./Card";
 import Category from "./Category";
 import Offers from "./Offers";
+import Services from "./Services";
 import Swipper from "./Swipper";
 import Testimonials from "./Testimonials";
 
@@ -68,6 +69,14 @@ const Home = () => {
           <Testimonials />
         </div>
       </div>
+      
+      {/* Services */}
+      <div className="w-full max-w-6xl px-4 mt-10">
+        <div className="mt-6">
+          <Services />
+        </div>
+      </div>
+
     </div>
   );
 };
