@@ -64,7 +64,7 @@ const Login = () => {
             placeholder="Enter your email"
           />
           <PHInput
-            type="text"
+            type="password"
             name="password"
             label="Password"
             placeholder="Enter your password"
@@ -94,7 +94,7 @@ const Login = () => {
                 className="flex w-full justify-center items-center rounded-md border border-transparent bg-teal-600 px-4 py-2 text-sm font-medium text-white mt-5 shadow-sm hover:bg-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 gap-3"
               >
                 <span>Go to Home</span>
-                <AiOutlineHome className="text-white" />
+                <AiOutlineHome className="text-white text-lg" />
               </button>
             </NavLink>
           </div>

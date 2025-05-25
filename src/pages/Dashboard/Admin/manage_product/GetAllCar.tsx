@@ -18,7 +18,7 @@ const GetAllCar: React.FC = () => {
   const [filteredData, setFilteredData] = useState<TTableData[]>([]);
 
   // Price Range State (Default: 0 - 400,000)
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 400000]);
+  const [priceRange, setPriceRange] = useState<number[]>([0, 400000]);
 
   const navigate = useNavigate();
 
@@ -30,13 +30,14 @@ const GetAllCar: React.FC = () => {
   console.log("car data :", CarData);
 
   const tableData = CarData?.data?.map(
-    ({ _id, price, modelNumber, brand, category, quantity }) => ({
+    ({ _id, price, modelNumber, brand, category, quantity, image }) => ({
       key: _id,
       price,
       model: modelNumber ?? "N/A",
       brand,
       category,
       quantity,
+      image: image ?? "", // Add the missing image property with fallback
     })
   );
 
@@ -142,31 +143,6 @@ const GetAllCar: React.FC = () => {
       title: "Actions",
       key: "actions",
       render: (record: TTableData) => (
-        // <Dropdown
-        //   overlay={
-        //     <Menu>
-        //       <Menu.Item
-        //         key="view"
-        //         icon={<EyeOutlined />}
-        //         onClick={() => navigate(`/products/${record.key}`)}
-        //       >
-        //         View Details
-        //       </Menu.Item>
-        //       <Menu.Item
-        //         key="edit"
-        //         icon={<FilterOutlined />}
-        //         onClick={() => navigate(`/edit-product/${record.key}`)}
-        //       >
-        //         Edit Product
-        //       </Menu.Item>
-        //     </Menu>
-        //   }
-        //   trigger={["click"]}
-        // >
-        //   <Button type="text">
-        //     <MoreOutlined />
-        //   </Button>
-        // </Dropdown>
         <Button
           onClick={() => navigate(`/products/${record.key}`)}
           className="transition-all duration-300 bg-teal-500 hover:bg-teal-700 text-white font-bold py-1 px-3 rounded-md shadow-md"
@@ -184,8 +160,8 @@ const GetAllCar: React.FC = () => {
   };
 
   return (
-    <div className="p-6  min-h-screen">
-      <div className=" shadow-md rounded-lg p-6">
+    <div className="p-6 min-h-screen">
+      <div className="shadow-md rounded-lg p-6">
         <div className="flex flex-col items-center">
           <div className="flex justify-between items-center mb-6">
             <Card
@@ -217,24 +193,24 @@ const GetAllCar: React.FC = () => {
           />
 
           {/* Price Range Filter */}
-          <div className="flex flex-col bg-white rounded-xl p-2">
-            <span className="text-lg font-semibold text-gray-600">
-              Price Range
+          <div className="flex flex-col bg-white rounded-xl p-4">
+            <span className="text-lg font-semibold text-gray-600 mb-2">
+              Price Range: ${priceRange[0].toLocaleString()} - ${priceRange[1].toLocaleString()}
             </span>
             <Slider
               range
               min={0}
-              // max={100000}
               max={400000}
               step={500}
-              defaultValue={priceRange}
-              onChange={(value) => setPriceRange(value as [number, number])}
+              value={priceRange}
+              onChange={(value) => setPriceRange(value)}
               className="w-full md:w-80"
+              tooltip={{ formatter: (value) => `$${value?.toLocaleString()}` }}
             />
-            <span className="flex justify-between">
-              <p>0</p>
-              <p>400000</p>
-            </span>
+            <div className="flex justify-between text-sm text-gray-500 mt-1">
+              <span>$0</span>
+              <span>$400,000</span>
+            </div>
           </div>
         </div>
 
@@ -259,7 +235,6 @@ const GetAllCar: React.FC = () => {
                   {...props}
                   style={{
                     ...props.style,
-                    // backgroundColor: tealColors.secondary, // Bright Teal header
                     color: "teal",
                     fontWeight: "bold",
                     textAlign: "center",

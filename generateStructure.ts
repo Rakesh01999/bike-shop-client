@@ -1,9 +1,7 @@
 // generateStructure.ts
 
-// import fs from "fs";
-// import path from "path";
-import * as fs from 'fs';
-import * as path from 'path';
+import fs from 'fs';          // Using default import
+import path from 'path';      // Using default import
 
 function getStructure(dir: string, depth = 0): string {
   const files = fs.readdirSync(dir);
@@ -28,7 +26,6 @@ const projectStructure = getStructure(process.cwd());
 fs.writeFileSync("project-structure.txt", projectStructure);
 
 console.log("✅ Project structure saved to project-structure.txt");
-
 
 // # Compile
 // npx tsc generateStructure.ts

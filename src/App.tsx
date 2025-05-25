@@ -4,6 +4,7 @@ import Footer from "./pages/Footer/Footer";
 
 function App() {
   return (
+    // <div>
     <div>
       <div className="mb-24">
         <Navbar />

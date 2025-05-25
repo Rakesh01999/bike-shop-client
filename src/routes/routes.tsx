@@ -14,6 +14,8 @@ import { routeGenerator } from '../utils/routesGenerator';
 import { adminChildren } from './Adminroutes';
 import { userChildren } from './UserRoutes';
 import ProtectedRoute from '../components/layout/ProtectedRoute';
+import Contact from '../pages/Contact';
+import Blog from '../pages/Blog';
 
 const router = createBrowserRouter([
    {
@@ -27,6 +29,14 @@ const router = createBrowserRouter([
         {
            path:'about',
            element:<About/>
+        },
+        {
+           path:'contact',
+           element:<Contact/>
+        },
+        {
+           path:'blog',
+           element:<Blog/>
         },
         {
             path:'register',

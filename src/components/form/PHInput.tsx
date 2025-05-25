@@ -16,17 +16,29 @@ const PHInput = ({ type, name, label, disabled, placeholder }: TInputProps) => {
     <div style={{ marginBottom: "20px" }}>
       <Controller
         name={name}
-        control={control} 
+        control={control}
         render={({ field, fieldState: { error } }) => (
           <Form.Item label={label}>
-            <Input
-              {...field}
-              type={type}
-              id={name}
-              size="large"
-              disabled={disabled}
-              placeholder={placeholder}
-            />
+            {type === "password" ? (
+              <Input.Password
+                {...field}
+                id={name}
+                size="large"
+                disabled={disabled}
+                placeholder={placeholder}
+                style={{ borderColor: "teal" }}
+              />
+            ) : (
+              <Input
+                {...field}
+                type={type}
+                id={name}
+                size="large"
+                disabled={disabled}
+                placeholder={placeholder}
+                style={{ borderColor: "teal" }}
+              />
+            )}
             {error && <small style={{ color: "red" }}>{error.message}</small>}
           </Form.Item>
         )}

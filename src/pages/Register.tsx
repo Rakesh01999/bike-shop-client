@@ -74,7 +74,7 @@ const Register = () => {
             placeholder="Enter you email"
           />
           <PHInput
-            type="text"
+            type="password"
             name="password"
             label="Password"
             placeholder="Enter your password"

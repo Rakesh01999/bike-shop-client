@@ -70,6 +70,8 @@ const Navbar = () => {
             <NavLink href="/allproduct" label="All Products" />
             <NavLink href="/dashboard" label="Dashboard" />
             <NavLink href="/about" label="About" />
+            <NavLink href="/blog" label="Blog" />
+            <NavLink href="/contact" label="Contact" />
 
             {!user && (
               <>

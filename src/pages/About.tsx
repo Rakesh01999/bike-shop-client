@@ -126,6 +126,40 @@ const About = () => {
           </div>
         </div>
       </section>
+      {/* Testimonials */}
+      <section className="bg-white py-16">
+        <div className="container mx-auto text-center">
+          <h2 className="text-3xl font-semibold text-teal-700 mb-8">
+            What Our Customers Say
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 px-6">
+            {[
+              {
+                name: "Tanvir Alam",
+                feedback:
+                  "Amazing service and top-notch bikes. My go-to shop from now on!",
+              },
+              {
+                name: "Nusrat Jahan",
+                feedback:
+                  "Friendly staff and excellent pricing. Highly recommend BikeShop!",
+              },
+              {
+                name: "Rifat Mahmud",
+                feedback:
+                  "Had my bike serviced here — fast, reliable, and honest pricing.",
+              },
+            ].map((testi, idx) => (
+              <div key={idx} className="bg-teal-50 p-6 rounded-lg shadow-md">
+                <p className="italic text-gray-700">"{testi.feedback}"</p>
+                <p className="mt-4 font-semibold text-teal-700">
+                  — {testi.name}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* Get In Touch */}
       <section className="bg-teal-600 text-white py-16">
