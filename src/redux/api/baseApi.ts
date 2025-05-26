@@ -11,7 +11,6 @@ import { logout, setUser } from '../features/auth/authSlice';
 import { toast } from 'sonner';
 
 const baseQuery = fetchBaseQuery({
-  // baseUrl: 'https://carmodelbackend.vercel.app/api',
 
   baseUrl: 'https://bike-shop-server-six.vercel.app/api/v1',
   // baseUrl: 'http://localhost:5000/api/v1',
@@ -42,9 +41,6 @@ const baseQueryWithRefreshToken: BaseQueryFn<
   if (result?.error?.status === 401) {
     //* Send Refresh
     console.log('Sending refresh token');
-
-    // const res = await fetch('https://carmodelbackend.vercel.app/api/refresh-token', {
-    // const res = await fetch('https://bike-shop-server-six.vercel.app/api/refresh-token', {
 
     const res = await fetch('https://bike-shop-server-six.vercel.app/api/v1/refresh-token', {
       // const res = await fetch('http://localhost:5000/api/v1/refresh-token', {

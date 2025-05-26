@@ -21,6 +21,7 @@ const tealColors = {
 
 // Profile Page Component
 const Profile = () => {
+  
   const user = useAppSelector(useCurrentUser) as User;
   const userId = user?.userId;
   const { data: userData, isLoading, isError } = useSingleuserQuery(userId);

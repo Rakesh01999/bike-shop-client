@@ -28,6 +28,7 @@ const Login = () => {
       navigate("/");
       // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-empty
     } catch (err) {
+      console.log(err);
       toast.error("Login failed", { id: toastId, duration: 5000 });
     }
   };

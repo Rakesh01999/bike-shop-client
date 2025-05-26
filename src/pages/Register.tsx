@@ -62,17 +62,19 @@ const Register = () => {
         </h2>
         <PHForm onSubmit={onSubmit} resolver={zodResolver(registrationSchema)}>
           <PHInput
-            type="text"
-            name="name"
-            label="Name"
-            placeholder="Enter you email"
-          />
-          <PHInput
-            type="text"
+            type="email"
             name="email"
             label="Email"
             placeholder="Enter you email"
           />
+          
+          <PHInput
+            type="text"
+            name="name"
+            label="Name"
+            placeholder="Enter you name"
+          />
+          
           <PHInput
             type="password"
             name="password"

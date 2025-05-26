@@ -10,11 +10,10 @@ import { useUpdateProfileMutation } from "../../../redux/features/auth/authApi";
 // Validation Schema
 const profileSchema = z.object({
   name: z.string().min(3, "Name must be at least 3 characters"),
-  phone_number: z
-    .string(),
-    // .regex(/^01[3-9]\d{8}$/, "Enter a valid Bangladeshi phone number")
-    // .regex(/^\+?[1-9]\d{1,14}$/, "Enter a valid phone number"), // Supports international formats
-  address: z.string().min(5, "Address must be at least 5 characters"),
+  phone_number: z.string(),
+  // .regex(/^01[3-9]\d{8}$/, "Enter a valid Bangladeshi phone number")
+  // .regex(/^\+?[1-9]\d{1,14}$/, "Enter a valid phone number"), // Supports international formats
+  address: z.string().min(5, "Address must be at least 5 characters"), 
 });
 
 type ProfileFormValues = z.infer<typeof profileSchema>;
@@ -30,26 +29,27 @@ const UpdateProfile = () => {
 
   const [updateProfile] = useUpdateProfileMutation();
 
-  const onSubmit = async (data: ProfileFormValues) => {
-    const toastId = toast.loading("Updating Profile...");
+const onSubmit = async (data: ProfileFormValues) => {
+  const toastId = toast.loading("Updating Profile...");
 
-    try {
-      const res = await updateProfile(data).unwrap();
+  const payload = { ...data };
+  try {
+    const res = await updateProfile(payload).unwrap();
+    console.log(payload);
+    console.log(res);
 
-      console.log(res);
-      toast.success("Profile updated successfully!", {
-        id: toastId,
-        duration: 2000,
-      });
-    } catch (err: any) {
-      toast.error(err?.data?.message || "Failed to update profile", {
-        id: toastId,
-        duration: 5000,
-      });
-    }
-  };
+    toast.success("Profile updated successfully!", {
+      id: toastId,
+      duration: 2000,
+    });
+  } catch (err: any) {
+    toast.error(err?.data?.message || "Failed to update profile", {
+      id: toastId,
+      duration: 5000,
+    });
+  }
+};
 
-  // Teal Theme
   const tealColors = {
     primary: "#0F766E",
     secondary: "#14B8A6",
