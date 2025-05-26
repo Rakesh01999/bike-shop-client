@@ -1,3 +1,4 @@
+import AdminDashboard from "../pages/Dashboard/Admin/AdminDashboard/AdminDashboard";
 import All_order from "../pages/Dashboard/Admin/manage_order/All_order";
 import Calculate_revenue from "../pages/Dashboard/Admin/manage_order/Calculate_revenue";
 import CreateCar from "../pages/Dashboard/Admin/manage_product/CreateCar";
@@ -8,6 +9,11 @@ import Acctivate_account from "../pages/Dashboard/Admin/manage_user/Acctivate_ac
 
 export const adminChildren = [
   {
+    name: "Admin Dashboard",
+    path: "adminDashboard",
+    element: <AdminDashboard />,
+  },
+  {
     name: "Manage_user",
     path: "manage_user",
     element: <Acctivate_account />,
@@ -16,16 +22,12 @@ export const adminChildren = [
     name: "Manage Product",
     children: [
       {
-        // name: "Create Car",
         name: "Create Bike",
-        // path: "crate_car",
         path: "create_bike",
         element: <CreateCar />,
       },
       {
-        // name: "See all car",
         name: "See all bikes",
-        // path: "get_car",
         path: "get_bike",
         element: <GetAllCar />,
       },

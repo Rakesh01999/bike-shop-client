@@ -11,7 +11,8 @@ type UserType = {
   _id: string;
   name: string;
   email: string;
-  role: "admin" | "faculty" | "student" | "user" | "customer";
+  // role: "admin" | "faculty" | "student" | "user" | "customer";
+  role: "admin" | "user" | "customer";
   status: string;
   exp: number;
   iat: number;
@@ -21,7 +22,7 @@ const { Sider } = Layout;
 
 const userRole = {
   ADMIN: "admin",
-  USER: "customer"
+  USER: "customer",
 };
 
 // Teal Theme Colors (matching Navbar)
@@ -89,13 +90,13 @@ const Sidebar = () => {
           borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
         }}
       >
-        <h2 
-          style={{ 
-            color: colors.text.primary, 
+        <h2
+          style={{
+            color: colors.text.primary,
             margin: 0,
             fontSize: "1.25rem",
             fontWeight: "bold",
-            textAlign: "center"
+            textAlign: "center",
           }}
         >
           {/* AutoVerse */}
