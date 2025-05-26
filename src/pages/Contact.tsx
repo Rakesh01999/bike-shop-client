@@ -117,10 +117,10 @@ const Contact = () => {
           </h2>
           <ul className="text-gray-700 space-y-2">
             <li>
-              📍 <strong>Address:</strong> 123 Main Street, Dhaka
+              📍 <strong>Address:</strong> Khalishpur , Khulna
             </li>
             <li>
-              📞 <strong>Phone:</strong> +880 123-456-7890
+              📞 <strong>Phone:</strong> +880 199-964-7103
             </li>
             <li>
               ✉️ <strong>Email:</strong> support@bikeshop.com
