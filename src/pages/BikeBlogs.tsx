@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import { Tag, Select, Modal, Button } from "antd";
-import { CalendarOutlined, UserOutlined, TagOutlined } from "@ant-design/icons";
-
-const { Option } = Select;
+import { Tag, Modal, Button } from "antd";
+import { CalendarOutlined, UserOutlined } from "@ant-design/icons";
 
 // Extend Blog Post Type to include full content
 interface BlogPost {
@@ -53,7 +51,6 @@ const blogPosts: BlogPost[] = [
     imageUrl: "https://i.postimg.cc/mDHqQ0Bw/1.jpg",
     readTime: "5 min read",
   },
-  // ... other blog posts (add fullContent to each)
   {
     id: 2,
     title: "Essential Bike Maintenance Tips for Beginners",
@@ -220,7 +217,7 @@ const blogPosts: BlogPost[] = [
 const BlogComponent: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-empty
   const [searchTerm, _setSearchTerm] = useState("");
-  const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
+  const [categoryFilter] = useState<string | null>(null);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-empty
   const [currentPage, _setCurrentPage] = useState(1);
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
@@ -238,9 +235,6 @@ const BlogComponent: React.FC = () => {
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
-
-  // Categories for filter
-  const categories = [...new Set(blogPosts.map((post) => post.category))];
 
   // Open Full Post Modal
   const handleReadMore = (post: BlogPost) => {
@@ -261,27 +255,6 @@ const BlogComponent: React.FC = () => {
         <p className="text-base md:text-lg text-gray-600">
           Expert insights, tips, and stories from the world of biking
         </p>
-      </div>
-
-      {/* Filters */}
-      <div className="w-full max-w-6xl mb-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="w-full">
-            <Select
-              placeholder="Filter by Category"
-              className="w-full"
-              allowClear
-              onChange={(value) => setCategoryFilter(value)}
-              suffixIcon={<TagOutlined className="text-teal-600" />}
-            >
-              {categories.map((category) => (
-                <Option key={category} value={category}>
-                  {category}
-                </Option>
-              ))}
-            </Select>
-          </div>
-        </div>
       </div>
 
       {/* Blog Posts Grid */}
@@ -380,20 +353,6 @@ const BlogComponent: React.FC = () => {
           </div>
         )}
       </Modal>
-
-      {/* Pagination (Optional) */}
-      {/* {filteredPosts.length > postsPerPage && (
-        <div className="mt-8 flex justify-center">
-          <Pagination
-            current={currentPage}
-            total={filteredPosts.length}
-            pageSize={postsPerPage}
-            onChange={(page) => setCurrentPage(page)}
-            showSizeChanger={false}
-            responsive
-          />
-        </div>
-      )} */}
     </div>
   );
 };
