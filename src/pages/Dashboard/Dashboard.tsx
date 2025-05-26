@@ -24,7 +24,8 @@ const Dashboard = () => {
       // navigate("/dashboard/get_bike");
       navigate("/dashboard/adminDashboard");
     } else {
-      navigate("/dashboard/update-profile");
+      // navigate("/dashboard/update-profile");
+      navigate("/dashboard/userDashboard");
     }
   }, [navigate, role]);
   return (
