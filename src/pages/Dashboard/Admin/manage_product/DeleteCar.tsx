@@ -14,6 +14,10 @@ const DeleteCar = () => {
   const [form] = Form.useForm();
   const [updateCar] = useDeleteCarMutation();
 
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+
   const { data: CarData, isFetching } = useGetAllCarsQuery([]);
 
   const tableData = CarData?.data?.map(
@@ -35,17 +39,35 @@ const DeleteCar = () => {
   const handleDeleteSubmit = async (values: { carId: string }) => {
     if (values.carId) {
       try {
+        await updateCar({
+          order_id: values.carId,
+        }).unwrap();
         toast.success("Car deleted successfully!");
         setIsDeleteModalVisible(false);
         setCarToDelete(null);
-        await updateCar({
-          order_id: values.carId,
-        });
+        
+        // Check if current page becomes empty after deletion
+        const totalItems = (tableData?.length || 0) - 1;
+        const maxPage = Math.ceil(totalItems / pageSize);
+        if (currentPage > maxPage && maxPage > 0) {
+          setCurrentPage(maxPage);
+        }
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (error) {
         toast.error("Delete failed");
       }
     }
+  };
+
+  // Pagination change handlers
+  const handlePageChange = (page: number, size: number) => {
+    setCurrentPage(page);
+    setPageSize(size);
+  };
+
+  const handlePageSizeChange = (current: number, size: number) => {
+    setCurrentPage(1); // Reset to first page when page size changes
+    setPageSize(size);
   };
 
   const columns = [
@@ -63,6 +85,7 @@ const DeleteCar = () => {
       title: "Price",
       dataIndex: "price",
       key: "price",
+      render: (price: number) => `$${price.toFixed(2)}`,
     },
     {
       title: "Category",
@@ -82,6 +105,7 @@ const DeleteCar = () => {
           onClick={() => handleDeleteClick(record)}
           style={{ marginLeft: 0 }}
           danger
+          className="hover:bg-red-600 hover:border-red-600"
         >
           Delete
         </Button>
@@ -94,6 +118,24 @@ const DeleteCar = () => {
     primary: "#0F766E", // Deep Teal
     secondary: "#14B8A6", // Bright Teal
     background: "#ECFDF5", // Light Teal
+  };
+
+  // Pagination configuration
+  const paginationConfig = {
+    current: currentPage,
+    pageSize: pageSize,
+    total: tableData?.length || 0,
+    showSizeChanger: true,
+    showQuickJumper: true,
+    showTotal: (total: number, range: [number, number]) =>
+      `${range[0]}-${range[1]} of ${total} items`,
+    pageSizeOptions: ['5', '10', '20', '50', '100'],
+    onChange: handlePageChange,
+    onShowSizeChange: handlePageSizeChange,
+    style: {
+      marginTop: '16px',
+      textAlign: 'center' as const,
+    },
   };
 
   return (
@@ -113,7 +155,7 @@ const DeleteCar = () => {
         >
           Delete Bike
         </h1>
-        <p className="text-gray-600 text-sm">Delete Bike .</p>
+        <p className="text-gray-600 text-sm">Delete Bike from here.</p>
       </Card>
 
       <Table
@@ -122,6 +164,7 @@ const DeleteCar = () => {
         dataSource={tableData}
         scroll={{ x: 800 }}
         rowKey="key"
+        pagination={paginationConfig}
         components={{
           header: {
             cell: (props: any) => (
@@ -132,26 +175,58 @@ const DeleteCar = () => {
                   backgroundColor: tealColors.secondary, // Bright Teal header
                   color: "white",
                   fontWeight: "bold",
-                  // textAlign: "center",
+                  textAlign: "center",
                 }}
               />
             ),
           },
         }}
       />
+      
       <Modal
-        title="Confirm Deletion"
+        title={
+          <span className="text-lg font-semibold text-red-600">
+            Confirm Deletion
+          </span>
+        }
         open={isDeleteModalVisible}
         onCancel={() => setIsDeleteModalVisible(false)}
         onOk={() => form.submit()}
         okText="Yes, Delete"
         cancelText="No, Cancel"
+        okButtonProps={{
+          className: "bg-red-500 hover:bg-red-600 text-white font-semibold",
+          danger: true,
+        }}
+        cancelButtonProps={{ 
+          className: "hover:bg-gray-100" 
+        }}
       >
         <Form form={form} layout="vertical" onFinish={handleDeleteSubmit}>
           <Form.Item name="carId" initialValue={carToDelete?.key} hidden>
             <input type="hidden" />
           </Form.Item>
-          <p>Are you sure you want to delete this car?</p>
+          <div className="py-4">
+            <p className="text-gray-700 mb-2">
+              Are you sure you want to delete this bike?
+            </p>
+            {carToDelete && (
+              <div className="bg-gray-50 p-3 rounded-md mt-3">
+                <p className="text-sm">
+                  <strong>Model:</strong> {carToDelete.model}
+                </p>
+                <p className="text-sm">
+                  <strong>Brand:</strong> {carToDelete.brand}
+                </p>
+                <p className="text-sm">
+                  <strong>Price:</strong> ${carToDelete.price?.toFixed(2)}
+                </p>
+              </div>
+            )}
+            <p className="text-red-600 text-sm mt-3 font-medium">
+              This action cannot be undone.
+            </p>
+          </div>
         </Form>
       </Modal>
     </div>

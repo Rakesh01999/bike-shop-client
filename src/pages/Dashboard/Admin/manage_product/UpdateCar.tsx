@@ -7,11 +7,16 @@ import {
 import { Button, Table, Modal, Form, InputNumber, Card } from "antd";
 import type { TTableData } from "../../../Allproduct";
 import { toast } from "sonner";
+
 const UpdateCar = () => {
   const [selectedCar, setSelectedCar] = useState<TTableData | null>(null);
   const [form] = Form.useForm();
   const [updateCar] = useUpdateCarMutation();
   const [isModalVisible, setIsModalVisible] = useState(false);
+  
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
   const { data: CarData, isFetching } = useGetAllCarsQuery([]);
 
@@ -55,6 +60,17 @@ const UpdateCar = () => {
     }
   };
 
+  // Pagination change handlers
+  const handlePageChange = (page: number, size: number) => {
+    setCurrentPage(page);
+    setPageSize(size);
+  };
+
+  const handlePageSizeChange = (current: number, size: number) => {
+    setCurrentPage(1); // Reset to first page when page size changes
+    setPageSize(size);
+  };
+
   const columns = [
     {
       title: "Model",
@@ -70,6 +86,7 @@ const UpdateCar = () => {
       title: "Price",
       dataIndex: "price",
       key: "price",
+      render: (price: number) => `$${price.toFixed(2)}`,
     },
     {
       title: "Category",
@@ -102,6 +119,24 @@ const UpdateCar = () => {
     background: "#ECFDF5", // Light Teal
   };
 
+  // Pagination configuration
+  const paginationConfig = {
+    current: currentPage,
+    pageSize: pageSize,
+    total: tableData?.length || 0,
+    showSizeChanger: true,
+    showQuickJumper: true,
+    showTotal: (total: number, range: [number, number]) =>
+      `${range[0]}-${range[1]} of ${total} items`,
+    pageSizeOptions: ['5', '10', '20', '50', '100'],
+    onChange: handlePageChange,
+    onShowSizeChange: handlePageSizeChange,
+    style: {
+      marginTop: '16px',
+      textAlign: 'center' as const,
+    },
+  };
+
   return (
     <div className="min-h-screen flex flex-col items-center px-5 py-6">
       {/* Title Card */}
@@ -119,7 +154,7 @@ const UpdateCar = () => {
         >
           Update Bike
         </h1>
-        <p className="text-gray-600 text-sm">Update Bike from here .</p>
+        <p className="text-gray-600 text-sm">Update Bike from here.</p>
       </Card>
 
       <Table
@@ -128,6 +163,7 @@ const UpdateCar = () => {
         dataSource={tableData}
         scroll={{ x: 800 }}
         rowKey="key"
+        pagination={paginationConfig}
         components={{
           header: {
             cell: (props: any) => (
@@ -145,30 +181,7 @@ const UpdateCar = () => {
           },
         }}
       />
-      {/* <Modal
-        title="Update Bike"
-        // visible={isModalVisible}
-        open={isModalVisible}
-        onCancel={() => setIsModalVisible(false)}
-        onOk={() => form.submit()}
-      >
-        <Form form={form} layout="vertical" onFinish={handleUpdateSubmit}>
-          <Form.Item
-            label="Price"
-            name="price"
-            rules={[{ required: true, message: "Please input the price!" }]}
-          >
-            <InputNumber style={{ width: "100%" }} min={1} />
-          </Form.Item>
-          <Form.Item
-            label="Quantity"
-            name="quantity"
-            rules={[{ required: true, message: "Please input the quantity!" }]}
-          >
-            <InputNumber style={{ width: "100%" }} min={1} />
-          </Form.Item>
-        </Form>
-      </Modal> */}
+
       <Modal
         title={
           <span className="text-lg font-semibold text-gray-700">
