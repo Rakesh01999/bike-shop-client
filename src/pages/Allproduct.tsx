@@ -13,6 +13,7 @@ import {
   Row,
   Col,
   Collapse,
+  Pagination,
 } from "antd";
 import { useNavigate } from "react-router-dom";
 import { SearchOutlined, FilterOutlined } from "@ant-design/icons";
@@ -28,8 +29,11 @@ export type TTableData = Pick<
 
 const AllProduct = () => {
   const [params] = useState<TQueryParam[] | undefined>(undefined);
-  const [pagination] = useState({ current: 1, pageSize: 20 });
   const [searchParams] = useSearchParams();
+
+  // Pagination States
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [pageSize, setPageSize] = useState<number>(20);
 
   // Search and Filter States
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -43,14 +47,14 @@ const AllProduct = () => {
 
   const { data: CarData, isFetching } = useGetAllCarsQuery([
     ...(params || []),
-    { name: "page", value: pagination.current.toString() },
-    { name: "limit", value: pagination.pageSize.toString() },
+    { name: "page", value: currentPage.toString() },
+    { name: "limit", value: pageSize.toString() },
   ]);
 
   // Memoize table data to prevent recreation on every render
   const tableData: TTableData[] = useMemo(() => {
     if (!CarData?.data) return [];
-    
+
     return CarData.data.map(
       ({ _id, price, modelNumber, brand, category, quantity, image }) => ({
         key: _id,
@@ -73,15 +77,15 @@ const AllProduct = () => {
     const uniqueCategories = [
       ...new Set(tableData.map((item) => item.category)),
     ];
-    
-    const uniqueBrands = [
-      ...new Set(tableData.map((item) => item.brand)),
-    ];
-    
+
+    const uniqueBrands = [...new Set(tableData.map((item) => item.brand))];
+
     const uniqueModels = [
-      ...new Set(tableData.map((item) => item.model).filter(model => model !== "N/A")),
+      ...new Set(
+        tableData.map((item) => item.model).filter((model) => model !== "N/A")
+      ),
     ];
-    
+
     const prices = tableData.map((item) => item.price);
     const maxPriceValue = Math.max(...prices);
 
@@ -97,10 +101,13 @@ const AllProduct = () => {
   useEffect(() => {
     if (tableData.length > 0 && !isInitialized) {
       // Get URL parameters
-      const urlCategory = searchParams.get('category');
-      const urlBrand = searchParams.get('brand');
-      const urlModel = searchParams.get('modelnumber') || searchParams.get('modelNumber');
-      
+      const urlCategory = searchParams.get("category");
+      const urlBrand = searchParams.get("brand");
+      const urlModel =
+        searchParams.get("modelnumber") || searchParams.get("modelNumber");
+      const urlPage = searchParams.get("page");
+      const urlPageSize = searchParams.get("pageSize");
+
       // Set filters based on URL parameters
       if (urlCategory) {
         setSelectedCategory(urlCategory);
@@ -111,24 +118,40 @@ const AllProduct = () => {
       if (urlModel) {
         setSelectedModel(urlModel);
       }
-      
+      if (urlPage) {
+        setCurrentPage(parseInt(urlPage, 10) || 1);
+      }
+      if (urlPageSize) {
+        setPageSize(parseInt(urlPageSize, 10) || 20);
+      }
+
       // Initialize price range
       setPriceRange([0, maxPrice]);
       setIsInitialized(true);
     }
   }, [tableData.length, maxPrice, isInitialized, searchParams]);
 
-  // NEW: Watch for URL parameter changes after initialization
+  // Watch for URL parameter changes after initialization
   useEffect(() => {
     if (isInitialized && tableData.length > 0) {
-      const urlCategory = searchParams.get('category');
-      const urlBrand = searchParams.get('brand');
-      const urlModel = searchParams.get('modelnumber') || searchParams.get('modelNumber');
-      
+      const urlCategory = searchParams.get("category");
+      const urlBrand = searchParams.get("brand");
+      const urlModel =
+        searchParams.get("modelnumber") || searchParams.get("modelNumber");
+      const urlPage = searchParams.get("page");
+      const urlPageSize = searchParams.get("pageSize");
+
       // Update filters when URL parameters change
       setSelectedCategory(urlCategory || "");
       setSelectedBrand(urlBrand || "");
       setSelectedModel(urlModel || "");
+
+      if (urlPage) {
+        setCurrentPage(parseInt(urlPage, 10) || 1);
+      }
+      if (urlPageSize) {
+        setPageSize(parseInt(urlPageSize, 10) || 20);
+      }
     }
   }, [searchParams, isInitialized, tableData.length]);
 
@@ -170,47 +193,110 @@ const AllProduct = () => {
     );
 
     return filtered;
-  }, [searchTerm, selectedCategory, selectedBrand, selectedModel, priceRange, tableData]);
+  }, [
+    searchTerm,
+    selectedCategory,
+    selectedBrand,
+    selectedModel,
+    priceRange,
+    tableData,
+  ]);
+
+  // Memoize paginated data
+  const paginatedData = useMemo(() => {
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    return filteredData.slice(startIndex, endIndex);
+  }, [filteredData, currentPage, pageSize]);
+
+  // Reset to first page when filters change
+  useEffect(() => {
+    if (currentPage > 1 && filteredData.length > 0) {
+      const maxPages = Math.ceil(filteredData.length / pageSize);
+      if (currentPage > maxPages) {
+        setCurrentPage(1);
+        updateURLParams({ page: "1" });
+      }
+    }
+  }, [filteredData.length, currentPage, pageSize]);
+
+  // Function to update URL parameters
+  const updateURLParams = useCallback(
+    (updates: Record<string, string | null>) => {
+      const newSearchParams = new URLSearchParams(searchParams);
+
+      Object.entries(updates).forEach(([key, value]) => {
+        if (value === null || value === "") {
+          newSearchParams.delete(key);
+        } else {
+          newSearchParams.set(key, value);
+        }
+      });
+
+      navigate(`?${newSearchParams.toString()}`, { replace: true });
+    },
+    [navigate, searchParams]
+  );
 
   // Memoize event handlers
-  const handleSearch = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
-  }, []);
+  const handleSearch = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setSearchTerm(e.target.value);
+      setCurrentPage(1);
+      updateURLParams({ page: "1" });
+    },
+    [updateURLParams]
+  );
 
-  const handleCategoryChange = useCallback((value: string) => {
-    setSelectedCategory(value);
-    // Update URL without the category parameter when cleared
-    if (!value) {
-      const newSearchParams = new URLSearchParams(searchParams);
-      newSearchParams.delete('category');
-      navigate(`?${newSearchParams.toString()}`, { replace: true });
-    }
-  }, [navigate, searchParams]);
+  const handleCategoryChange = useCallback(
+    (value: string) => {
+      setSelectedCategory(value);
+      setCurrentPage(1);
+      updateURLParams({ category: value, page: "1" });
+    },
+    [updateURLParams]
+  );
 
-  const handleBrandChange = useCallback((value: string) => {
-    setSelectedBrand(value);
-    // Update URL without the brand parameter when cleared
-    if (!value) {
-      const newSearchParams = new URLSearchParams(searchParams);
-      newSearchParams.delete('brand');
-      navigate(`?${newSearchParams.toString()}`, { replace: true });
-    }
-  }, [navigate, searchParams]);
+  const handleBrandChange = useCallback(
+    (value: string) => {
+      setSelectedBrand(value);
+      setCurrentPage(1);
+      updateURLParams({ brand: value, page: "1" });
+    },
+    [updateURLParams]
+  );
 
-  const handleModelChange = useCallback((value: string) => {
-    setSelectedModel(value);
-    // Update URL without the model parameter when cleared
-    if (!value) {
-      const newSearchParams = new URLSearchParams(searchParams);
-      newSearchParams.delete('modelnumber');
-      newSearchParams.delete('modelNumber');
-      navigate(`?${newSearchParams.toString()}`, { replace: true });
-    }
-  }, [navigate, searchParams]);
+  const handleModelChange = useCallback(
+    (value: string) => {
+      setSelectedModel(value);
+      setCurrentPage(1);
+      updateURLParams({ modelnumber: value, page: "1" });
+    },
+    [updateURLParams]
+  );
 
-  const handlePriceRangeChange = useCallback((value: number[]) => {
-    setPriceRange(value);
-  }, []);
+  const handlePriceRangeChange = useCallback(
+    (value: number[]) => {
+      setPriceRange(value);
+      setCurrentPage(1);
+      updateURLParams({ page: "1" });
+    },
+    [updateURLParams]
+  );
+
+  const handlePageChange = useCallback(
+    (page: number, size?: number) => {
+      setCurrentPage(page);
+      if (size && size !== pageSize) {
+        setPageSize(size);
+        updateURLParams({ page: "1", pageSize: size.toString() });
+        setCurrentPage(1);
+      } else {
+        updateURLParams({ page: page.toString() });
+      }
+    },
+    [pageSize, updateURLParams]
+  );
 
   const clearFilters = useCallback(() => {
     setSearchTerm("");
@@ -218,13 +304,16 @@ const AllProduct = () => {
     setSelectedBrand("");
     setSelectedModel("");
     setPriceRange([0, maxPrice]);
-    // Clear URL parameters
-    navigate('/allproduct', { replace: true });
+    setCurrentPage(1);
+    navigate("/allproduct", { replace: true });
   }, [maxPrice, navigate]);
 
-  const navigateToProduct = useCallback((productId: string) => {
-    navigate(`/products/${productId}`);
-  }, [navigate]);
+  const navigateToProduct = useCallback(
+    (productId: string) => {
+      navigate(`/products/${productId}`);
+    },
+    [navigate]
+  );
 
   // Get active filter display
   const getActiveFiltersDisplay = useMemo(() => {
@@ -236,6 +325,16 @@ const AllProduct = () => {
     return filters;
   }, [selectedCategory, selectedBrand, selectedModel, searchTerm]);
 
+  // Calculate pagination info
+  const paginationInfo = useMemo(() => {
+    const totalItems = filteredData.length;
+    const totalPages = Math.ceil(totalItems / pageSize);
+    const startItem = totalItems === 0 ? 0 : (currentPage - 1) * pageSize + 1;
+    const endItem = Math.min(currentPage * pageSize, totalItems);
+
+    return { totalItems, totalPages, startItem, endItem };
+  }, [filteredData.length, pageSize, currentPage]);
+
   // Teal Theme
   const tealColors = {
     primary: "#0F766E",
@@ -246,9 +345,9 @@ const AllProduct = () => {
   return (
     <div
       className="min-h-screen flex flex-col items-center px-3 sm:px-5 py-6"
-      style={{
-        background: `linear-gradient(135deg, ${tealColors.background} 0%, ${tealColors.secondary} 100%)`,
-      }}
+      // style={{
+      //   background: `linear-gradient(135deg, ${tealColors.background} 0%, ${tealColors.secondary} 100%)`,
+      // }}
     >
       {/* Title Card */}
       <Card
@@ -268,7 +367,7 @@ const AllProduct = () => {
         <p className="text-gray-600 text-sm">
           Find the perfect bike for your journey.
         </p>
-        
+
         {/* Active Filters Display */}
         {getActiveFiltersDisplay.length > 0 && (
           <div className="mt-3 flex flex-wrap gap-2 justify-center">
@@ -524,11 +623,17 @@ const AllProduct = () => {
           />
         </div>
 
-        {/* Results Counter */}
-        <div className="mt-4 text-center">
+        {/* Results Counter and Pagination Info */}
+        <div className="mt-4 flex flex-col sm:flex-row justify-between items-center gap-2">
           <span className="text-sm text-gray-600">
-            Showing {filteredData.length} of {tableData?.length || 0} bikes
+            Showing {paginationInfo.startItem}-{paginationInfo.endItem} of{" "}
+            {paginationInfo.totalItems} bikes
           </span>
+          {paginationInfo.totalItems > 0 && (
+            <span className="text-xs text-gray-500">
+              Page {currentPage} of {paginationInfo.totalPages}
+            </span>
+          )}
         </div>
       </Card>
 
@@ -566,61 +671,130 @@ const AllProduct = () => {
           </div>
         </Card>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6 w-full max-w-7xl">
-          {filteredData.map((bike) => (
+        <>
+          {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6 w-full max-w-7xl mb-8"> */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6 w-full max-w-6xl mb-8">
+            {paginatedData.map((bike) => (
+              <Card
+                key={bike.key}
+                className="rounded-2xl shadow-lg transition-transform hover:scale-105 hover:shadow-xl bg-teal-50"
+                style={{
+                  // background: "white",
+                  border: `1px solid ${tealColors.secondary}`,
+                }}
+                bodyStyle={{ padding: "1rem" }}
+              >
+                {/* Image */}
+                <img
+                  src={bike.image}
+                  alt={bike.model}
+                  className="h-32 sm:h-40 w-full object-cover rounded-md mb-4"
+                />
+
+                <h2 className="text-base sm:text-lg font-semibold text-gray-800 mb-1 truncate">
+                  {bike.model}
+                </h2>
+                <p className="text-xs sm:text-sm text-gray-500 mb-1 truncate">
+                  Brand: {bike.brand}
+                </p>
+                <p className="text-xs sm:text-sm text-gray-500 mb-1 truncate">
+                  Category: {bike.category}
+                </p>
+                <p className="text-sm sm:text-base font-bold text-green-600 mb-2">
+                  ${bike.price.toLocaleString()}
+                </p>
+
+                <p
+                  className={`text-xs sm:text-sm font-semibold mb-3 ${
+                    bike.quantity > 0 ? "text-green-600" : "text-red-600"
+                  }`}
+                >
+                  {bike.quantity > 0
+                    ? `In Stock: ${bike.quantity}`
+                    : "Out of Stock"}
+                </p>
+
+                <Button
+                  onClick={() => navigateToProduct(bike.key)}
+                  className="w-full text-xs sm:text-sm font-bold py-1 rounded-md"
+                  style={{
+                    backgroundColor: tealColors.secondary,
+                    borderColor: tealColors.secondary,
+                    color: "white",
+                  }}
+                >
+                  View Details
+                </Button>
+              </Card>
+            ))}
+          </div>
+
+          {/* Pagination Component */}
+          {paginationInfo.totalItems > 0 && (
             <Card
-              key={bike.key}
-              className="rounded-2xl shadow-lg transition-transform hover:scale-105 hover:shadow-xl"
+              className="w-full max-w-6xl shadow-lg"
               style={{
-                background: "white",
+                background: "rgba(255, 255, 255, 0.95)",
+                backdropFilter: "blur(10px)",
                 border: `1px solid ${tealColors.secondary}`,
               }}
-              bodyStyle={{ padding: "1rem" }}
             >
-              {/* Image */}
-              <img
-                src={bike.image}
-                alt={bike.model}
-                className="h-32 sm:h-40 w-full object-cover rounded-md mb-4"
-              />
+              <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+                {/* Pagination Info - Mobile */}
+                <div className="block sm:hidden text-center">
+                  <div className="text-sm text-gray-600 mb-2">
+                    {paginationInfo.startItem}-{paginationInfo.endItem} of{" "}
+                    {paginationInfo.totalItems} items
+                  </div>
+                  <div className="text-xs text-gray-500">
+                    Page {currentPage} of {paginationInfo.totalPages}
+                  </div>
+                </div>
 
-              <h2 className="text-base sm:text-lg font-semibold text-gray-800 mb-1 truncate">
-                {bike.model}
-              </h2>
-              <p className="text-xs sm:text-sm text-gray-500 mb-1 truncate">
-                Brand: {bike.brand}
-              </p>
-              <p className="text-xs sm:text-sm text-gray-500 mb-1 truncate">
-                Category: {bike.category}
-              </p>
-              <p className="text-sm sm:text-base font-bold text-green-600 mb-2">
-                ${bike.price.toLocaleString()}
-              </p>
+                {/* Pagination Info - Desktop */}
+                <div className="hidden sm:block text-sm text-gray-600">
+                  Showing {paginationInfo.startItem}-{paginationInfo.endItem} of{" "}
+                  {paginationInfo.totalItems} bikes
+                </div>
 
-              <p
-                className={`text-xs sm:text-sm font-semibold mb-3 ${
-                  bike.quantity > 0 ? "text-green-600" : "text-red-600"
-                }`}
-              >
-                {bike.quantity > 0
-                  ? `In Stock: ${bike.quantity}`
-                  : "Out of Stock"}
-              </p>
-
-              <Button
-                onClick={() => navigateToProduct(bike.key)}
-                className="w-full text-xs sm:text-sm font-bold py-1 rounded-md"
-                style={{
-                  backgroundColor: tealColors.secondary,
-                  borderColor: tealColors.secondary,
-                  color: "white",
-                }}
-              >
-                View Details
-              </Button>
+                {/* Pagination Component */}
+                <Pagination
+                  current={currentPage}
+                  total={paginationInfo.totalItems}
+                  pageSize={pageSize}
+                  onChange={handlePageChange}
+                  onShowSizeChange={handlePageChange}
+                  showSizeChanger
+                  showQuickJumper={paginationInfo.totalPages > 10}
+                  pageSizeOptions={["10", "20", "40", "60", "100"]}
+                  showTotal={(total, range) =>
+                    window.innerWidth >= 640
+                      ? `${range[0]}-${range[1]} of ${total} items`
+                      : `${total} total`
+                  }
+                  size={window.innerWidth < 640 ? "small" : "default"}
+                  responsive
+                  className="flex justify-center custom-pagination"
+                />
+                {/* Page Size Selector - Mobile */}
+                <div className="block sm:hidden">
+                  <Select
+                    value={pageSize}
+                    onChange={(value) => handlePageChange(1, value)}
+                    size="small"
+                    style={{ width: 80 }}
+                  >
+                    <Option value={10}>10</Option>
+                    <Option value={20}>20</Option>
+                    <Option value={40}>40</Option>
+                    <Option value={60}>60</Option>
+                    <Option value={100}>100</Option>
+                  </Select>
+                </div>
+              </div>
             </Card>
-          ))}
-        </div>
+          )}
+        </>
       )}
     </div>
   );
