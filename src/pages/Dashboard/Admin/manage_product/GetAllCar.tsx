@@ -12,8 +12,11 @@ import type { TTableData } from "../../../Allproduct";
 const GetAllCar: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-empty
   const [params, _setParams] = useState<TQueryParam[] | undefined>(undefined);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-empty
-  const [pagination, _setPagination] = useState({ current: 1, pageSize: 20 });
+  
+  // Pagination state - now functional
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(20);
+  
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [filteredData, setFilteredData] = useState<TTableData[]>([]);
 
@@ -24,8 +27,8 @@ const GetAllCar: React.FC = () => {
 
   const { data: CarData, isFetching } = useGetAllCarsQuery([
     ...(params || []),
-    { name: "page", value: pagination.current.toString() },
-    { name: "limit", value: pagination.pageSize.toString() },
+    { name: "page", value: currentPage.toString() },
+    { name: "limit", value: pageSize.toString() },
   ]);
   console.log("car data :", CarData);
 
@@ -58,8 +61,30 @@ const GetAllCar: React.FC = () => {
       });
 
       setFilteredData(filtered);
+      // Reset to first page when filters change
+      if (currentPage > 1 && filtered.length <= (currentPage - 1) * pageSize) {
+        setCurrentPage(1);
+      }
     }
-  }, [searchTerm, priceRange, CarData]);
+  }, [searchTerm, priceRange, CarData, currentPage, pageSize]);
+
+  // Handle pagination changes
+  const handleTableChange = (page: number, size: number) => {
+    setCurrentPage(page);
+    setPageSize(size);
+  };
+
+  // Handle search change (reset to first page)
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1);
+  };
+
+  // Handle price range change (reset to first page)
+  const handlePriceRangeChange = (value: number[]) => {
+    setPriceRange(value);
+    setCurrentPage(1);
+  };
 
   const getColorForCategory = (category: string) => {
     const categoryColors: { [key: string]: string } = {
@@ -153,6 +178,33 @@ const GetAllCar: React.FC = () => {
     },
   ];
 
+  // Pagination configuration
+  const paginationConfig = {
+    current: currentPage,
+    pageSize: pageSize,
+    total: filteredData.length, // Use filtered data length
+    showSizeChanger: true,
+    showQuickJumper: true,
+    showTotal: (total: number, range: [number, number]) =>
+      `${range[0]}-${range[1]} of ${total} bikes`,
+    pageSizeOptions: ['5', '10', '20', '50'],
+    onChange: handleTableChange,
+    onShowSizeChange: handleTableChange,
+    style: {
+      marginTop: '16px',
+      textAlign: 'center' as const,
+    },
+    itemRender: (page: number, type: string, originalElement: React.ReactNode) => {
+      if (type === 'prev') {
+        return <span className="px-3 py-1 text-sm bg-teal-50 text-teal-600 rounded hover:bg-teal-100 cursor-pointer">Previous</span>;
+      }
+      if (type === 'next') {
+        return <span className="px-3 py-1 text-sm bg-teal-50 text-teal-600 rounded hover:bg-teal-100 cursor-pointer">Next</span>;
+      }
+      return originalElement;
+    },
+  };
+
   const tealColors = {
     primary: "#0F766E", // Deep Teal
     secondary: "#14B8A6", // Bright Teal
@@ -178,22 +230,31 @@ const GetAllCar: React.FC = () => {
               >
                 Bike Inventory
               </h1>
+              {/* Display filtered results count */}
+              <div className="mt-2">
+                <Tag color="blue" className="text-sm">
+                  {filteredData.length} {filteredData.length === 1 ? 'bike' : 'bikes'} found
+                  {(searchTerm || priceRange[0] > 0 || priceRange[1] < 400000) && ' (filtered)'}
+                </Tag>
+              </div>
             </Card>
           </div>
         </div>
+        
         {/* Search Input */}
         <div className="mb-6 flex flex-wrap gap-4 justify-between">
           <Input
             prefix={<SearchOutlined />}
             placeholder="Search by brand, model, or category"
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={handleSearchChange}
             className="w-full md:w-80"
             size="large"
+            allowClear
           />
 
           {/* Price Range Filter */}
-          <div className="flex flex-col bg-white rounded-xl p-4">
+          <div className="flex flex-col bg-white rounded-xl p-4 shadow-sm">
             <span className="text-lg font-semibold text-gray-600 mb-2">
               Price Range: ${priceRange[0].toLocaleString()} - ${priceRange[1].toLocaleString()}
             </span>
@@ -203,7 +264,7 @@ const GetAllCar: React.FC = () => {
               max={400000}
               step={500}
               value={priceRange}
-              onChange={(value) => setPriceRange(value)}
+              onChange={handlePriceRangeChange}
               className="w-full md:w-80"
               tooltip={{ formatter: (value) => `$${value?.toLocaleString()}` }}
             />
@@ -218,13 +279,7 @@ const GetAllCar: React.FC = () => {
           columns={columns}
           dataSource={filteredData}
           loading={isFetching}
-          pagination={{
-            current: pagination.current,
-            pageSize: pagination.pageSize,
-            total: CarData?.meta?.total,
-            showSizeChanger: true,
-            pageSizeOptions: ["5", "10", "20", "50"],
-          }}
+          pagination={paginationConfig}
           scroll={{ x: 800 }}
           className="shadow-sm"
           rowClassName={(record) => (record.quantity === 0 ? "bg-red-50" : "")}
@@ -235,7 +290,8 @@ const GetAllCar: React.FC = () => {
                   {...props}
                   style={{
                     ...props.style,
-                    color: "teal",
+                    backgroundColor: tealColors.secondary,
+                    color: "white",
                     fontWeight: "bold",
                     textAlign: "center",
                   }}

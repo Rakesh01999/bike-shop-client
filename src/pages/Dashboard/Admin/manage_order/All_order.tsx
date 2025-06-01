@@ -14,9 +14,11 @@ const All_order = () => {
     // error
   } = useGetAllOrdersQuery(undefined);
 
-  // State for filtering
+  // State for filtering and pagination
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [statusFilter, setStatusFilter] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
   // Teal Theme
   const tealColors = {
@@ -64,6 +66,51 @@ const All_order = () => {
 
     return searchMatch && statusMatch;
   });
+
+  // Handle pagination change
+  const handleTableChange = (page: number, size: number) => {
+    setCurrentPage(page);
+    setPageSize(size);
+  };
+
+  // Handle search change (reset to first page when searching)
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1); // Reset to first page when searching
+  };
+
+  // Handle status filter change (reset to first page when filtering)
+  const handleStatusFilterChange = (value: string) => {
+    setStatusFilter(value);
+    setCurrentPage(1); // Reset to first page when filtering
+  };
+
+  // Pagination configuration
+  const paginationConfig = {
+    current: currentPage,
+    pageSize: pageSize,
+    total: processedData.length, // Use filtered data length
+    showSizeChanger: true,
+    showQuickJumper: true,
+    showTotal: (total: number, range: [number, number]) =>
+      `${range[0]}-${range[1]} of ${total} orders`,
+    pageSizeOptions: ['10', '20', '50', '100'],
+    onChange: handleTableChange,
+    onShowSizeChange: handleTableChange,
+    style: {
+      marginTop: '16px',
+      textAlign: 'center' as const,
+    },
+    itemRender: (page: number, type: string, originalElement: React.ReactNode) => {
+      if (type === 'prev') {
+        return <span className="px-3 py-1 text-sm bg-teal-50 text-teal-600 rounded hover:bg-teal-100 cursor-pointer">Previous</span>;
+      }
+      if (type === 'next') {
+        return <span className="px-3 py-1 text-sm bg-teal-50 text-teal-600 rounded hover:bg-teal-100 cursor-pointer">Next</span>;
+      }
+      return originalElement;
+    },
+  };
 
   const columns = [
     {
@@ -148,6 +195,13 @@ const All_order = () => {
           Order Management
         </h1>
         <p className="text-gray-600 text-sm">View and track all bike orders</p>
+        {/* Display filtered results count */}
+        <div className="mt-2">
+          <Tag color="blue" className="text-sm">
+            {processedData.length} {processedData.length === 1 ? 'order' : 'orders'} found
+            {(searchTerm || statusFilter) && ' (filtered)'}
+          </Tag>
+        </div>
       </Card>
 
       {/* Filtering Section */}
@@ -165,8 +219,9 @@ const All_order = () => {
             placeholder="Search by email or product id"
             prefix={<SearchOutlined className="text-teal-500" />}
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={handleSearchChange}
             className="flex-grow"
+            allowClear
           />
 
           {/* Status Filter */}
@@ -174,7 +229,8 @@ const All_order = () => {
             placeholder="Transaction Status"
             allowClear
             style={{ width: 200 }}
-            onChange={(value) => setStatusFilter(value)}
+            value={statusFilter}
+            onChange={handleStatusFilterChange}
             suffixIcon={<FilterOutlined className="text-teal-500" />}
           >
             <Option value="success">Success</Option>
@@ -207,14 +263,7 @@ const All_order = () => {
             loading={isFetching}
             rowKey="_id"
             scroll={{ x: "max-content" }}
-            pagination={{
-              total: orderData?.meta?.total,
-              pageSize: orderData?.meta?.limit,
-              current: orderData?.meta?.page,
-              showSizeChanger: true,
-              showQuickJumper: true,
-              pageSizeOptions: ["10", "20", "50", "100"],
-            }}
+            pagination={paginationConfig}
             className="rounded-lg overflow-hidden"
             components={{
               header: {

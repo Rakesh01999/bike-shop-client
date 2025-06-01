@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Table, Button, Tag, Card, Spin } from "antd";
+import { useState } from "react";
 import {
   useAlluserQuery,
   useBlockedUserMutation,
@@ -19,6 +20,10 @@ interface TUser {
 const Acctivate_account = () => {
   const { data: Alluser, isFetching } = useAlluserQuery(undefined);
   const [blockedUser] = useBlockedUserMutation();
+  
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
   const handleBlockUser = async (userId: string) => {
     try {
@@ -36,6 +41,12 @@ const Acctivate_account = () => {
         style: { fontSize: "16px", backgroundColor: "#F44336", color: "#fff" }, // Red for error
       });
     }
+  };
+
+  // Handle pagination change
+  const handleTableChange = (page: number, size: number) => {
+    setCurrentPage(page);
+    setPageSize(size);
   };
 
   // Teal Theme Colors
@@ -109,6 +120,33 @@ const Acctivate_account = () => {
     },
   ];
 
+  // Pagination configuration
+  const paginationConfig = {
+    current: currentPage,
+    pageSize: pageSize,
+    total: Alluser?.data?.length || 0,
+    showSizeChanger: true,
+    showQuickJumper: true,
+    showTotal: (total: number, range: [number, number]) =>
+      `${range[0]}-${range[1]} of ${total} users`,
+    pageSizeOptions: ['5', '10', '20', '50', '100'],
+    onChange: handleTableChange,
+    onShowSizeChange: handleTableChange,
+    style: {
+      marginTop: '16px',
+      textAlign: 'center' as const,
+    },
+    itemRender: (page: number, type: string, originalElement: React.ReactNode) => {
+      if (type === 'prev') {
+        return <Button size="small">Previous</Button>;
+      }
+      if (type === 'next') {
+        return <Button size="small">Next</Button>;
+      }
+      return originalElement;
+    },
+  };
+
   return (
     <div
       className="min-h-screen flex flex-col items-center px-5 py-10"
@@ -157,6 +195,7 @@ const Acctivate_account = () => {
             rowKey="_id"
             scroll={{ x: "max-content" }}
             className="rounded-lg overflow-hidden"
+            pagination={paginationConfig}
             components={{
               header: {
                 cell: (props: any) => (
