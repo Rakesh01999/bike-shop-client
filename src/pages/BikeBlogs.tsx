@@ -248,7 +248,7 @@ const BlogComponent: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col items-center px-4 sm:px-6 lg:px-8 py-8 md:py-12">
       {/* Title and Description Card */}
-      <div className="w-full max-w-3xl text-center mb-8 bg-teal-400 shadow-md rounded-lg p-6 transform transition-all duration-300 hover:shadow-lg">
+      <div className="w-full max-w-3xl text-center mb-8 bg-teal-200 shadow-md rounded-lg p-6 transform transition-all duration-300 hover:shadow-lg">
         <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 text-teal-700">
           Bike Shop Blog
         </h1>

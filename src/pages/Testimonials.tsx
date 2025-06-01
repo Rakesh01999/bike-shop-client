@@ -56,7 +56,8 @@ const Testimonials = () => {
     <div className="py-12 px-6 text-center">
       {/* Title & Description */}
       <div className="mb-8">
-        <h2 className="text-3xl font-bold text-gray-800">What Our Riders Say</h2>
+        {/* <h2 className="text-3xl font-bold text-gray-800">What Our Riders Say</h2> */}
+        <h2 className="text-3xl font-bold text-teal-700">What Our Riders Say</h2>
         <p className="text-lg text-gray-600 mt-2">
           Hear from our happy customers who found their perfect ride with us.
         </p>
