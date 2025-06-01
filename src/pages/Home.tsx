@@ -11,9 +11,9 @@ const Home = () => {
   return (
     <div
       className="min-h-screen flex flex-col items-center"
-      style={{
-        background: `linear-gradient(135deg, #ECFDF5 0%, #14B8A6 100%)`,
-      }}
+      // style={{
+      //   background: `linear-gradient(135deg, #ECFDF5 0%, #14B8A6 100%)`,
+      // }}
     >
       {/* Hero Swiper Section */}
       <div className="w-full">

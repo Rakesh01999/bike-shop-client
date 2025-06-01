@@ -6,7 +6,7 @@ import {
   AppstoreAddOutlined,
 } from "@ant-design/icons";
 import { useGetAllCarsQuery } from "../redux/features/bikes/bikesManagement";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 const CustomCard = () => {
@@ -32,6 +32,9 @@ const CustomCard = () => {
     secondary: "#14B8A6", // Bright Teal
     background: "#ECFDF5", // Light Teal
   };
+  const navigateToProduct = useCallback((productId: string) => {
+    navigate(`/products/${productId}`);
+  }, [navigate]);
 
   return (
     <div
@@ -41,17 +44,16 @@ const CustomCard = () => {
       // }}
     >
       {/* Title Section */}
-      <div className="text-center mb-6">
+      {/* <div className="text-center mb-6">
         <h2
           className="text-3xl font-bold text-teal-900"
-          // style={{ color: tealColors.primary }}
         >
           Available Bikes
         </h2>
         <p className="text-gray-600 text-sm">
           Browse through our collection of high-quality bikes.
         </p>
-      </div>
+      </div> */}
 
       {/* Loader while fetching */}
       {isFetching ? (
@@ -65,6 +67,7 @@ const CustomCard = () => {
               key={product._id}
               hoverable
               className="rounded-lg shadow-md transition-all duration-300 transform hover:scale-105"
+              onClick={() => navigateToProduct(product._id)}
               style={{
                 background: "rgba(255, 255, 255, 0.9)",
                 border: `2px solid ${tealColors.secondary}`,
