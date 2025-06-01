@@ -136,7 +136,7 @@ const Acctivate_account = () => {
       marginTop: '16px',
       textAlign: 'center' as const,
     },
-    itemRender: (page: number, type: string, originalElement: React.ReactNode) => {
+    itemRender: (_page: number, type: string, originalElement: React.ReactNode) => {
       if (type === 'prev') {
         return <Button size="small">Previous</Button>;
       }

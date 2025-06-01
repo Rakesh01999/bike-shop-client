@@ -66,7 +66,7 @@ const UpdateCar = () => {
     setPageSize(size);
   };
 
-  const handlePageSizeChange = (current: number, size: number) => {
+  const handlePageSizeChange = (_current: number, size: number) => {
     setCurrentPage(1); // Reset to first page when page size changes
     setPageSize(size);
   };

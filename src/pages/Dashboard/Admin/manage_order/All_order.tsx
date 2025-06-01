@@ -101,7 +101,7 @@ const All_order = () => {
       marginTop: '16px',
       textAlign: 'center' as const,
     },
-    itemRender: (page: number, type: string, originalElement: React.ReactNode) => {
+    itemRender: (_page: number, type: string, originalElement: React.ReactNode) => {
       if (type === 'prev') {
         return <span className="px-3 py-1 text-sm bg-teal-50 text-teal-600 rounded hover:bg-teal-100 cursor-pointer">Previous</span>;
       }
