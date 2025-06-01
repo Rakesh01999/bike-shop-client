@@ -34,18 +34,18 @@ const Contact = () => {
   };
   
   // Teal Theme
-  const tealColors = {
-    primary: "#0F766E", // Deep Teal
-    secondary: "#14B8A6", // Bright Teal
-    background: "#ECFDF5", // Light Teal
-  };
+  // const tealColors = {
+  //   primary: "#0F766E", // Deep Teal
+  //   secondary: "#14B8A6", // Bright Teal
+  //   background: "#ECFDF5", // Light Teal
+  // };
 
   return (
     <div
       className="min-h-screen bg-gray-50 flex flex-col"
-      style={{
-        background: `linear-gradient(135deg, ${tealColors.background} 0%, ${tealColors.secondary} 100%)`,
-      }}
+      // style={{
+      //   background: `linear-gradient(135deg, ${tealColors.background} 0%, ${tealColors.secondary} 100%)`,
+      // }}
     >
       {/* Hero */}
       <section className="bg-teal-700 text-white py-16 text-center">
@@ -111,7 +111,7 @@ const Contact = () => {
         </div>
 
         {/* Contact Info */}
-        <div className="space-y-8">
+        <div className="space-y-8 text-center">
           <h2 className="text-2xl font-semibold text-teal-700 mb-4">
             Contact Info
           </h2>

@@ -75,19 +75,20 @@ const blogs: BlogPost[] = [
 
 const Blog: React.FC = () => {
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
+
   // Teal Theme
-  const tealColors = {
-    primary: "#0F766E", // Deep Teal
-    secondary: "#14B8A6", // Bright Teal
-    background: "#ECFDF5", // Light Teal
-  };
+  // const tealColors = {
+  //   primary: "#0F766E", // Deep Teal
+  //   secondary: "#14B8A6", // Bright Teal
+  //   background: "#ECFDF5", // Light Teal
+  // };
 
   return (
     <div
       className="min-h-screen bg-gray-100 py-10 px-4 sm:px-6 lg:px-8"
-      style={{
-        background: `linear-gradient(135deg, ${tealColors.background} 0%, ${tealColors.secondary} 100%)`,
-      }}
+      // style={{
+      //   background: `linear-gradient(135deg, ${tealColors.background} 0%, ${tealColors.secondary} 100%)`,
+      // }}
     >
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-10">
@@ -103,7 +104,8 @@ const Blog: React.FC = () => {
           {blogs.map((blog) => (
             <div
               key={blog.id}
-              className="bg-white rounded-lg shadow-md hover:shadow-xl transition cursor-pointer"
+              // className="bg-white rounded-lg shadow-md hover:shadow-xl transition cursor-pointer"
+              className="bg-teal-100 rounded-lg shadow-md hover:shadow-xl transition cursor-pointer"
               onClick={() => setSelectedPost(blog)}
             >
               <img

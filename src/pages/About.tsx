@@ -8,9 +8,9 @@ const About = () => {
   return (
     <div
       className="bg-gray-50 min-h-screen flex flex-col"
-      style={{
-        background: `linear-gradient(135deg, ${tealColors.background} 0%, ${tealColors.secondary} 100%)`,
-      }}
+      // style={{
+      //   background: `linear-gradient(135deg, ${tealColors.background} 0%, ${tealColors.secondary} 100%)`,
+      // }}
     >
       {/* Hero Section */}
       <section className=" text-teal-700 py-20">
@@ -162,7 +162,7 @@ const About = () => {
       </section>
 
       {/* Get In Touch */}
-      <section className="bg-teal-600 text-white py-16">
+      <section className="bg-teal-500 text-white py-16">
         <div className="container mx-auto text-center">
           <h2 className="text-3xl font-semibold mb-4">Let's Connect</h2>
           <p className="text-lg mb-6 max-w-2xl mx-auto">
@@ -170,9 +170,9 @@ const About = () => {
             and our team will assist you.
           </p>
           <a
-            href="/about"
-            className="bg-yellow-300 text-teal-800 font-semibold py-3 px-6 rounded-lg shadow-md 
-            hover:bg-yellow-400 transition"
+            href="/contact"
+            className="bg-teal-200 text-teal-800 font-semibold py-3 px-6 rounded-lg shadow-md 
+            hover:bg-teal-400 transition"
           >
             Contact Us
           </a>
