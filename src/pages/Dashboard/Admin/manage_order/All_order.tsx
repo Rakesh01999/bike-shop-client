@@ -128,9 +128,9 @@ const All_order = () => {
   return (
     <div
       className="min-h-screen flex flex-col items-center px-5 py-6"
-      style={{
-        background: `linear-gradient(135deg, ${tealColors.background} 0%, ${tealColors.secondary} 100%)`,
-      }}
+      // style={{
+      //   background: `linear-gradient(135deg, ${tealColors.background} 0%, ${tealColors.secondary} 100%)`,
+      // }}
     >
       {/* Title Card */}
       <Card
