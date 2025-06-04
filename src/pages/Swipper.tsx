@@ -7,41 +7,41 @@ import { Link } from "react-router-dom";
 import "./swipper.css";
 
 const Swipper: React.FC = () => {
-  const slides = [
-    {
-      // image: "https://i.postimg.cc/zDx7jX1j/Bann1.jpg",
-      image: "https://i.postimg.cc/G2220CQS/bn1.jpg",
-      overlayText: "Drive in Style, Experience the Power",
-      description: "Unleash the Road with Precision and Performance",
-      altText: "Bike Slide 1",
-      cta: {
-        label: "All Products",
-        link: "/allproduct",
-      },
+const slides = [
+  {
+    image: "https://i.postimg.cc/G2220CQS/bn1.jpg",
+    overlayText: "Drive in Style, Experience the Power",
+    description: "Unleash the Road with Precision and Performance",
+    extraText: "Discover our latest arrivals built for thrill and safety.",
+    altText: "Bike Slide 1",
+    cta: {
+      label: "Contact Us",
+      link: "/contact",
     },
-    {
-      // image: "https://i.postimg.cc/h4Z8my9Z/Bann2.jpg",
-      image: "https://i.postimg.cc/5Nv8KBjQ/bn2.jpg",
-      overlayText: "Precision Meets Aesthetic Design",
-      description: "Riding Redefined with Next-Level Engineering",
-      altText: "Bike Slide 2",
-      cta: {
-        label: "Read Blogs",
-        link: "/blogs",
-      },
+  },
+  {
+    image: "https://i.postimg.cc/5Nv8KBjQ/bn2.jpg",
+    overlayText: "Precision Meets Aesthetic Design",
+    description: "Riding Redefined with Next-Level Engineering",
+    extraText: "Crafted with care, tested for excellence. Ride smart, ride strong.",
+    altText: "Bike Slide 2",
+    cta: {
+      label: "Read Blogs",
+      link: "/blogs",
     },
-    {
-      // image: "https://i.postimg.cc/JzZj9RSS/Bann3.jpg",
-      image: "https://i.postimg.cc/rph4RgZ3/bn3.jpg",
-      overlayText: "Tech-Driven Performance",
-      description: "Unleash Your Riding Potential Today",
-      altText: "Bike Slide 3",
-      cta: {
-        label: "Contact Us",
-        link: "/contact",
-      },
+  },
+  {
+    image: "https://i.postimg.cc/rph4RgZ3/bn3.jpg",
+    overlayText: "Special Offer",
+    description: "20% OFF",
+    extraText: "Limited time deal on our best-selling models. Don’t miss out!",
+    altText: "Bike Slide 3",
+    cta: {
+      label: "Buy Now",
+      link: "/allproduct",
     },
-  ];
+  },
+];
 
   return (
     <div className="w-full overflow-hidden">
@@ -74,23 +74,28 @@ const Swipper: React.FC = () => {
             <div className="relative z-30 flex items-center justify-start h-full px-4 sm:px-8 md:px-16">
               {/* <div className="text-left text-white max-w-xl space-y-4"> */}
               <div className="text-left text-white w-1/3 space-y-4">
-                <h2 className="text-xl sm:text-2xl md:text-2xl lg:text-4xl font-bold drop-shadow-xl">
+                {/* <h2 className="text-xl sm:text-2xl md:text-2xl lg:text-4xl font-bold drop-shadow-xl"> */}
+                <h2 className="sm:text-lg md:text-2xl lg:text-4xl font-bold drop-shadow-xl">
                   {slide.overlayText}
                 </h2>
-                <p className="text-sm sm:text-base md:text-lg drop-shadow-lg">
+                {/* <p className="text-sm sm:text-base md:text-lg drop-shadow-lg"> */}
+                <p className="text-xs sm:text-base md:text-lg drop-shadow-lg">
                   {slide.description}
                 </p>
-                <div className="flex flex-wrap gap-4 mt-4">
+                <p className="text-xs sm:text-base md:text-lg drop-shadow-lg">
+                  {slide.extraText}
+                </p>
+                <div className="flex flex-wrap gap-3 sm:gap-4 mt-4">
                   <Link
                     to={slide.cta.link}
-                    // className="bg-teal-500 hover:bg-teal-600 px-6 py-2 rounded-full text-white font-semibold transition"
-                    className="bg-teal-500 hover:bg-teal-600 px-6 py-2 rounded-full text-white sm:text-sm font-semibold transition"
+                    // className="bg-teal-500 hover:bg-teal-600 px-4 sm:px-6 py-2 text-sm sm:text-base rounded-full text-white font-semibold transition duration-300"
+                    className="bg-teal-500 hover:bg-teal-600 px-4 sm:px-6 py-2 text-xs sm:text-base rounded-full text-white font-semibold transition duration-300"
                   >
                     {slide.cta.label}
                   </Link>
                   <Link
                     to="/about"
-                    className="bg-white hover:bg-gray-300 text-teal-600 px-6 py-2 rounded-full font-semibold transition"
+                    className="bg-white hover:bg-gray-300 text-teal-600 px-4 sm:px-6 py-2 text-xs sm:text-base rounded-full font-semibold transition duration-300"
                   >
                     Learn More
                   </Link>
