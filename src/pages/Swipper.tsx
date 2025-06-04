@@ -7,44 +7,61 @@ import { Link } from "react-router-dom";
 import "./swipper.css";
 
 const Swipper: React.FC = () => {
-const slides = [
-  {
-    image: "https://i.postimg.cc/G2220CQS/bn1.jpg",
-    overlayText: "Drive in Style, Experience the Power",
-    description: "Unleash the Road with Precision and Performance",
-    extraText: "Discover our latest arrivals built for thrill and safety.",
-    altText: "Bike Slide 1",
-    cta: {
-      label: "Contact Us",
-      link: "/contact",
+  const slides = [
+    {
+      image: "https://i.postimg.cc/G2220CQS/bn1.jpg",
+      overlayText: "Drive in Style, Experience the Power",
+      description: "Unleash the Road with Precision and Performance",
+      extraText: "Discover our latest arrivals built for thrill and safety.",
+      altText: "Bike Slide 1",
+      cta: {
+        label: "Contact Us",
+        link: "/contact",
+      },
     },
-  },
-  {
-    image: "https://i.postimg.cc/5Nv8KBjQ/bn2.jpg",
-    overlayText: "Precision Meets Aesthetic Design",
-    description: "Riding Redefined with Next-Level Engineering",
-    extraText: "Crafted with care, tested for excellence. Ride smart, ride strong.",
-    altText: "Bike Slide 2",
-    cta: {
-      label: "Read Blogs",
-      link: "/blogs",
+    {
+      image: "https://i.postimg.cc/5Nv8KBjQ/bn2.jpg",
+      overlayText: "Precision Meets Aesthetic Design",
+      description: "Riding Redefined with Next-Level Engineering",
+      extraText:
+        "Crafted with care, tested for excellence. Ride smart, ride strong.",
+      altText: "Bike Slide 2",
+      cta: {
+        label: "Read Blogs",
+        link: "/blogs",
+      },
     },
-  },
-  {
-    image: "https://i.postimg.cc/rph4RgZ3/bn3.jpg",
-    overlayText: "Special Offer",
-    description: "20% OFF",
-    extraText: "Limited time deal on our best-selling models. Don’t miss out!",
-    altText: "Bike Slide 3",
-    cta: {
-      label: "Buy Now",
-      link: "/allproduct",
+    {
+      image: "https://i.postimg.cc/rph4RgZ3/bn3.jpg",
+      overlayText: "Special Offer",
+      description: "20% OFF",
+      extraText:
+        "Limited time deal on our best-selling models. Don’t miss out!",
+      altText: "Bike Slide 3",
+      cta: {
+        label: "Buy Now",
+        link: "/allproduct",
+      },
     },
-  },
-];
+  ];
 
   return (
     <div className="w-full overflow-hidden">
+      <style>
+        {`
+    .swiper-button-prev::after,
+    .swiper-button-next::after {
+      color: #14b8a6; /* Tailwind teal-500 */
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    .swiper-button-prev:hover::after,
+    .swiper-button-next:hover::after {
+      color: #0f766e; /* Tailwind teal-600 on hover */
+    }
+  `}
+      </style>
+
       <Swiper
         modules={[Navigation, Pagination, Autoplay, EffectFade]}
         navigation={{
@@ -107,8 +124,8 @@ const slides = [
 
         {/* Navigation Buttons */}
         <div className="swiper-navigation-wrapper absolute top-1/2 transform -translate-y-1/2 z-40 w-full px-4">
-          <div className="swiper-button-prev text-white bg-black/50 hover:bg-black/70 p-2 rounded-full transition-all" />
-          <div className="swiper-button-next text-white bg-black/50 hover:bg-black/70 p-2 rounded-full transition-all" />
+          <div className="swiper-button-prev text-white  hover:bg-black/70 p-2 rounded-full transition-all" />
+          <div className="swiper-button-next text-white  hover:bg-black/70 p-2 rounded-full transition-all" />
         </div>
 
         {/* Pagination */}
