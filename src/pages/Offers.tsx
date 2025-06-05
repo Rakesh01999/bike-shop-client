@@ -34,14 +34,13 @@ const Offers = () => {
       // className="bg-gray-50 py-12 px-4 md:px-8"
       className="bg-cover py-12 px-4 md:px-8"
       style={{
-        backgroundImage: "url('https://i.postimg.cc/kg7qQcNz/taaft-com-image-generator-by-taaft-1748203501.png')",
+        backgroundImage:
+          "url('https://i.postimg.cc/kg7qQcNz/taaft-com-image-generator-by-taaft-1748203501.png')",
         backgroundRepeat: "no-repeat",
       }}
     >
       <div className="max-w-6xl mx-auto text-center">
         {/* <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6"> */}
-       
-
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {offers.map((offer, index) => (
             <div

@@ -30,14 +30,14 @@ const Category = () => {
 
   return (
     // <div className="py-12 px-4 md:px-8 bg-gradient-to-r from-[#ECFDF5] to-[#A7F3D0]">
-    <div className="py-12 px-4 md:px-8 bg-[#A7F3D0]">
-      <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-teal-700 mb-2">
+    <div className="py-12 px-4 md:px-8 mx-auto bg-[#A7F3D0]">
+      <div className="mx-auto max-w-8xl text-center">        
+        {/* <h2 className="text-3xl md:text-4xl font-bold text-teal-700 mb-2">
           Shop by Category
         </h2>
         <p className="text-gray-600 mb-10">
           Explore bikes tailored for every ride and lifestyle.
-        </p>
+        </p> */}
 
         {isLoading ? (
           <p className="text-teal-600">Loading categories...</p>

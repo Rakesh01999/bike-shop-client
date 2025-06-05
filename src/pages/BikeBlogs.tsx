@@ -246,9 +246,10 @@ const BlogComponent: React.FC = () => {
     setSelectedPost(null);
   };
   return (
+    // <div className="min-h-screen flex flex-col items-center px-4 sm:px-6 lg:px-8 py-8 md:py-12">
     <div className="min-h-screen flex flex-col items-center px-4 sm:px-6 lg:px-8 py-8 md:py-12">
       {/* Title and Description Card */}
-      <div className="w-full max-w-3xl text-center mb-6 transform transition-all duration-300 ">
+      <div className="w-full text-center mb-6 transform transition-all duration-300 ">
         <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 text-teal-700">
           Bike Shop Blog
         </h1>
@@ -258,7 +259,7 @@ const BlogComponent: React.FC = () => {
       </div>
 
       {/* Blog Posts Grid */}
-      <div className="w-full max-w-6xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="w-full max-w-8xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {currentPosts.map((post) => (
           <div
             key={post.id}

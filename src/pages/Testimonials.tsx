@@ -7,52 +7,54 @@ import { useRef } from "react";
 const testimonials = [
   {
     id: 1,
-    quote: "Absolutely love my new bike! Smooth ride and top-notch quality.",
+    quote: "Love my new bike! Smooth ride, great quality, and stylish design.",
     name: "Daniel R.",
     location: "New York",
   },
   {
     id: 2,
     quote:
-      "Best bike shop in town! Great selection and amazing customer support.",
+      "Top bike shop! Excellent selection, great prices, and friendly service always.",
     name: "Sarah K.",
     location: "California",
   },
   {
     id: 3,
-    quote:
-      "The entire buying process was effortless. Highly recommend this store!",
+    quote: "Buying was easy and fast. Totally recommend this great bike store.",
     name: "Chris M.",
     location: "Texas",
   },
   {
     id: 4,
     quote:
-      "Top-tier bikes at unbeatable prices! Will be back for my next upgrade.",
+      "Amazing prices, premium bikes, great value! Coming back for my upgrade.",
     name: "Emma T.",
     location: "Florida",
   },
   {
     id: 5,
-    quote: "The staff guided me to the perfect bike. Couldn’t be happier!",
+    quote: "Helpful staff guided me perfectly. I found my dream bike easily.",
     name: "Liam B.",
     location: "Washington",
   },
   {
     id: 6,
-    quote: "Fast delivery, quality bike, and exceptional service. 5 stars!",
+    quote:
+      "Bike arrived fast, top quality, great service — would give six stars!",
     name: "Sophia J.",
     location: "Illinois",
   },
   {
     id: 7,
-    quote: "Great experience! My bike rides like a dream. Worth every penny!",
+    quote:
+      "Fantastic ride, perfect handling! My bike experience has been truly amazing.",
     name: "Michael P.",
     location: "Nevada",
   },
   {
     id: 8,
-    quote: "Ordered online and got my bike delivered in 2 days! Impressed!",
+    quote:
+      "Ordered online, fast delivery, top condition. Very impressed and happy customer!",
     name: "Lucas D.",
     location: "Arizona",
   },
@@ -62,7 +64,8 @@ const Testimonials = () => {
   const paginationRef = useRef(null);
 
   return (
-    <div className="px-6 bg-white text-center">
+    // <div className="px-6 bg-white text-center">
+    <div className="px-4 text-center">
       {/* Title */}
       <div className="mb-8">
         <h2 className="text-3xl font-bold text-teal-700">
@@ -74,7 +77,8 @@ const Testimonials = () => {
       </div>
 
       {/* Swiper with External Pagination */}
-      <div className="max-w-6xl mx-auto">
+      {/* <div className="max-w-6xl mx-auto"> */}
+      <div className="w-full mx-auto">
         <Swiper
           modules={[Pagination, Autoplay]}
           spaceBetween={24}
@@ -99,8 +103,9 @@ const Testimonials = () => {
         >
           {testimonials.map((testimonial) => (
             <SwiperSlide key={testimonial.id}>
-              <div className="shadow-lg rounded-xl border p-6 bg-white h-full flex flex-col justify-between transition hover:shadow-xl border-l-4 border-teal-600">
-                <p className="text-gray-700 italic mb-4">
+              {/* <div className="h-[200px] md:h-[180px] lg:h-[200px] xl:h-[260px] flex flex-col justify-between bg-white border shadow-md rounded-xl border-l-4 border-teal-600 p-6 transition-all hover:shadow-xl"> */}
+              <div className="h-[190px] flex flex-col justify-between bg-white border shadow-md rounded-xl border-l-4 border-teal-600 p-6 transition-all hover:shadow-xl">
+                <p className="text-gray-700 italic mb-4 line-clamp-4">
                   "{testimonial.quote}"
                 </p>
                 <p className="font-semibold text-gray-900">

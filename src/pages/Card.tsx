@@ -43,7 +43,7 @@ const CustomCard = () => {
   return (
     <div
       // className="min-h-screen flex flex-col items-center px-5 py-10"
-      className="min-h-screen flex flex-col items-center px-5 "
+      className="flex flex-col items-center px-5 "
       // style={{
       //   background: `linear-gradient(135deg, ${tealColors.background} 0%, ${tealColors.secondary} 100%)`,
       // }}
