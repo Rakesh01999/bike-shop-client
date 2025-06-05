@@ -32,13 +32,17 @@ const CustomCard = () => {
     secondary: "#14B8A6", // Bright Teal
     background: "#ECFDF5", // Light Teal
   };
-  const navigateToProduct = useCallback((productId: string) => {
-    navigate(`/products/${productId}`);
-  }, [navigate]);
+  const navigateToProduct = useCallback(
+    (productId: string) => {
+      navigate(`/products/${productId}`);
+    },
+    [navigate]
+  );
 
   return (
     <div
-      className="min-h-screen flex flex-col items-center px-5 py-10"
+      // className="min-h-screen flex flex-col items-center px-5 py-10"
+      className="min-h-screen flex flex-col items-center px-5 "
       // style={{
       //   background: `linear-gradient(135deg, ${tealColors.background} 0%, ${tealColors.secondary} 100%)`,
       // }}

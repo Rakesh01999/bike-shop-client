@@ -34,14 +34,15 @@ const Home = () => {
       </div>
 
       {/* Bike Category */}
-      <div className="w-full max-w-6xl px-4 mt-16">
-        <div className="mt-6">
+      <div className="w-full max-w-6xl px-4 mt-10">
+        <div className="">
           <Category />
         </div>
       </div>
 
       <div>
-        <h2 className="text-3xl md:text-4xl font-bold text-teal-900 animate-pulse mb-6 text-center mt-16">
+        {/* <h2 className="text-3xl md:text-4xl font-bold text-teal-900 animate-pulse mb-6 text-center mt-10"> */}
+        <h2 className="text-3xl md:text-4xl font-bold text-teal-900 animate-pulse text-center mt-10">
           🔥 Special Offers
         </h2>
         <p className="text-gray-700 max-w-2xl mx-auto text-center">
@@ -58,22 +59,22 @@ const Home = () => {
       </div>
 
       {/* Bike Blogs */}
-      <div className="w-full max-w-6xl px-4 mt-16">
-        <div className="mt-6">
+      <div className="w-full max-w-6xl px-4">
+        <div className="">
           <BikeBlogs />
         </div>
       </div>
 
       {/* Customer Testimonials */}
-      <div className="w-full max-w-6xl px-4 mt-16">
-        <div className="mt-6">
+      <div className="w-full max-w-6xl px-4 mt-10">
+        <div className="">
           <Testimonials />
         </div>
       </div>
       
       {/* Services */}
       <div className="w-full max-w-6xl px-4 mt-10">
-        <div className="mt-6">
+        <div className="">
           <Services />
         </div>
       </div>
