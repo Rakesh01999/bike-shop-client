@@ -116,8 +116,8 @@ const Testimonials = () => {
         <div
           ref={paginationRef}
           //  className="mt-6 flex justify-center gap-2"
-          // className="mt-6 flex justify-center gap-2 [&_span]:block [&_span]:w-3 [&_span]:h-3 [&_span]:rounded-full 
-          className="mt-6 flex justify-center gap-2 [&_span]:block md:[&_span]:w-3 md:[&_span]:h-3 [&_span]:rounded-full 
+          // className="mt-6 flex justify-center gap-2 [&_span]:block [&_span]:w-3 [&_span]:h-3 [&_span]:rounded-full
+          className="mt-6 flex justify-center gap-2 [&_span]:block md:[&_span]:w- lg:[&_span]:w-3 md:[&_span]:h-2 lg:[&_span]:h-3 [&_span]:rounded-full 
              [&_span]:bg-gray-500 [&_span]:transition-all 
              [&_span.swiper-pagination-bullet-active]:bg-teal-500"
         />

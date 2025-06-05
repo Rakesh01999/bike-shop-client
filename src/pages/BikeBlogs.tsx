@@ -271,7 +271,8 @@ const BlogComponent: React.FC = () => {
                 className="w-full h-48 object-cover"
               />
               <div className="absolute top-4 left-4">
-                <Tag color="processing">{post.category}</Tag>
+                {/* <Tag color="processing">{post.category}</Tag> */}
+                <Tag className="bg-teal-200 text-teal-800 border-teal-600">{post.category}</Tag>
               </div>
             </div>
 
