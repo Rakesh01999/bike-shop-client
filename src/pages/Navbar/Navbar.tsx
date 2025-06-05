@@ -189,7 +189,8 @@ const Navbar = () => {
     >
       {/* Desktop Navigation - Single Row */}
       <div className="hidden lg:block">
-        <div className="container mx-auto flex justify-between items-center p-4 max-w-6xl">
+        {/* <div className="container mx-auto flex justify-between items-center p-4 max-w-6xl"> */}
+        <div className="container mx-auto flex justify-between items-center p-4 max-w-8xl">
           {/* Logo Section */}
           <div
             className="flex items-center space-x-4 group cursor-pointer"

@@ -11,7 +11,8 @@ import { useNavigate } from "react-router-dom";
 
 const CustomCard = () => {
   const { data: cars, isFetching } = useGetAllCarsQuery(undefined);
-  const displayedCars = cars?.data?.slice(0, 6);
+  // const displayedCars = cars?.data?.slice(0, 6);
+  const displayedCars = cars?.data?.slice(0, 8);
 
   const [totalCars, setTotalCars] = useState<number>(0);
   const navigate = useNavigate();
@@ -65,7 +66,7 @@ const CustomCard = () => {
           <Spin size="large" />
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full max-w-6xl">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 w-full max-w-8xl mx-auto">
           {displayedCars?.map((product) => (
             <AntCard
               key={product._id}
@@ -111,7 +112,7 @@ const CustomCard = () => {
       )}
 
       {/* View All Button */}
-      {totalCars > 6 && (
+      {totalCars > 8 && (
         <div className="text-center mt-6">
           <Button
             className="w-52 h-10 bg-teal-600 hover:bg-teal-700 text-white md:text-xl font-bold px-6 py-2 rounded-lg shadow-md transition-all"

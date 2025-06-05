@@ -21,7 +21,8 @@ const Home = () => {
       </div>
 
       {/* Featured Products / Custom Cards */}
-      <div className="mt-10 w-full max-w-6xl px-4">
+      {/* <div className="mt-10 w-full max-w-8xl px-4 mx-auto"> */}
+      <div className="mt-10 max-w-8xl mx-auto">
         <h2 className="text-3xl font-bold text-teal-700 text-center">
           Explore Our Best Bikes
         </h2>
