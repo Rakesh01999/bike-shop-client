@@ -1,9 +1,14 @@
-import { Card as AntCard, Button, Spin } from "antd";
 import {
-  TagOutlined,
+  // Card as AntCard,
+  Button,
+  Spin,
+  Tag,
+} from "antd";
+import {
+  // TagOutlined,
   CarOutlined,
   DollarOutlined,
-  AppstoreAddOutlined,
+  // AppstoreAddOutlined,
 } from "@ant-design/icons";
 import { useGetAllCarsQuery } from "../redux/features/bikes/bikesManagement";
 import { useState, useEffect, useCallback } from "react";
@@ -66,47 +71,55 @@ const CustomCard = () => {
           <Spin size="large" />
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 w-full max-w-8xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full max-w-8xl mx-auto">
+          {/* Adjusted grid columns and max-width for better responsiveness */}
           {displayedCars?.map((product) => (
-            <AntCard
+            <div
               key={product._id}
-              hoverable
-              className="rounded-lg shadow-md transition-all duration-300 transform hover:scale-105"
+              className="bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer transform transition-all duration-300 hover:shadow-xl hover:-translate-y-2" // Applied modern card styling
               onClick={() => navigateToProduct(product._id)}
               style={{
-                background: "rgba(255, 255, 255, 0.9)",
-                border: `2px solid ${tealColors.secondary}`,
+                border: `1px solid ${tealColors.secondary}`, // Added border with teal color
               }}
-              cover={
-                <img
-                  alt={product.model}
-                  src={product.image}
-                  className="w-full h-48 object-cover rounded-t-lg"
-                />
-              }
             >
-              <div className="space-y-2 text-sm">
-                <p>
-                  <CarOutlined className="text-teal-600" />{" "}
-                  <strong>Brand:</strong> {product.brand}
-                </p>
-                <p>
-                  <TagOutlined className="text-teal-600" />{" "}
-                  <strong>Category:</strong> {product.category}
-                </p>
-                <p>
-                  <DollarOutlined className="text-teal-600" />{" "}
-                  <strong>Price:</strong>{" "}
-                  <span className="text-teal-700 font-semibold">
-                    ${product.price.toLocaleString()}
-                  </span>
-                </p>
-                <p>
-                  <AppstoreAddOutlined className="text-teal-600" />{" "}
-                  <strong>Model:</strong> {product.modelNumber}
-                </p>
+              <div className="relative">
+                <img
+                  alt={product.modelNumber}
+                  src={product.image}
+                  className="w-full h-48 object-cover rounded-t-xl" // Rounded top corners
+                />
+                <div className="absolute top-4 left-4">
+                  <Tag className="bg-teal-200 text-teal-800 border-teal-600 font-semibold text-xs px-3 py-1 rounded-full">
+                    {/* Styled category tag */}
+                    {product.category}
+                  </Tag>
+                </div>
               </div>
-            </AntCard>
+
+              <div className="p-5 space-y-3">
+                {/* Added padding and spacing */}
+                <h3 className="text-lg font-bold text-teal-700 line-clamp-1">
+                  {/* Styled title */}
+                  {product.modelNumber}
+                </h3>
+                <div className="text-sm text-gray-600 space-y-1">
+                  {/* Details section */}
+                  <p className="flex items-center">
+                    <CarOutlined className="text-teal-600 mr-2" />
+                    <strong>Brand:</strong>{" "}
+                    <span className="ml-1">{product.brand}</span>
+                  </p>
+                  <p className="flex items-center">
+                    <DollarOutlined className="text-teal-600 mr-2" />
+                    <strong>Price:</strong>{" "}
+                    <span className="text-teal-700 font-semibold ml-1">
+                      ${product.price?.toLocaleString()}
+                    </span>
+                  </p>
+                  {/* Removed duplicate model line */}
+                </div>
+              </div>
+            </div>
           ))}
         </div>
       )}
@@ -115,6 +128,8 @@ const CustomCard = () => {
       {totalCars > 8 && (
         <div className="text-center mt-6">
           <Button
+            // className="w-52 h-10 bg-teal-600 hover:bg-teal-700 text-white md:text-xl font-bold px-6 py-2 rounded-lg shadow-md transition-all"
+            // className="w-56 h-12 bg-teal-600 hover:bg-teal-700 text-white text-lg font-bold px-8 py-3 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105"
             className="w-52 h-10 bg-teal-600 hover:bg-teal-700 text-white md:text-xl font-bold px-6 py-2 rounded-lg shadow-md transition-all"
             onClick={handleViewAll}
           >
