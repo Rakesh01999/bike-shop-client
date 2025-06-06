@@ -1,9 +1,9 @@
 const About = () => {
-  const tealColors = {
-    primary: "#0F766E", // Deep Teal
-    secondary: "#14B8A6", // Bright Teal
-    background: "#ECFDF5", // Light Teal
-  };
+  // const tealColors = {
+  //   primary: "#0F766E", // Deep Teal
+  //   secondary: "#14B8A6", // Bright Teal
+  //   background: "#ECFDF5", // Light Teal
+  // };
 
   return (
     <div
@@ -13,7 +13,7 @@ const About = () => {
       // }}
     >
       {/* Hero Section */}
-      <section className=" text-teal-700 py-20">
+      <section className=" text-teal-700 mt-10 md:mt-14">
         <div className="container mx-auto text-center">
           <h1 className="text-4xl font-bold mb-4 tracking-wide">
             About <span className="">BikeShop</span>
@@ -26,40 +26,52 @@ const About = () => {
       </section>
 
       {/* Our Mission */}
-      <section className="container mx-auto py-16 px-6">
-        <h2 className="text-3xl font-semibold text-center text-teal-800 mb-8">
+      <section className="container mx-auto mt-10 px-6">
+        <h2 className="text-3xl font-semibold text-center text-teal-800 mb-10">
           Our Mission
         </h2>
         <div className="flex flex-col md:flex-row items-center gap-10">
-          <div className="md:w-1/2 text-gray-700 space-y-5">
+          {/* Text Section */}
+          <div className="md:w-1/2 text-gray-700 space-y-6">
             <p className="text-lg leading-relaxed">
               At <span className="text-teal-600 font-bold">BikeShop</span>, we
-              are passionate about providing the highest quality bikes at
-              affordable prices. Whether you're a seasoned rider or a first-time
-              buyer, we ensure a seamless experience from selection to purchase.
+              believe that every journey deserves the perfect ride. Our mission
+              is to empower riders of all levels — from daily commuters to
+              passionate adventurers — with premium-quality bikes that combine
+              performance, durability, and style.
             </p>
-            <p className="text-lg">
-              Our commitment is to deliver excellent service, ensuring you get
-              the best ride for your needs.
+            <p className="text-lg leading-relaxed">
+              We take pride in offering an easy, transparent, and satisfying
+              shopping experience. Our team carefully curates each model,
+              ensuring every bike meets high standards for comfort and
+              reliability. Whether you're upgrading your ride or just getting
+              started, we're here to support your cycling journey.
+            </p>
+            <p className="text-lg leading-relaxed">
+              With a strong focus on customer satisfaction and sustainable
+              mobility, BikeShop is more than a store — it's a community of
+              riders moving forward together.
             </p>
           </div>
-          <div className="md:w-1/2">
+
+          {/* Image Section */}
+          <div className="md:w-1/2 max-w-md mx-auto">
             <img
               src="https://i.postimg.cc/yxXJVFxy/MY-24-KTM-SUPERSPORT-RC-390.jpg"
               alt="Bike Shop"
-              className="rounded-lg shadow-lg w-full object-cover"
+              className="rounded-lg shadow-md w-full object-cover h-[300px] md:h-[350px]"
             />
           </div>
         </div>
       </section>
 
       {/* Our Services */}
-      <section className="bg-gray-200 py-16">
+      <section className="bg-gray-200 mt-10 pt-6 md:pb-10 pb-6">
         <div className="container mx-auto text-center">
           <h2 className="text-3xl font-semibold text-teal-800 mb-8">
             Our Services
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 px-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-10 px-5">
             {[
               {
                 title: "Bike Sales",
@@ -80,11 +92,12 @@ const About = () => {
             ].map((service, index) => (
               <div
                 key={index}
-                className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition"
-                style={{
-                  // background: `linear-gradient(135deg, ${tealColors.background} 0%, ${tealColors.secondary} 100%)`,
-                  background: `linear-gradient(135deg, ${tealColors.background} 0%, ${tealColors.secondary} 170%)`,
-                }}
+                className="bg-teal-100 p-6 rounded-lg shadow-lg hover:shadow-xl transition"
+                style={
+                  {
+                    // background: `linear-gradient(135deg, ${tealColors.background} 0%, ${tealColors.secondary} 170%)`,
+                  }
+                }
               >
                 <h3 className="text-xl font-semibold text-teal-600 mb-4">
                   {service.title}
@@ -98,11 +111,12 @@ const About = () => {
       </section>
 
       {/* Why Choose Us */}
-      <section className="container mx-auto py-16 px-6">
+      <section className="container mx-auto py-10 px-6">
         <h2 className="text-3xl font-semibold text-center text-teal-800 mb-8">
           Why Choose Us?
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+          {/* Left Side - List */}
           <div className="text-lg text-gray-700 space-y-4">
             <p>We stand out because of:</p>
             <ul className="list-disc pl-5 space-y-2">
@@ -113,19 +127,33 @@ const About = () => {
               <li>🎯 Unmatched customer satisfaction guarantee</li>
             </ul>
           </div>
-          <div className="text-lg text-gray-700">
+
+          {/* Right Side - Expanded Text */}
+          <div className="text-lg text-gray-700 space-y-5">
             <p>
               We value our customers and are committed to making every ride an
               adventure. Join our family and experience the{" "}
-              {/* <span className="text-teal-600 font-bold"> */}
               <span className="text-teal-900 font-bold">
                 BikeShop Difference
               </span>
               .
             </p>
+            <p>
+              Our support team is always ready to assist you — from helping you
+              choose the right bike to offering post-purchase guidance. We
+              believe that your journey doesn't end with the sale — it begins
+              there.
+            </p>
+            <p>
+              With flexible delivery options, ongoing service offers, and a
+              growing rider community, we’re not just selling bikes — we’re
+              building connections, trust, and a culture of safe, enjoyable
+              riding.
+            </p>
           </div>
         </div>
       </section>
+
       {/* Testimonials */}
       <section className="bg-white py-16">
         <div className="container mx-auto text-center">
