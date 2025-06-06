@@ -66,7 +66,7 @@ const Navbar = () => {
     setMenuOpen(false);
   };
 
-  // Vehicles Mega Menu Component
+  // Vehicles Mega Menu Component with reduced spacing
   const VehiclesMegaMenu = () => (
     <div
       className="absolute top-full left-0 w-full bg-white shadow-xl transform transition-all duration-300 z-50"
@@ -76,19 +76,19 @@ const Navbar = () => {
         transform: `translateY(${megaMenuOpen ? "0" : "-10px"})`,
       }}
     >
-      <div className="container mx-auto max-w-6xl p-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="container mx-auto max-w-6xl p-3">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Categories Section */}
           <div>
-            <h3 className="text-lg font-semibold mb-4 text-teal-700 border-b border-teal-200 pb-2">
+            <h3 className="text-base font-semibold mb-2 text-teal-700 border-b border-teal-200 pb-1">
               Categories
             </h3>
-            <div className="space-y-2">
+            <div className="space-y-1">
               {categories.map((category, index) => (
                 <button
                   key={index}
                   onClick={() => handleFilteredNavigation("category", category)}
-                  className="block w-full text-left px-4 py-2 rounded-lg hover:bg-teal-50 text-gray-700 hover:text-teal-700 transition-all duration-200 text-sm"
+                  className="block w-full text-left px-3 py-1.5 rounded-md hover:bg-teal-50 text-gray-700 hover:text-teal-700 transition-all duration-200 text-sm"
                 >
                   {category}
                 </button>
@@ -98,15 +98,15 @@ const Navbar = () => {
 
           {/* Brands Section */}
           <div>
-            <h3 className="text-lg font-semibold mb-4 text-teal-700 border-b border-teal-200 pb-2">
+            <h3 className="text-base font-semibold mb-2 text-teal-700 border-b border-teal-200 pb-1">
               Brands
             </h3>
-            <div className="space-y-2">
+            <div className="space-y-1">
               {brands.map((brand, index) => (
                 <button
                   key={index}
                   onClick={() => handleFilteredNavigation("brand", brand)}
-                  className="block w-full text-left px-4 py-2 rounded-lg hover:bg-teal-50 text-gray-700 hover:text-teal-700 transition-all duration-200 text-sm"
+                  className="block w-full text-left px-3 py-1.5 rounded-md hover:bg-teal-50 text-gray-700 hover:text-teal-700 transition-all duration-200 text-sm"
                 >
                   {brand}
                 </button>
@@ -116,15 +116,15 @@ const Navbar = () => {
 
           {/* Models Section */}
           <div>
-            <h3 className="text-lg font-semibold mb-4 text-teal-700 border-b border-teal-200 pb-2">
+            <h3 className="text-base font-semibold mb-2 text-teal-700 border-b border-teal-200 pb-1">
               Models
             </h3>
-            <div className="space-y-2 max-h-64 overflow-y-auto">
+            <div className="space-y-1 max-h-48 overflow-y-auto">
               {models.map((model, index) => (
                 <button
                   key={index}
                   onClick={() => handleFilteredNavigation("modelNumber", model)}
-                  className="block w-full text-left px-4 py-2 rounded-lg hover:bg-teal-50 text-gray-700 hover:text-teal-700 transition-all duration-200 text-sm"
+                  className="block w-full text-left px-3 py-1.5 rounded-md hover:bg-teal-50 text-gray-700 hover:text-teal-700 transition-all duration-200 text-sm"
                 >
                   {model}
                 </button>
