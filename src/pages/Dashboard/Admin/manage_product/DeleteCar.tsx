@@ -142,15 +142,16 @@ const DeleteCar = () => {
     <div className="min-h-screen flex flex-col items-center px-5 py-6">
       {/* Title Card */}
       <Card
-        className="w-full max-w-3xl text-center shadow-lg mb-6"
-        style={{
-          background: "rgba(255, 255, 255, 0.9)",
-          backdropFilter: "blur(10px)",
-          border: `1px solid ${tealColors.secondary}`,
-        }}
+        className="w-full max-w-3xl text-center bg-gray-100 mb-6"
+        // className="w-full max-w-3xl text-center shadow-lg mb-6"
+        // style={{
+        //   background: "rgba(255, 255, 255, 0.9)",
+        //   backdropFilter: "blur(10px)",
+        //   border: `1px solid ${tealColors.secondary}`,
+        // }}
       >
         <h1
-          className="text-2xl font-semibold text-gray-800"
+          className="text-2xl md:text-3xl lg:text-4xl font-semibold text-gray-800"
           style={{ color: tealColors.primary }}
         >
           Delete Bike

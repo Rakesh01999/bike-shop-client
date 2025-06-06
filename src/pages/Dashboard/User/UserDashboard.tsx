@@ -232,7 +232,7 @@ const UserDashboard = () => {
             level={1}
             className="text-gray-800 font-bold mb-2 sm:mb-4 text-2xl sm:text-3xl lg:text-4xl"
           >
-            User Dashboard
+            <span className="text-teal-700 md:text-3xl text-2xl lg:text-4xl">User Dashboard</span>
           </Title>
           <Paragraph className="text-sm sm:text-base lg:text-lg text-gray-600 max-w-2xl mx-auto px-4">
             Welcome to your smart and dynamic dashboard !

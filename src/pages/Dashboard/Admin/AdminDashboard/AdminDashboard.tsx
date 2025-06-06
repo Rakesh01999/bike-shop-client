@@ -83,12 +83,12 @@ const AdminDashboard = () => {
   // Helper function to get bikes array from response
   const getBikesArray = (carData: CarDataResponse | undefined): Bike[] => {
     if (!carData?.data) return [];
-    
+
     // Handle case where data is directly an array
     if (Array.isArray(carData.data)) {
       return carData.data;
     }
-    
+
     return [];
   };
 
@@ -131,7 +131,8 @@ const AdminDashboard = () => {
   const brandChartData = useMemo((): BrandData[] => {
     if (bikes.length === 0) return [];
 
-    const brandStats: { [key: string]: { count: number; totalPrice: number } } = {};
+    const brandStats: { [key: string]: { count: number; totalPrice: number } } =
+      {};
 
     bikes.forEach((bike: Bike) => {
       const brand = bike.brand || "Unknown";
@@ -189,15 +190,22 @@ const AdminDashboard = () => {
     >
       <div className="flex items-center justify-between">
         <div className="flex-1 min-w-0">
-          <p className="text-gray-600 text-xs sm:text-sm font-medium truncate">{title}</p>
-          <p className={`${color} text-xl sm:text-2xl lg:text-3xl font-bold mt-1 sm:mt-2`}>
+          <p className="text-gray-600 text-xs sm:text-sm font-medium truncate">
+            {title}
+          </p>
+          <p
+            className={`${color} text-xl sm:text-2xl lg:text-3xl font-bold mt-1 sm:mt-2`}
+          >
             {isLoading ? "..." : value}
           </p>
         </div>
         <div
           className={`${color
             .replace("text-", "bg-")
-            .replace("-600", "-100")} p-2 sm:p-3 rounded-full flex-shrink-0 ml-2`}
+            .replace(
+              "-600",
+              "-100"
+            )} p-2 sm:p-3 rounded-full flex-shrink-0 ml-2`}
         >
           <Icon className={`w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 ${color}`} />
         </div>
@@ -210,7 +218,10 @@ const AdminDashboard = () => {
       <div className="min-h-screen bg-gradient-to-br from-teal-50 via-teal-100 to-teal-50 flex items-center justify-center p-4">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 sm:h-24 sm:w-24 lg:h-32 lg:w-32 border-b-2 border-teal-600 mx-auto mb-4"></div>
-          <Title level={3} className="text-gray-600 text-lg sm:text-xl lg:text-2xl">
+          <Title
+            level={3}
+            className="text-gray-600 text-lg sm:text-xl lg:text-2xl"
+          >
             Loading Dashboard...
           </Title>
         </div>
@@ -224,12 +235,15 @@ const AdminDashboard = () => {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-6 sm:mb-8">
-          <Title level={1} className="text-gray-800 font-bold mb-2 sm:mb-4 text-2xl sm:text-3xl lg:text-4xl">
-            📊 Admin Dashboard
+          <Title
+            level={1}
+            className="text-gray-800 font-bold mb-2 sm:mb-4 md:text-2xl sm:text-xl lg:text-4xl"
+          >
+            <span className="text-teal-700 md:text-3xl text-2xl lg:text-4xl">Admin Dashboard</span>
           </Title>
           <Paragraph className="text-sm sm:text-base lg:text-lg text-gray-600 max-w-2xl mx-auto px-4">
-            Real-time insights from your Bike Shop. All data is dynamically
-            loaded from your database.
+            {/* Real-time insights from your Bike Shop. All data is dynamically
+            loaded from your database. */}
           </Paragraph>
         </div>
 
@@ -272,13 +286,19 @@ const AdminDashboard = () => {
             <div className="bg-white rounded-xl p-4 sm:p-6 shadow-lg">
               <div className="flex items-center mb-4 sm:mb-6">
                 <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600 mr-2 sm:mr-3 flex-shrink-0" />
-                <Title level={3} className="text-gray-800 m-0 text-lg sm:text-xl lg:text-2xl">
+                <Title
+                  level={3}
+                  className="text-gray-800 m-0 text-lg sm:text-xl lg:text-2xl"
+                >
                   📈 Brand Distribution
                 </Title>
               </div>
               <div className="w-full overflow-hidden">
                 <ResponsiveContainer width="100%" height={250} minHeight={200}>
-                  <BarChart data={brandChartData} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
+                  <BarChart
+                    data={brandChartData}
+                    margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
+                  >
                     <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                     <XAxis
                       dataKey="brand"
@@ -324,7 +344,10 @@ const AdminDashboard = () => {
             <div className="bg-white rounded-xl p-4 sm:p-6 shadow-lg">
               <div className="flex items-center mb-4 sm:mb-6">
                 <Activity className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600 mr-2 sm:mr-3 flex-shrink-0" />
-                <Title level={3} className="text-gray-800 m-0 text-lg sm:text-xl lg:text-2xl">
+                <Title
+                  level={3}
+                  className="text-gray-800 m-0 text-lg sm:text-xl lg:text-2xl"
+                >
                   🏍️ Product Categories
                 </Title>
               </div>
@@ -375,7 +398,10 @@ const AdminDashboard = () => {
             <div className="bg-white rounded-xl p-4 sm:p-6 shadow-lg">
               <div className="flex items-center mb-4 sm:mb-6">
                 <Package className="w-5 h-5 sm:w-6 sm:h-6 text-orange-600 mr-2 sm:mr-3 flex-shrink-0" />
-                <Title level={3} className="text-gray-800 m-0 text-lg sm:text-xl lg:text-2xl">
+                <Title
+                  level={3}
+                  className="text-gray-800 m-0 text-lg sm:text-xl lg:text-2xl"
+                >
                   📦 Stock Status
                 </Title>
               </div>
@@ -423,13 +449,23 @@ const AdminDashboard = () => {
               <div className="bg-white rounded-xl p-4 sm:p-6 shadow-lg">
                 <div className="flex items-center mb-4 sm:mb-6">
                   <DollarSign className="w-5 h-5 sm:w-6 sm:h-6 text-green-600 mr-2 sm:mr-3 flex-shrink-0" />
-                  <Title level={3} className="text-gray-800 m-0 text-lg sm:text-xl lg:text-2xl">
+                  <Title
+                    level={3}
+                    className="text-gray-800 m-0 text-lg sm:text-xl lg:text-2xl"
+                  >
                     💰 Brand Price Analysis
                   </Title>
                 </div>
                 <div className="w-full overflow-hidden">
-                  <ResponsiveContainer width="100%" height={250} minHeight={200}>
-                    <BarChart data={brandChartData} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
+                  <ResponsiveContainer
+                    width="100%"
+                    height={250}
+                    minHeight={200}
+                  >
+                    <BarChart
+                      data={brandChartData}
+                      margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
+                    >
                       <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                       <XAxis
                         dataKey="brand"
@@ -473,7 +509,10 @@ const AdminDashboard = () => {
         <div className="bg-gradient-to-r from-teal-500 to-teal-700 rounded-xl p-4 sm:p-6 text-white mb-6 sm:mb-8">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             <div className="flex-1">
-              <Title level={3} className="text-white m-0 mb-2 text-lg sm:text-xl lg:text-2xl">
+              <Title
+                level={3}
+                className="text-white m-0 mb-2 text-lg sm:text-xl lg:text-2xl"
+              >
                 🎯 Live Data Summary
               </Title>
               <Paragraph className="text-white text-sm sm:text-base mb-0">
@@ -486,13 +525,17 @@ const AdminDashboard = () => {
               {totalProducts > 0 && (
                 <div className="bg-white bg-opacity-20 rounded-lg p-3 sm:p-4 text-center flex-1 sm:flex-none">
                   <p className="text-xs sm:text-sm text-white">Brands</p>
-                  <p className="text-lg sm:text-xl lg:text-2xl font-bold">{brandChartData.length}</p>
+                  <p className="text-lg sm:text-xl lg:text-2xl font-bold">
+                    {brandChartData.length}
+                  </p>
                 </div>
               )}
               {totalUsers > 0 && (
                 <div className="bg-white bg-opacity-20 rounded-lg p-3 sm:p-4 text-center flex-1 sm:flex-none">
                   <p className="text-xs sm:text-sm text-white">Active Users</p>
-                  <p className="text-lg sm:text-xl lg:text-2xl font-bold">{totalUsers}</p>
+                  <p className="text-lg sm:text-xl lg:text-2xl font-bold">
+                    {totalUsers}
+                  </p>
                 </div>
               )}
             </div>
@@ -502,7 +545,10 @@ const AdminDashboard = () => {
         {/* No Data Message */}
         {totalProducts === 0 && totalUsers === 0 && totalOrders === 0 && (
           <div className="bg-white rounded-xl p-6 sm:p-8 shadow-lg text-center">
-            <Title level={3} className="text-gray-600 mb-4 text-lg sm:text-xl lg:text-2xl">
+            <Title
+              level={3}
+              className="text-gray-600 mb-4 text-lg sm:text-xl lg:text-2xl"
+            >
               📊 No Data Available
             </Title>
             <Paragraph className="text-gray-500 text-sm sm:text-base">

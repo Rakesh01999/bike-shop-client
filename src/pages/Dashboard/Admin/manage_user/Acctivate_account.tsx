@@ -20,7 +20,7 @@ interface TUser {
 const Acctivate_account = () => {
   const { data: Alluser, isFetching } = useAlluserQuery(undefined);
   const [blockedUser] = useBlockedUserMutation();
-  
+
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -129,18 +129,22 @@ const Acctivate_account = () => {
     showQuickJumper: true,
     showTotal: (total: number, range: [number, number]) =>
       `${range[0]}-${range[1]} of ${total} users`,
-    pageSizeOptions: ['5', '10', '20', '50', '100'],
+    pageSizeOptions: ["5", "10", "20", "50", "100"],
     onChange: handleTableChange,
     onShowSizeChange: handleTableChange,
     style: {
-      marginTop: '16px',
-      textAlign: 'center' as const,
+      marginTop: "16px",
+      textAlign: "center" as const,
     },
-    itemRender: (_page: number, type: string, originalElement: React.ReactNode) => {
-      if (type === 'prev') {
+    itemRender: (
+      _page: number,
+      type: string,
+      originalElement: React.ReactNode
+    ) => {
+      if (type === "prev") {
         return <Button size="small">Previous</Button>;
       }
-      if (type === 'next') {
+      if (type === "next") {
         return <Button size="small">Next</Button>;
       }
       return originalElement;
@@ -155,7 +159,7 @@ const Acctivate_account = () => {
       // }}
     >
       {/* Title Section */}
-      <Card
+      {/* <Card
         className="w-full max-w-4xl text-center shadow-lg mb-6"
         style={{
           background: "rgba(255, 255, 255, 0.9)",
@@ -172,8 +176,16 @@ const Acctivate_account = () => {
         <p className="text-gray-600 text-sm">
           View, block, and manage user accounts with ease.
         </p>
-      </Card>
+      </Card> */}
 
+      <div className="mb-6 text-center">
+        <h2
+          className="font-semibold text-2xl md:text-3xl lg:text-4xl"
+          style={{ color: tealColors.primary }}
+        >
+          Manage User Accounts
+        </h2>
+      </div>
       {/* User Table */}
       <Card
         className="w-full max-w-6xl shadow-md"

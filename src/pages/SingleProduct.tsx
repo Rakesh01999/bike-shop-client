@@ -38,18 +38,18 @@ const SingleProduct = () => {
   };
 
   // Teal Color Palette
-  const tealColors = {
-    primary: "#0F766E", // Deep Teal
-    secondary: "#14B8A6", // Bright Teal
-    background: "#ECFDF5", // Light Teal
-  };
+  // const tealColors = {
+  //   primary: "#0F766E", // Deep Teal
+  //   secondary: "#14B8A6", // Bright Teal
+  //   background: "#ECFDF5", // Light Teal
+  // };
 
   return (
     <div
       className="min-h-screen bg-gray-50 py-12 px-4"
-      style={{
-        background: `linear-gradient(135deg, ${tealColors.background} 0%, ${tealColors.secondary} 100%)`,
-      }}
+      // style={{
+      //   background: `linear-gradient(135deg, ${tealColors.background} 0%, ${tealColors.secondary} 100%)`,
+      // }}
     >
       <div className="max-w-7xl mx-auto">
         {/* Breadcrumb */}
@@ -140,7 +140,7 @@ const SingleProduct = () => {
                 type="primary"
                 size="large"
                 onClick={handleBuyNow}
-                className="flex-1 h-12 bg-blue-600 hover:bg-blue-700 border-none flex items-center justify-center gap-2"
+                className="flex-1 h-12 bg-blue-600 border-none flex items-center justify-center gap-2"
                 icon={<ShoppingCart className="w-5 h-5" />}
                 disabled={!car?.quantity}
               >

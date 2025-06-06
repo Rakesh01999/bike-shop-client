@@ -119,13 +119,12 @@ const ViewOrder = () => {
     >
       {/* Title Card */}
       <Card
-        className="w-full max-w-4xl text-center shadow-lg mb-6"
-        // style={{ background: "rgba(255, 255, 255, 0.95)", borderRadius: "12px" }}
-        style={{
-          background: "rgba(255, 255, 255, 0.9)",
-          backdropFilter: "blur(10px)",
-          border: `1px solid ${tealColors.secondary}`,
-        }}
+        className="w-full max-w-4xl text-center bg-gray-100 mb-6"
+        // style={{
+        //   background: "rgba(255, 255, 255, 0.9)",
+        //   backdropFilter: "blur(10px)",
+        //   border: `1px solid ${tealColors.secondary}`,
+        // }}
       >
         <Title
           level={3}

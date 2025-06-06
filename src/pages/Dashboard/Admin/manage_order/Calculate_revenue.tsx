@@ -10,11 +10,13 @@ const CalculateRevenue = () => {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r p-6 text-center">
       <div className="max-w-lg w-full text-white">
         <Title level={2} className="text-white font-bold drop-shadow-lg">
-          🚴‍♂️ Bike Shop Revenue Dashboard 💰
+          <span className="text-teal-700 font-bold">
+            🚴‍♂️ Bike Shop Revenue Dashboard 💰
+          </span>
         </Title>
         <Paragraph className="text-lg">
-          Welcome to our Bike Shop! Here you can track the **total revenue** 
-          generated from sales. Stay updated with the latest figures and make 
+          Welcome to our Bike Shop! Here you can track the **total revenue**
+          generated from sales. Stay updated with the latest figures and make
           informed business decisions.
         </Paragraph>
       </div>
