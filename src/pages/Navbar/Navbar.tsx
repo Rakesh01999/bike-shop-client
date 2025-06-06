@@ -11,7 +11,7 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [megaMenuOpen, setMegaMenuOpen] = useState(false);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
-  
+
   interface User {
     name?: string;
     email?: string;
@@ -218,7 +218,8 @@ const Navbar = () => {
               {/* Vehicles Mega Menu Trigger */}
               <div className="relative group">
                 <button
-                  className="flex items-center space-x-1 text-white hover:text-teal-200 transition-colors duration-300"
+                  // className="flex items-center space-x-1 text-white hover:text-teal-200 hover:font-bold transition-colors duration-300 font-semibold"
+                  className="flex items-center space-x-1 text-white hover:font-bold transition-colors duration-300 font-semibold"
                   onMouseEnter={() => setMegaMenuOpen(true)}
                   onClick={() => setMegaMenuOpen(!megaMenuOpen)}
                 >
@@ -230,6 +231,7 @@ const Navbar = () => {
                     }`}
                   />
                 </button>
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full"></span>
               </div>
 
               <NavLink href="/allproduct" label="All Product" />
@@ -347,7 +349,6 @@ const Navbar = () => {
                 />
               )}
             </button>
-            
           </div>
         </div>
 
@@ -361,7 +362,7 @@ const Navbar = () => {
               <CompactNavLink href="/about" label="About" />
               <CompactNavLink href="/blog" label="Blog" />
               <CompactNavLink href="/contact" label="Contact" />
-              
+
               {!user && (
                 <>
                   <CompactNavLink href="/login" label="Login" />

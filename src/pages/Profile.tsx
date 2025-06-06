@@ -27,13 +27,13 @@ const Profile = () => {
   const { data: userData, isLoading, isError } = useSingleuserQuery(userId);
 
   const profile = userData?.data;
-  console.log(profile);
+  
   return (
     <div
       className="min-h-screen flex items-center justify-center px-4"
-      style={{
-        background: `linear-gradient(135deg, ${tealColors.background}, ${tealColors.secondary})`,
-      }}
+      // style={{
+      //   background: `linear-gradient(135deg, ${tealColors.background}, ${tealColors.secondary})`,
+      // }}
     >
       <div className="bg-green-50 w-full max-w-3xl rounded-2xl shadow-2xl p-8 space-y-6">
         {isLoading ? (
@@ -145,9 +145,10 @@ const Profile = () => {
 
             {/* Action Button */}
             <div className="text-center mt-6">
-              <NavLink to="/dashboard/update-profile">
+              {/* <NavLink to="/dashboard/update-profile"> */}
+              <NavLink to="/dashboard/userDashboard">
                 <button className="px-6 py-2 bg-teal-600 text-white rounded-full hover:bg-teal-700 transition-all duration-300">
-                  Edit Profile
+                  Go to Dashboard
                 </button>
               </NavLink>
             </div>

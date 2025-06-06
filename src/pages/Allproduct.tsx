@@ -10,17 +10,23 @@ import {
   Spin,
   Select,
   Slider,
-  Row,
-  Col,
-  Collapse,
   Pagination,
+  Badge,
+  Drawer,
 } from "antd";
 import { useNavigate } from "react-router-dom";
-import { SearchOutlined, FilterOutlined } from "@ant-design/icons";
+import { 
+  SearchOutlined, 
+  FilterOutlined, 
+  ClearOutlined,
+  AppstoreOutlined,
+  TagOutlined,
+  DollarOutlined,
+  CarOutlined
+} from "@ant-design/icons";
 import "./pagination.css";
 
 const { Option } = Select;
-const { Panel } = Collapse;
 
 export type TTableData = Pick<
   Bike,
@@ -30,6 +36,9 @@ export type TTableData = Pick<
 const AllProduct = () => {
   const [params] = useState<TQueryParam[] | undefined>(undefined);
   const [searchParams] = useSearchParams();
+
+  // Mobile drawer state
+  const [mobileFiltersVisible, setMobileFiltersVisible] = useState(false);
 
   // Pagination States
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -315,15 +324,15 @@ const AllProduct = () => {
     [navigate]
   );
 
-  // Get active filter display
-  const getActiveFiltersDisplay = useMemo(() => {
-    const filters = [];
-    if (selectedCategory) filters.push(`Category: ${selectedCategory}`);
-    if (selectedBrand) filters.push(`Brand: ${selectedBrand}`);
-    if (selectedModel) filters.push(`Model: ${selectedModel}`);
-    if (searchTerm) filters.push(`Search: "${searchTerm}"`);
-    return filters;
-  }, [selectedCategory, selectedBrand, selectedModel, searchTerm]);
+  // Get active filter count (excluding search)
+  const activeFilterCount = useMemo(() => {
+    let count = 0;
+    if (selectedCategory) count++;
+    if (selectedBrand) count++;
+    if (selectedModel) count++;
+    if (priceRange[0] !== 0 || priceRange[1] !== maxPrice) count++;
+    return count;
+  }, [selectedCategory, selectedBrand, selectedModel, priceRange, maxPrice]);
 
   // Calculate pagination info
   const paginationInfo = useMemo(() => {
@@ -340,462 +349,440 @@ const AllProduct = () => {
     primary: "#0F766E",
     secondary: "#14B8A6",
     background: "#ECFDF5",
+    light: "#F0FDFA",
   };
 
-  return (
-    <div
-      className="min-h-screen flex flex-col items-center px-3 sm:px-5 py-6"
-      // style={{
-      //   background: `linear-gradient(135deg, ${tealColors.background} 0%, ${tealColors.secondary} 100%)`,
-      // }}
-    >
-      {/* Title Card */}
-      <Card
-        className="w-full max-w-6xl text-center shadow-lg mb-6"
-        style={{
-          background: "rgba(255, 255, 255, 0.9)",
-          backdropFilter: "blur(10px)",
-          border: `1px solid ${tealColors.secondary}`,
-        }}
-      >
-        <h1
-          className="text-xl sm:text-2xl font-semibold text-gray-800"
-          style={{ color: tealColors.primary }}
-        >
-          Explore Our Bike Collection
-        </h1>
-        <p className="text-gray-600 text-sm">
-          Find the perfect bike for your journey.
-        </p>
-
-        {/* Active Filters Display */}
-        {getActiveFiltersDisplay.length > 0 && (
-          <div className="mt-3 flex flex-wrap gap-2 justify-center">
-            {getActiveFiltersDisplay.map((filter, index) => (
-              <span
-                key={index}
-                className="px-3 py-1 bg-teal-100 text-teal-700 rounded-full text-xs font-medium"
-              >
-                {filter}
-              </span>
-            ))}
-          </div>
-        )}
-      </Card>
-
-      {/* Search and Filters Section */}
-      <Card
-        className="w-full max-w-6xl shadow-lg mb-6"
-        style={{
-          background: "rgba(255, 255, 255, 0.95)",
-          backdropFilter: "blur(10px)",
-          border: `1px solid ${tealColors.secondary}`,
-        }}
-      >
-        {/* Mobile Collapsible Filters */}
-        <div className="block sm:hidden mb-4">
-          <Collapse
-            ghost
-            expandIcon={({ isActive }) => (
-              <FilterOutlined
-                style={{
-                  color: tealColors.primary,
-                  transform: isActive ? "rotate(180deg)" : "rotate(0deg)",
-                  transition: "transform 0.3s",
-                }}
+  // Filter Sidebar Component (without search - moved to header)
+  const FilterSidebar = ({ isMobile = false }) => (
+    <div className={`${isMobile ? 'p-0' : 'h-full'}`}>
+      <div className="space-y-6">
+        {/* Filter Header */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <FilterOutlined style={{ color: tealColors.primary, fontSize: '18px' }} />
+            <h3 className="text-lg font-semibold" style={{ color: tealColors.primary }}>
+              Filters
+            </h3>
+            {activeFilterCount > 0 && (
+              <Badge 
+                count={activeFilterCount} 
+                style={{ backgroundColor: tealColors.secondary }}
               />
             )}
-          >
-            <Panel
-              header={
-                <span style={{ color: tealColors.primary, fontWeight: "bold" }}>
-                  Advanced Filters
-                </span>
-              }
-              key="1"
-            >
-              <div className="space-y-4">
-                {/* Category Filter */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Category
-                  </label>
-                  <Select
-                    placeholder="Select Category"
-                    value={selectedCategory || undefined}
-                    onChange={handleCategoryChange}
-                    className="w-full"
-                    allowClear
-                  >
-                    {categories.map((category) => (
-                      <Option key={category} value={category}>
-                        {category}
-                      </Option>
-                    ))}
-                  </Select>
-                </div>
-
-                {/* Brand Filter */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Brand
-                  </label>
-                  <Select
-                    placeholder="Select Brand"
-                    value={selectedBrand || undefined}
-                    onChange={handleBrandChange}
-                    className="w-full"
-                    allowClear
-                  >
-                    {brands.map((brand) => (
-                      <Option key={brand} value={brand}>
-                        {brand}
-                      </Option>
-                    ))}
-                  </Select>
-                </div>
-
-                {/* Model Filter */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Model
-                  </label>
-                  <Select
-                    placeholder="Select Model"
-                    value={selectedModel || undefined}
-                    onChange={handleModelChange}
-                    className="w-full"
-                    allowClear
-                  >
-                    {models.map((model) => (
-                      <Option key={model} value={model}>
-                        {model}
-                      </Option>
-                    ))}
-                  </Select>
-                </div>
-
-                {/* Price Range Filter */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Price Range: ${priceRange[0].toLocaleString()} - $
-                    {priceRange[1].toLocaleString()}
-                  </label>
-                  <Slider
-                    range
-                    min={0}
-                    max={maxPrice}
-                    value={priceRange}
-                    onChange={handlePriceRangeChange}
-                    step={50}
-                    tooltip={{
-                      formatter: (value) => `$${value?.toLocaleString()}`,
-                    }}
-                  />
-                </div>
-
-                {/* Clear Filters Button */}
-                <Button
-                  onClick={clearFilters}
-                  className="w-full"
-                  style={{
-                    borderColor: tealColors.secondary,
-                    color: tealColors.primary,
-                  }}
-                >
-                  Clear All Filters
-                </Button>
-              </div>
-            </Panel>
-          </Collapse>
-        </div>
-
-        {/* Desktop Filters Layout */}
-        <div className="hidden sm:block">
-          <Row gutter={[16, 16]} align="middle">
-            {/* Search Input */}
-            <Col xs={24} sm={12} md={6}>
-              <Input
-                placeholder="Search by brand, model, category"
-                value={searchTerm}
-                onChange={handleSearch}
-                prefix={<SearchOutlined className="text-teal-500" />}
-                className="border-2 border-teal-500 focus:border-teal-700 rounded-xl transition-all"
-              />
-            </Col>
-
-            {/* Category Filter */}
-            <Col xs={24} sm={6} md={4}>
-              <Select
-                placeholder="Category"
-                value={selectedCategory || undefined}
-                onChange={handleCategoryChange}
-                className="w-full"
-                allowClear
-              >
-                {categories.map((category) => (
-                  <Option key={category} value={category}>
-                    {category}
-                  </Option>
-                ))}
-              </Select>
-            </Col>
-
-            {/* Brand Filter */}
-            <Col xs={24} sm={6} md={4}>
-              <Select
-                placeholder="Brand"
-                value={selectedBrand || undefined}
-                onChange={handleBrandChange}
-                className="w-full"
-                allowClear
-              >
-                {brands.map((brand) => (
-                  <Option key={brand} value={brand}>
-                    {brand}
-                  </Option>
-                ))}
-              </Select>
-            </Col>
-
-            {/* Model Filter */}
-            <Col xs={24} sm={6} md={4}>
-              <Select
-                placeholder="Model"
-                value={selectedModel || undefined}
-                onChange={handleModelChange}
-                className="w-full"
-                allowClear
-              >
-                {models.map((model) => (
-                  <Option key={model} value={model}>
-                    {model}
-                  </Option>
-                ))}
-              </Select>
-            </Col>
-
-            {/* Price Range */}
-            <Col xs={24} sm={12} md={4}>
-              <div>
-                <div className="text-xs text-gray-600 mb-1">
-                  Price: ${priceRange[0].toLocaleString()} - $
-                  {priceRange[1].toLocaleString()}
-                </div>
-                <Slider
-                  range
-                  min={0}
-                  max={maxPrice}
-                  value={priceRange}
-                  onChange={handlePriceRangeChange}
-                  step={50}
-                  tooltip={{
-                    formatter: (value) => `$${value?.toLocaleString()}`,
-                  }}
-                />
-              </div>
-            </Col>
-
-            {/* Clear Filters */}
-            <Col xs={24} sm={6} md={2}>
-              <Button
-                onClick={clearFilters}
-                className="w-full"
-                style={{
-                  borderColor: tealColors.secondary,
-                  color: tealColors.primary,
-                }}
-              >
-                Clear
-              </Button>
-            </Col>
-          </Row>
-        </div>
-
-        {/* Mobile Search Bar */}
-        <div className="block sm:hidden">
-          <Input
-            placeholder="Search by brand, model, category"
-            value={searchTerm}
-            onChange={handleSearch}
-            prefix={<SearchOutlined className="text-teal-500" />}
-            className="w-full border-2 border-teal-500 focus:border-teal-700 rounded-xl transition-all"
-          />
-        </div>
-
-        {/* Results Counter and Pagination Info */}
-        <div className="mt-4 flex flex-col sm:flex-row justify-between items-center gap-2">
-          <span className="text-sm text-gray-600">
-            Showing {paginationInfo.startItem}-{paginationInfo.endItem} of{" "}
-            {paginationInfo.totalItems} bikes
-          </span>
-          {paginationInfo.totalItems > 0 && (
-            <span className="text-xs text-gray-500">
-              Page {currentPage} of {paginationInfo.totalPages}
-            </span>
-          )}
-        </div>
-      </Card>
-
-      {/* Products Grid */}
-      {isFetching ? (
-        <div className="flex justify-center items-center min-h-[300px]">
-          <Spin size="large" />
-        </div>
-      ) : filteredData.length === 0 ? (
-        <Card
-          className="w-full max-w-md text-center shadow-lg"
-          style={{
-            background: "rgba(255, 255, 255, 0.9)",
-            backdropFilter: "blur(10px)",
-            border: `1px solid ${tealColors.secondary}`,
-          }}
-        >
-          <div className="py-8">
-            <h3 className="text-lg font-semibold text-gray-700 mb-2">
-              No bikes found
-            </h3>
-            <p className="text-gray-500 text-sm mb-4">
-              Try adjusting your search criteria or filters.
-            </p>
+          </div>
+          {activeFilterCount > 0 && (
             <Button
+              size="small"
+              icon={<ClearOutlined />}
               onClick={clearFilters}
-              style={{
-                backgroundColor: tealColors.secondary,
-                borderColor: tealColors.secondary,
-                color: "white",
+              style={{ 
+                color: tealColors.primary,
+                borderColor: tealColors.primary
               }}
             >
-              Clear All Filters
+              Clear All
             </Button>
+          )}
+        </div>
+
+        {/* Category Filter */}
+        <div>
+          <div className="flex items-center gap-2 mb-3">
+            <AppstoreOutlined style={{ color: tealColors.primary }} />
+            <label className="text-sm font-medium text-gray-700">Category</label>
           </div>
-        </Card>
-      ) : (
-        <>
-          {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6 w-full max-w-7xl mb-8"> */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6 w-full max-w-6xl mb-8">
-            {paginatedData.map((bike) => (
-              <Card
-                key={bike.key}
-                className="rounded-2xl shadow-lg transition-transform hover:scale-105 hover:shadow-xl bg-teal-50"
-                style={{
-                  // background: "white",
-                  border: `1px solid ${tealColors.secondary}`,
-                }}
-                bodyStyle={{ padding: "1rem" }}
-              >
-                {/* Image */}
-                <img
-                  src={bike.image}
-                  alt={bike.model}
-                  className="h-32 sm:h-40 w-full object-cover rounded-md mb-4"
+          <Select
+            placeholder="All Categories"
+            value={selectedCategory || undefined}
+            onChange={handleCategoryChange}
+            className="w-full"
+            allowClear
+            style={{ borderRadius: '8px' }}
+          >
+            {categories.map((category) => (
+              <Option key={category} value={category}>
+                {category}
+              </Option>
+            ))}
+          </Select>
+        </div>
+
+        {/* Brand Filter */}
+        <div>
+          <div className="flex items-center gap-2 mb-3">
+            <TagOutlined style={{ color: tealColors.primary }} />
+            <label className="text-sm font-medium text-gray-700">Brand</label>
+          </div>
+          <Select
+            placeholder="All Brands"
+            value={selectedBrand || undefined}
+            onChange={handleBrandChange}
+            className="w-full"
+            allowClear
+            style={{ borderRadius: '8px' }}
+          >
+            {brands.map((brand) => (
+              <Option key={brand} value={brand}>
+                {brand}
+              </Option>
+            ))}
+          </Select>
+        </div>
+
+        {/* Model Filter */}
+        <div>
+          <div className="flex items-center gap-2 mb-3">
+            <CarOutlined style={{ color: tealColors.primary }} />
+            <label className="text-sm font-medium text-gray-700">Model</label>
+          </div>
+          <Select
+            placeholder="All Models"
+            value={selectedModel || undefined}
+            onChange={handleModelChange}
+            className="w-full"
+            allowClear
+            style={{ borderRadius: '8px' }}
+          >
+            {models.map((model) => (
+              <Option key={model} value={model}>
+                {model}
+              </Option>
+            ))}
+          </Select>
+        </div>
+
+        {/* Price Range Filter */}
+        <div>
+          <div className="flex items-center gap-2 mb-3">
+            <DollarOutlined style={{ color: tealColors.primary }} />
+            <label className="text-sm font-medium text-gray-700">
+              Price Range
+            </label>
+          </div>
+          <div className="px-2">
+            <div className="flex justify-between text-sm text-gray-600 mb-2">
+              <span>${priceRange[0].toLocaleString()}</span>
+              <span>${priceRange[1].toLocaleString()}</span>
+            </div>
+            <Slider
+              range
+              min={0}
+              max={maxPrice}
+              value={priceRange}
+              onChange={handlePriceRangeChange}
+              step={50}
+              tooltip={{
+                formatter: (value) => `$${value?.toLocaleString()}`,
+              }}
+              trackStyle={[{ backgroundColor: tealColors.secondary }]}
+              handleStyle={[
+                { borderColor: tealColors.secondary, backgroundColor: tealColors.secondary },
+                { borderColor: tealColors.secondary, backgroundColor: tealColors.secondary }
+              ]}
+            />
+            <div className="text-xs text-gray-500 mt-1 text-center">
+              Max: ${maxPrice.toLocaleString()}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <div className="bg-white shadow-sm border-b">
+        {/* <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4"> */}
+        <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="flex flex-col gap-4">
+            {/* Title Row */}
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 md:mt-7 lg:mt-1">
+              <div>
+                <h1 className="text-2xl font-bold" style={{ color: tealColors.primary }}>
+                  Bike Collection
+                </h1>
+                <p className="text-gray-600 text-sm">
+                  Find the perfect bike for your journey
+                </p>
+              </div>
+              
+              {/* Results Info */}
+              <div className="text-sm text-teal-700 font-semibold">
+                {paginationInfo.totalItems > 0 ? (
+                  <span>
+                    Showing {paginationInfo.startItem}-{paginationInfo.endItem} of{" "}
+                    {paginationInfo.totalItems} bikes
+                  </span>
+                ) : (
+                  <span>No bikes found</span>
+                )}
+              </div>
+            </div>
+
+            {/* Search and Filter Controls Row */}
+            <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center">
+              {/* Search Input - Prominent and Accessible */}
+              <div className="flex-1 max-w-md">
+                <Input
+                  placeholder="Search by brand, model, category..."
+                  value={searchTerm}
+                  onChange={handleSearch}
+                  prefix={<SearchOutlined style={{ color: tealColors.secondary }} />}
+                  className="h-10 border-2 rounded-lg transition-all duration-200 focus:shadow-lg"
+                  style={{ 
+                    borderColor: tealColors.secondary,
+                    fontSize: '16px' // Prevents zoom on iOS
+                  }}
+                  allowClear
                 />
+              </div>
 
-                <h2 className="text-base sm:text-lg font-semibold text-gray-800 mb-1 truncate">
-                  {bike.model}
-                </h2>
-                <p className="text-xs sm:text-sm text-gray-500 mb-1 truncate">
-                  Brand: {bike.brand}
-                </p>
-                <p className="text-xs sm:text-sm text-gray-500 mb-1 truncate">
-                  Category: {bike.category}
-                </p>
-                <p className="text-sm sm:text-base font-bold text-green-600 mb-2">
-                  ${bike.price.toLocaleString()}
-                </p>
-
-                <p
-                  className={`text-xs sm:text-sm font-semibold mb-3 ${
-                    bike.quantity > 0 ? "text-green-600" : "text-red-600"
-                  }`}
-                >
-                  {bike.quantity > 0
-                    ? `In Stock: ${bike.quantity}`
-                    : "Out of Stock"}
-                </p>
-
+              {/* Filter Button and Active Filters Display */}
+              <div className="flex items-center gap-3">
                 <Button
-                  onClick={() => navigateToProduct(bike.key)}
-                  className="w-full text-xs sm:text-sm font-bold py-1 rounded-md"
+                  icon={<FilterOutlined />}
+                  onClick={() => setMobileFiltersVisible(true)}
+                  className="lg:hidden h-10"
+                  style={{ 
+                    borderColor: tealColors.secondary,
+                    color: tealColors.primary
+                  }}
+                >
+                  Filters {activeFilterCount > 0 && `(${activeFilterCount})`}
+                </Button>
+
+                {/* Active Filters Count for Desktop */}
+                <div className="hidden lg:flex items-center gap-2">
+                  {activeFilterCount > 0 && (
+                    <>
+                      <Badge 
+                        count={activeFilterCount} 
+                        style={{ backgroundColor: tealColors.secondary }}
+                      />
+                      <span className="text-sm text-gray-600">filters active</span>
+                      <Button
+                        size="small"
+                        icon={<ClearOutlined />}
+                        onClick={clearFilters}
+                        style={{ 
+                          color: tealColors.primary,
+                          borderColor: tealColors.primary
+                        }}
+                      >
+                        Clear
+                      </Button>
+                    </>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Search Results Indicator */}
+            {searchTerm && (
+              <div className="flex items-center gap-2 text-sm">
+                <span className="text-gray-600">Search results for:</span>
+                <span 
+                  className="px-2 py-1 rounded-md text-white text-xs font-medium"
+                  style={{ backgroundColor: tealColors.secondary }}
+                >
+                  "{searchTerm}"
+                </span>
+                {searchTerm && (
+                  <Button
+                    size="small"
+                    type="text"
+                    onClick={() => setSearchTerm("")}
+                    className="text-gray-500 hover:text-gray-700"
+                  >
+                    Clear search
+                  </Button>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      {/* <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6"> */}
+      <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="flex gap-6">
+          {/* Desktop Sidebar */}
+          <div className="hidden lg:block w-80 flex-shrink-0">
+            <Card
+              className="sticky top-6"
+              style={{
+                background: "white",
+                border: `1px solid ${tealColors.secondary}`,
+                borderRadius: '12px',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.05)'
+              }}
+              bodyStyle={{ padding: '24px' }}
+            >
+              <FilterSidebar />
+            </Card>
+          </div>
+
+          {/* Mobile Filter Drawer */}
+          <Drawer
+            title="Filters"
+            placement="left"
+            onClose={() => setMobileFiltersVisible(false)}
+            open={mobileFiltersVisible}
+            width={320}
+            bodyStyle={{ padding: '24px' }}
+          >
+            <FilterSidebar isMobile={true} />
+          </Drawer>
+
+          {/* Products Section */}
+          <div className="flex-1 min-w-0">
+            {isFetching ? (
+              <div className="flex justify-center items-center min-h-[400px]">
+                <Spin size="large" />
+              </div>
+            ) : filteredData.length === 0 ? (
+              <Card
+                className="text-center py-12"
+                style={{
+                  background: "white",
+                  border: `1px solid ${tealColors.secondary}`,
+                  borderRadius: '12px',
+                }}
+              >
+                <div className="text-6xl mb-4">🚲</div>
+                <h3 className="text-xl font-semibold text-gray-700 mb-2">
+                  No bikes found
+                </h3>
+                <p className="text-gray-500 mb-6">
+                  {searchTerm 
+                    ? `No results found for "${searchTerm}". Try adjusting your search or filters.`
+                    : "Try adjusting your search criteria or filters."
+                  }
+                </p>
+                <Button
+                  onClick={clearFilters}
                   style={{
                     backgroundColor: tealColors.secondary,
                     borderColor: tealColors.secondary,
                     color: "white",
                   }}
+                  size="large"
                 >
-                  View Details
+                  Clear All Filters
                 </Button>
               </Card>
-            ))}
-          </div>
+            ) : (
+              <>
+                {/* Products Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
+                  {paginatedData.map((bike) => (
+                    <Card
+                      key={bike.key}
+                      className="group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                      style={{
+                        background: "white",
+                        border: `1px solid ${tealColors.secondary}`,
+                        borderRadius: '16px',
+                        overflow: 'hidden'
+                      }}
+                      bodyStyle={{ padding: 0 }}
+                      cover={
+                        <div className="relative overflow-hidden" style={{ height: '200px' }}>
+                          <img
+                            src={bike.image}
+                            alt={bike.model}
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                          />
+                          <div className="absolute top-3 right-3">
+                            <div 
+                              className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                                bike.quantity > 0 
+                                  ? 'bg-green-100 text-green-700' 
+                                  : 'bg-red-100 text-red-700'
+                              }`}
+                            >
+                              {bike.quantity > 0 ? `${bike.quantity} left` : 'Out of Stock'}
+                            </div>
+                          </div>
+                        </div>
+                      }
+                    >
+                      <div className="p-4">
+                        <h3 className="text-lg font-semibold text-gray-800 mb-1 truncate">
+                          {bike.model}
+                        </h3>
+                        <p className="text-sm text-gray-500 mb-1">{bike.brand}</p>
+                        <p className="text-xs text-gray-400 mb-3">{bike.category}</p>
+                        
+                        <div className="flex justify-between items-center mb-4">
+                          <span className="text-xl font-bold" style={{ color: tealColors.primary }}>
+                            ${bike.price.toLocaleString()}
+                          </span>
+                        </div>
 
-          {/* Pagination Component */}
-          {paginationInfo.totalItems > 0 && (
-            <Card
-              className="w-full max-w-6xl shadow-lg"
-              style={{
-                background: "rgba(255, 255, 255, 0.95)",
-                backdropFilter: "blur(10px)",
-                border: `1px solid ${tealColors.secondary}`,
-              }}
-            >
-              <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-                {/* Pagination Info - Mobile */}
-                <div className="block sm:hidden text-center">
-                  <div className="text-sm text-gray-600 mb-2">
-                    {paginationInfo.startItem}-{paginationInfo.endItem} of{" "}
-                    {paginationInfo.totalItems} items
-                  </div>
-                  <div className="text-xs text-gray-500">
-                    Page {currentPage} of {paginationInfo.totalPages}
-                  </div>
+                        <Button
+                          onClick={() => navigateToProduct(bike.key)}
+                          className="w-full font-semibold"
+                          style={{
+                            backgroundColor: tealColors.secondary,
+                            borderColor: tealColors.secondary,
+                            color: "white",
+                            height: '40px',
+                            borderRadius: '8px'
+                          }}
+                          disabled={bike.quantity === 0}
+                        >
+                          {bike.quantity > 0 ? 'View Details' : 'Out of Stock'}
+                        </Button>
+                      </div>
+                    </Card>
+                  ))}
                 </div>
 
-                {/* Pagination Info - Desktop */}
-                <div className="hidden sm:block text-sm text-gray-600">
-                  Showing {paginationInfo.startItem}-{paginationInfo.endItem} of{" "}
-                  {paginationInfo.totalItems} bikes
-                </div>
-
-                {/* Pagination Component */}
-                <Pagination
-                  current={currentPage}
-                  total={paginationInfo.totalItems}
-                  pageSize={pageSize}
-                  onChange={handlePageChange}
-                  onShowSizeChange={handlePageChange}
-                  showSizeChanger
-                  showQuickJumper={paginationInfo.totalPages > 10}
-                  pageSizeOptions={["10", "20", "40", "60", "100"]}
-                  showTotal={(total, range) =>
-                    window.innerWidth >= 640
-                      ? `${range[0]}-${range[1]} of ${total} items`
-                      : `${total} total`
-                  }
-                  size={window.innerWidth < 640 ? "small" : "default"}
-                  responsive
-                  className="flex justify-center custom-pagination"
-                />
-                {/* Page Size Selector - Mobile */}
-                <div className="block sm:hidden">
-                  <Select
-                    value={pageSize}
-                    onChange={(value) => handlePageChange(1, value)}
-                    size="small"
-                    style={{ width: 80 }}
+                {/* Pagination */}
+                {paginationInfo.totalItems > 0 && (
+                  <Card
+                    style={{
+                      background: "white",
+                      border: `1px solid ${tealColors.secondary}`,
+                      borderRadius: '12px',
+                    }}
+                    bodyStyle={{ padding: '20px' }}
                   >
-                    <Option value={10}>10</Option>
-                    <Option value={20}>20</Option>
-                    <Option value={40}>40</Option>
-                    <Option value={60}>60</Option>
-                    <Option value={100}>100</Option>
-                  </Select>
-                </div>
-              </div>
-            </Card>
-          )}
-        </>
-      )}
+                    <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+                      <div className="text-sm text-gray-600">
+                        Showing {paginationInfo.startItem}-{paginationInfo.endItem} of{" "}
+                        {paginationInfo.totalItems} bikes
+                      </div>
+
+                      <Pagination
+                        current={currentPage}
+                        total={paginationInfo.totalItems}
+                        pageSize={pageSize}
+                        onChange={handlePageChange}
+                        onShowSizeChange={handlePageChange}
+                        showSizeChanger
+                        showQuickJumper={paginationInfo.totalPages > 10}
+                        pageSizeOptions={["10", "20", "40", "60", "100"]}
+                        showTotal={(total, range) =>
+                          window.innerWidth >= 640
+                            ? `${range[0]}-${range[1]} of ${total} items`
+                            : `${total} total`
+                        }
+                        size={window.innerWidth < 640 ? "small" : "default"}
+                        responsive
+                        className="custom-pagination"
+                      />
+                    </div>
+                  </Card>
+                )}
+              </>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
