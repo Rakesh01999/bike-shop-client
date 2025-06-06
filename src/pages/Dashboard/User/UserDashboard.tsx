@@ -17,7 +17,7 @@ import {
 import {
   Users,
   Package,
-  DollarSign,
+  // DollarSign,
   TrendingUp,
   Activity,
   LucideIcon,
@@ -144,31 +144,6 @@ const UserDashboard = () => {
     }));
   }, [bikes]);
 
-  // Stock status data
-  const stockStatusData = useMemo((): ChartData[] => {
-    if (bikes.length === 0) return [];
-
-    let inStock = 0;
-    let lowStock = 0;
-    let outOfStock = 0;
-
-    bikes.forEach((bike: Bike) => {
-      const quantity = bike.quantity || 0;
-      if (quantity === 0) {
-        outOfStock++;
-      } else if (quantity < 5) {
-        lowStock++;
-      } else {
-        inStock++;
-      }
-    });
-
-    return [
-      { name: "In Stock", value: inStock, color: "#10b981" },
-      { name: "Low Stock", value: lowStock, color: "#f59e0b" },
-      { name: "Out of Stock", value: outOfStock, color: "#ef4444" },
-    ].filter((item) => item.value > 0);
-  }, [bikes]);
 
   const StatCard = ({
     icon: Icon,
@@ -240,7 +215,7 @@ const UserDashboard = () => {
         </div>
 
         {/* Dynamic Stats Cards */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 mb-6 sm:mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 lg:gap-6 mb-6 sm:mb-8">
           <StatCard
             icon={Users}
             title="Total Users"
@@ -370,118 +345,6 @@ const UserDashboard = () => {
             </div>
           )}
         </div>
-
-        {/* Stock Status Chart */}
-        {stockStatusData.length > 0 && (
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 mb-6 sm:mb-8">
-            <div className="bg-white rounded-xl p-4 sm:p-6 shadow-lg">
-              <div className="flex items-center mb-4 sm:mb-6">
-                <Package className="w-5 h-5 sm:w-6 sm:h-6 text-orange-600 mr-2 sm:mr-3 flex-shrink-0" />
-                <Title
-                  level={3}
-                  className="text-gray-800 m-0 text-lg sm:text-xl lg:text-2xl"
-                >
-                  📦 Stock Status
-                </Title>
-              </div>
-              <div className="w-full overflow-hidden">
-                <ResponsiveContainer width="100%" height={250} minHeight={200}>
-                  <PieChart>
-                    <Pie
-                      data={stockStatusData}
-                      cx="50%"
-                      cy="45%"
-                      outerRadius={80}
-                      innerRadius={40}
-                      paddingAngle={3}
-                      dataKey="value"
-                    >
-                      {stockStatusData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={entry.color} />
-                      ))}
-                    </Pie>
-                    <Tooltip
-                      contentStyle={{
-                        backgroundColor: "#fff",
-                        border: "1px solid #e0e0e0",
-                        borderRadius: "8px",
-                        boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-                        fontSize: "12px",
-                      }}
-                      formatter={(value) => [`${value} Products`, "Count"]}
-                    />
-                    <Legend
-                      verticalAlign="bottom"
-                      height={36}
-                      wrapperStyle={{ fontSize: "11px" }}
-                      formatter={(value) => (
-                        <span style={{ color: "#666" }}>{value}</span>
-                      )}
-                    />
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-
-            {/* Brand Price Analysis */}
-            {brandChartData.length > 0 && (
-              <div className="bg-white rounded-xl p-4 sm:p-6 shadow-lg">
-                <div className="flex items-center mb-4 sm:mb-6">
-                  <DollarSign className="w-5 h-5 sm:w-6 sm:h-6 text-green-600 mr-2 sm:mr-3 flex-shrink-0" />
-                  <Title
-                    level={3}
-                    className="text-gray-800 m-0 text-lg sm:text-xl lg:text-2xl"
-                  >
-                    💰 Brand Price Analysis
-                  </Title>
-                </div>
-                <div className="w-full overflow-hidden">
-                  <ResponsiveContainer
-                    width="100%"
-                    height={250}
-                    minHeight={200}
-                  >
-                    <BarChart
-                      data={brandChartData}
-                      margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
-                    >
-                      <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                      <XAxis
-                        dataKey="brand"
-                        stroke="#666"
-                        fontSize={10}
-                        angle={-45}
-                        textAnchor="end"
-                        height={80}
-                        interval={0}
-                      />
-                      <YAxis stroke="#666" fontSize={10} />
-                      <Tooltip
-                        contentStyle={{
-                          backgroundColor: "#fff",
-                          border: "1px solid #e0e0e0",
-                          borderRadius: "8px",
-                          boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-                          fontSize: "12px",
-                        }}
-                        formatter={(value) => [
-                          `$${value?.toLocaleString()}`,
-                          "Average Price",
-                        ]}
-                      />
-                      <Bar
-                        dataKey="avgPrice"
-                        fill="#10b981"
-                        name="Average Price"
-                        radius={[4, 4, 0, 0]}
-                      />
-                    </BarChart>
-                  </ResponsiveContainer>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
 
         {/* Data Summary */}
         {/* <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl p-4 sm:p-6 text-white mb-6 sm:mb-8"> */}

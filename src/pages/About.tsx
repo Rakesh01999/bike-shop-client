@@ -48,14 +48,16 @@ const About = () => {
               started, we're here to support your cycling journey.
             </p>
             <p className="text-lg leading-relaxed">
-              With a strong focus on customer satisfaction and sustainable
+              With flexible delivery options, ongoing service offers, and a
+              growing rider community, a strong focus on customer satisfaction and sustainable
               mobility, BikeShop is more than a store — it's a community of
               riders moving forward together.
             </p>
           </div>
 
           {/* Image Section */}
-          <div className="md:w-1/2 max-w-md mx-auto">
+          {/* <div className="md:w-1/2 max-w-md mx-auto"> */}
+          <div className="md:w-1/2  mx-auto">
             <img
               src="https://i.postimg.cc/yxXJVFxy/MY-24-KTM-SUPERSPORT-RC-390.jpg"
               alt="Bike Shop"
@@ -145,8 +147,7 @@ const About = () => {
               there.
             </p>
             <p>
-              With flexible delivery options, ongoing service offers, and a
-              growing rider community, we’re not just selling bikes — we’re
+              We’re not just selling bikes — we’re
               building connections, trust, and a culture of safe, enjoyable
               riding.
             </p>

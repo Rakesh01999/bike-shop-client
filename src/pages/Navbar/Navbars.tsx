@@ -40,40 +40,39 @@ const Navbars = ({ children }: { children: React.ReactNode }) => {
           background: `linear-gradient(135deg, ${colors.primary} 0%, ${colors.secondary} 100%)`,
         }}
       >
-        <div className="container mx-auto flex justify-between items-center p-4 max-w-6xl">
-          
+        <div className="container mx-auto flex justify-between items-center p-4 max-w-8xl">
           {/* 🚗 **Logo Section with Hover Animation** */}
           <div
             className="flex items-center space-x-4 group cursor-pointer"
             onClick={() => navigate("/")}
           >
-
-<img
-            // src="https://i.postimg.cc/C5SrMXNd/car.png"
-            src="https://i.postimg.cc/Kzzym4yH/bike.png"
-            alt="Bike"
-            className="w-16 h-16 rounded-full border-2 border-white/20 transform transition-all duration-300 group-hover:rotate-12 group-hover:scale-110"
-          />
-          <span
-            className="text-2xl font-bold tracking-wider transition-all duration-300 group-hover:text-teal-200"
-            style={{ color: colors.text.primary }}
-          >
-            {/* AutoVerse */}
             <img
-            src="https://i.postimg.cc/KzLCGTHQ/bike-shop-logo.png"
-            alt="Bike"
-            className="md:w-32 w-24"
-          />
-          </span>
-        </div>
+              // src="https://i.postimg.cc/C5SrMXNd/car.png"
+              src="https://i.postimg.cc/Kzzym4yH/bike.png"
+              alt="Bike"
+              className="w-16 h-16 rounded-full border-2 border-white/20 transform transition-all duration-300 group-hover:rotate-12 group-hover:scale-110"
+            />
+            <span
+              className="text-2xl font-bold tracking-wider transition-all duration-300 group-hover:text-teal-200"
+              style={{ color: colors.text.primary }}
+            >
+              {/* AutoVerse */}
+              <img
+                src="https://i.postimg.cc/KzLCGTHQ/bike-shop-logo.png"
+                alt="Bike"
+                className="md:w-32 w-24"
+              />
+            </span>
+          </div>
 
           {/* **Desktop Navigation** */}
           <div className="hidden md:flex items-center space-x-6">
             <div className="flex space-x-6">
-              <NavLink href="/" label="Home" />
-              <NavLink href="/allproduct" label="All Products" />
+              <NavLink href="/allproduct" label="All Product" />
               <NavLink href="/dashboard" label="Dashboard" />
               <NavLink href="/about" label="About" />
+              <NavLink href="/blog" label="Blog" />
+              <NavLink href="/contact" label="Contact" />
 
               {!user && (
                 <>

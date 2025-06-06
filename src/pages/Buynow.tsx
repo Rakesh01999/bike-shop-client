@@ -77,18 +77,18 @@ const Buynow = () => {
     }
   };
   // Teal Color Palette
-  const tealColors = {
-    primary: "#0F766E", // Deep Teal
-    secondary: "#14B8A6", // Bright Teal
-    background: "#ECFDF5", // Light Teal
-  };
+  // const tealColors = {
+  //   primary: "#0F766E", // Deep Teal
+  //   secondary: "#14B8A6", // Bright Teal
+  //   background: "#ECFDF5", // Light Teal
+  // };
 
   return (
     <div
       className="flex justify-center items-center min-h-screen p-4"
-      style={{
-        background: `linear-gradient(135deg, ${tealColors.background} 0%, ${tealColors.secondary} 100%)`,
-      }}
+      // style={{
+      //   background: `linear-gradient(135deg, ${tealColors.background} 0%, ${tealColors.secondary} 100%)`,
+      // }}
     >
       <Card className="w-full max-w-2xl shadow-xl rounded-lg p-6">
         <Title level={2} className="text-center text-blue-600">

@@ -732,9 +732,10 @@ const AllProduct = () => {
                             height: '40px',
                             borderRadius: '8px'
                           }}
-                          disabled={bike.quantity === 0}
+                          // disabled={bike.quantity === 0}
                         >
-                          {bike.quantity > 0 ? 'View Details' : 'Out of Stock'}
+                          {/* {bike.quantity > 0 ? 'View Details' : 'Out of Stock'} */}
+                          View Details
                         </Button>
                       </div>
                     </Card>
